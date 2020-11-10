@@ -4,6 +4,9 @@
 #include "SafeDelete.h"
 
 #include "Sprite.h"
+#include "Object3D.h"
+#include "GameObject.h"
+#include "Model.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -23,10 +26,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	input = new Input();
 	input->Initialize(winApp->GetInstance(), winApp->GetHwnd());
 
+	GameObject* obj1 = nullptr;
+	Model* mod1 = new Model(dxManager->GetDevice());
+
 
 #pragma region テクスチャ初期化
 
 	Sprite::StaticInitialize(dxManager->GetDevice(), WinApp::window_width, WinApp::window_height);
+	/*Object3D::StaticInitialize(dxManager->GetDevice(), WinApp::window_width, WinApp::window_height);*/
+	GameObject::StaticInitialize(dxManager->GetDevice(), WinApp::window_width, WinApp::window_height);
 
 	Sprite* sprite = nullptr;
 
@@ -39,6 +47,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 #pragma endregion
 
+#pragma region オブジェクト初期化
+
+	mod1->CreateModel("ground");
+	obj1 = GameObject::Create();
+	obj1->SetModel(mod1);
+
+	//Object3D* object3d = nullptr;
+	//object3d = Object3D::Create();
+	//object3d->Update();
+
+#pragma endregion
 
 	//メインループ
 	while (true)
@@ -49,6 +68,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 
 		input->Update();
+		//object3d->Update();
 
 		//描画開始↓
 		dxManager->BeginDraw();
@@ -59,9 +79,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		}
 
+		obj1->Update();
+
+
 		Sprite::BeginDraw(dxManager->GetcmdList());
 		sprite->Draw();
 		Sprite::EndDraw();
+
+		GameObject::BeginDraw(dxManager->GetcmdList());
+		obj1->Draw();
+		GameObject::EndDraw();
+
+		//Object3D::BeginDraw(dxManager->GetcmdList());
+		//object3d->Draw();
+		//Object3D::EndDraw();
 
 		//描画終了↑
 		dxManager->EndDraw();
@@ -71,6 +102,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	safe_delete(dxManager);
 	safe_delete(input);
 	safe_delete(sprite);
+	safe_delete(mod1);
+	safe_delete(obj1);
 
 	//ゲームウィンドウの破棄
 	winApp->ReleaseGameWindow();
