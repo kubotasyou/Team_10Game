@@ -74,7 +74,6 @@ StyleCopReport.xml
 *_h.h
 *.ilk
 *.meta
-*.obj
 *.iobj
 *.pch
 *.pdb
@@ -365,7 +364,6 @@ FodyWeavers.xsd
 GitDirectX12/.vs/GitDirectX12/v15/*.db
 
 * .cmd
-*.obj
 *.ilk
 *.db
 *.log
