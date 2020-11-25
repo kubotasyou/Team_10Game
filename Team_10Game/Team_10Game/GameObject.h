@@ -13,6 +13,7 @@ public://サブクラス
 	struct ConstBufferDataB0
 	{
 		XMMATRIX mat;	// ３Ｄ変換行列
+		XMFLOAT4 color;
 	};
 
 	//定数バッファ用データ構造体B1
@@ -63,6 +64,9 @@ public://一回しか読んじゃいけないやつら
 	//ベクトルによるカメラの移動
 	static void CameraMoveVector(XMFLOAT3 velocity);
 
+	//カメラの移動(ターゲット変更なし)
+	static void CameraRotVector(XMFLOAT3 rotation);
+
 private://一回しか読んじゃいけないやつらpart2
 
 	//デスクリプタヒープの初期化
@@ -97,10 +101,21 @@ public://関数
 		this->position = position;
 	}
 
+	void SetColor(XMFLOAT4 color)
+	{
+		this->color = color;
+	}
+
 	//座標の取得
 	const XMFLOAT3& GetPosition()
 	{
 		return position;
+	}
+
+	//半径取得
+	const float& GetRadius()
+	{
+		return radius;
 	}
 
 private://一度しか呼ばないメンバ変数
@@ -140,6 +155,9 @@ private://メンバ変数
 	XMFLOAT3 rotation = { 0,0,0 };//X,Y,Z軸回りのローカル回転角
 	XMFLOAT3 position = { 0,0,0 };//ローカル座標
 	XMMATRIX matWorld;            //ローカルワールド変換行列
+
+	//半径
+	float radius = 1.7f;
 
 };
 

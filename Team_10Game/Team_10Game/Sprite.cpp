@@ -258,6 +258,11 @@ void Sprite::StaticInitialize(ID3D12Device* device, int window_width, int window
 
 void Sprite::LoadTexture(UINT texNumber, const wchar_t * fileName)
 {
+	if (device == nullptr)
+	{
+		assert("デバイス内");
+	}
+
 	HRESULT result = S_FALSE;
 
 #pragma region テクスチャの読み込み

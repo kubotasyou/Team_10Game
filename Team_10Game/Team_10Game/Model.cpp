@@ -128,6 +128,8 @@ void Model::CreateModel(const std::string & path)
 		//先頭文字列が'f'ならポリゴン(三角形)
 		if (key == "f")
 		{
+			int faceIndexCount = 0;
+
 			//半角スペースで区切って、行の続きを読み込む
 			string index_string;
 
@@ -157,7 +159,20 @@ void Model::CreateModel(const std::string & path)
 				//頂点インデックスに追加
 				//.objファイルでは、インデックスが1始まりなので
 				//-1して、0スタートに合わせるようにする。
-				indices.emplace_back(indices.size());
+				
+
+				//一行の読み込み数が3より多かったら
+				if (faceIndexCount >= 3)
+				{
+					indices.emplace_back(indices.size() - 1);
+					indices.emplace_back(indices.size() - 1);
+					indices.emplace_back(indices.size() - 5);
+				}
+				else
+				{
+					indices.emplace_back(indices.size());
+				}
+				faceIndexCount++;
 			}
 		}
 	}

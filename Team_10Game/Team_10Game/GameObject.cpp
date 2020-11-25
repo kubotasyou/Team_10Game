@@ -20,7 +20,7 @@ ComPtr<ID3D12PipelineState> GameObject::pipelinestate;
 ComPtr<ID3D12DescriptorHeap> GameObject::descHeap;
 XMMATRIX GameObject::matView{};
 XMMATRIX GameObject::matProjection{};
-XMFLOAT3 GameObject::eye = { 0, 5, -50.0f };
+XMFLOAT3 GameObject::eye = { 0, 6, -5.0f };
 XMFLOAT3 GameObject::target = { 0, 0, 0 };
 XMFLOAT3 GameObject::up = { 0, 1, 0 };
 
@@ -73,19 +73,8 @@ GameObject * GameObject::Create()
 {
 	// 3Dオブジェクトのインスタンスを生成
 	GameObject* object = new GameObject();
-	if (object == nullptr)
-	{
-		assert("オブジェクトが生成できませんでした");
-	}
 
 	object->Initialize();
-
-	//// 初期化
-	//if (!object->Initialize()) 
-	//{
-	//	delete object;
-	//	assert("オブジェクトを初期化できませんでした。自動的に削除されます。");
-	//}
 
 	return object;
 }
@@ -119,6 +108,17 @@ void GameObject::CameraMoveVector(XMFLOAT3 velocity)
 
 	SetEye(eye_moved);
 	SetTarget(target_moved);
+}
+
+void GameObject::CameraRotVector(XMFLOAT3 rotation)
+{
+	XMFLOAT3 eyeRot = GetEye();
+
+	eyeRot.x += rotation.x;
+	eyeRot.y += rotation.y;
+	eyeRot.z += rotation.z;
+
+	SetEye(eyeRot);
 }
 
 void GameObject::InitializeDescriptorHeap()
@@ -355,16 +355,11 @@ void GameObject::Update()
 	matWorld *= matRot; // ワールド行列に回転を反映
 	matWorld *= matTrans; // ワールド行列に平行移動を反映
 
-	//// 親オブジェクトがあれば
-	//if (parent != nullptr) {
-	//	// 親オブジェクトのワールド行列を掛ける
-	//	matWorld *= parent->matWorld;
-	//}
-
 	// 定数バッファB0へデータ転送
 	ConstBufferDataB0* constMap0 = nullptr;
 	result = constBuffB0->Map(0, nullptr, (void**)&constMap0);
 	constMap0->mat = matWorld * matView * matProjection;	// 行列の合成
+	constMap0->color = color;
 	constBuffB0->Unmap(0, nullptr);
 
 	// 定数バッファB1へデータ転送
