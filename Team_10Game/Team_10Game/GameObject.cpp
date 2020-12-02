@@ -20,7 +20,7 @@ ComPtr<ID3D12PipelineState> GameObject::pipelinestate;
 ComPtr<ID3D12DescriptorHeap> GameObject::descHeap;
 XMMATRIX GameObject::matView{};
 XMMATRIX GameObject::matProjection{};
-XMFLOAT3 GameObject::eye = { 0, 6, -5.0f };
+XMFLOAT3 GameObject::eye = { 0, 5, -5.0f };
 XMFLOAT3 GameObject::target = { 0, 0, 0 };
 XMFLOAT3 GameObject::up = { 0, 1, 0 };
 

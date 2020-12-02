@@ -5,10 +5,7 @@
 #include "Object3D.h"
 #include "GameObject.h"
 #include "Model.h"
-#include "DebugText.h"
-
 #include "CountDownTimer.h"
-
 #include "Sound.h"
 
 class GamePlay
@@ -34,8 +31,6 @@ private:
 
 	DirectXManager* dxManager = nullptr;
 	Input* input = nullptr;
-
-	DebugText debugText;
 
 	Sprite* sprite = nullptr;
 	GameObject* obj = nullptr;

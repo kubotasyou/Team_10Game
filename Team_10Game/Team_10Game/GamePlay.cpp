@@ -30,43 +30,54 @@ void GamePlay::Initialize(DirectXManager * dxManager, Input * input)
 	this->dxManager = dxManager;
 	this->input = input;
 
-	Sprite::LoadTexture(0, L"Resources/Texture/debugfont.png");
-	debugText.Initialize(0);
-
 	////テクスチャ読み込み
 	//Sprite::LoadTexture(2, L"Resources/Texture/kirby.png");
 	////オブジェクト生成
 	//sprite = Sprite::Create(2, { -1.0f,0.0f });
 
+
+	//readme : 1サウンドクラスを使いやすいようにする。
+	//readme : レイの当たり判定は使えそうだから作っておく。
+	//readme : 4頂点オブジェクトの描画をする
 	//readme : カメラを分離させる。
 	//readme : シーン遷移ちゃんとしたやつ
 	//readme : プレイヤー→キャラクター管理クラス→エネミー
 
 
 
-    mod = new Model(dxManager->GetDevice());
-    mod->CreateModel("ground");
-    obj = GameObject::Create();
-    obj->SetModel(mod);
+	mod = new Model(dxManager->GetDevice());
+	mod->CreateModel("ground");
+	obj = GameObject::Create();
+	obj->SetModel(mod);
 
 	gNormal = XMFLOAT3(0, 1, 0);
+
 
 	charaModel = new Model(dxManager->GetDevice());
 	charaModel->CreateModel("sphere2");
 	chara = GameObject::Create();
 	chara->SetModel(charaModel);
-	chara->SetPosition(XMFLOAT3(-2,5,0));
+	chara->SetPosition(XMFLOAT3(0, 5, 0));
 
 	charaModel2 = new Model(dxManager->GetDevice());
 	charaModel2->CreateModel("sphere2");
 	chara2 = GameObject::Create();
 	chara2->SetModel(charaModel);
-	chara2->SetPosition(XMFLOAT3(2, 5, 0));
+	chara2->SetPosition(XMFLOAT3(2.f, 5, 0));
 
 	downTimer = new CountDownTimer();
 	downTimer->SetTime(5.0f);
+
 	sound = new Sound();
-	sound->Play("Resources/Sound/Alarm01.wav");
+	//sound->Play("Resources/Sound/Alarm01.wav");
+	//sound->LoadSound("Alarm01");
+	//sound->Play("Alarm01",0.1f);
+
+	//sound->LoadSound("3MinutesCooking");
+	//sound->Play("3MinutesCooking",0.1f);
+
+	sound->LoadSound("GodisSaying");
+	//sound->PlayLoop("GodisSaying", 0.1f);
 }
 
 void GamePlay::Update()
@@ -103,19 +114,19 @@ void GamePlay::Update()
 
 		if (input->GetKeyDown(KeyCode::RIGHT))
 		{
-			position.x += 0.1f;
+			position.x += 0.05f;
 		}
 		else if (input->GetKeyDown(KeyCode::LEFT))
 		{
-			position.x -= 0.1f;
+			position.x -= 0.05f;
 		}
 		else if (input->GetKeyDown(KeyCode::UP))
 		{
-			position.y += 0.1f;
+			position.y += 0.05f;
 		}
 		else if (input->GetKeyDown(KeyCode::DOWN))
 		{
-			position.y -= 0.1f;
+			position.y -= 0.05f;
 
 		}
 
@@ -152,9 +163,15 @@ void GamePlay::Update()
 
 #pragma endregion
 
+
 	if (!hit && !hit2)
 	{
 		chara->SetColor(XMFLOAT4(1, 1, 1, 1));
+	}
+
+	if (input->GetKeyTrigger(KeyCode::Z))
+	{
+		sound->Play("Alarm01", 0.1f);
 	}
 
 #pragma region 時間になったら系
@@ -162,7 +179,7 @@ void GamePlay::Update()
 	//時間になったらモデルチェンジ
 	if (downTimer->IsTime())
 	{
-		//chara2->SetModel(mod);
+		//sound->Play("Alarm01");
 	}
 
 #pragma endregion
@@ -186,6 +203,4 @@ void GamePlay::Draw()
 	chara->Draw();
 	chara2->Draw();
 	GameObject::EndDraw();
-
-	debugText.DrawAll(dxManager->GetcmdList());
 }

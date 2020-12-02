@@ -5,52 +5,9 @@
 //xaudioのインクルード
 #include <xaudio2.h>
 
+#include <unordered_map>
+
 using namespace Microsoft::WRL;
-
-class XAudio2VoiceCallback : public IXAudio2VoiceCallback
-{
-public:
-	////ボイス処理パスの開始
-	//void OnVoiceProcessingPassStart(UINT32 byteRequired) {};
-	////ボイス処理パスの終了時
-	//void OnVoiceProcessingPassEnd() {};
-	////バッファストリームの再生が終了したとき
-	//void OnStreamEnd() {};
-	////バッファの使用開始時
-	//void OnBufferStart(void* pBufferContext) {};
-	////バッファの末尾に到達したとき
-	//void OnBufferEnd(void* pBufferContext)
-	//{
-	//	//バッファを解放する
-	//	delete[] pBufferContext;
-	//}
-	////再生がループ位置に達したとき
-	//void OnLoopEnd(void* pBufferContext) {};
-	////ボイスrの実行エラー時
-	//void OnvoiceError(void* pBufferContext, HRESULT error) {};
-
-	//ボイス処理パスの開始
-	STDMETHOD_(void, OnVoiceProcessingPassStart)(THIS_ UINT32 BytesRequired) {};
-	//ボイス処理パスの終了時
-	STDMETHOD_(void, OnVoiceProcessingPassEnd)(THIS) {};
-
-	//バッファストリームの再生が終了したとき
-	STDMETHOD_(void, OnStreamEnd)(THIS) {};
-	//バッファの使用開始時
-	STDMETHOD_(void, OnBufferStart)(THIS_ void* pBufferContext) {};
-	//バッファの末尾に到達したとき
-	STDMETHOD_(void, OnBufferEnd)(THIS_ void* pBufferContext)
-	{
-		//バッファを解放する
-		delete[] pBufferContext;
-	}
-
-	//再生がループ位置に達したとき
-	STDMETHOD_(void, OnLoopEnd)(THIS_ void* pBufferContext) {};
-
-	//ボイスrの実行エラー時
-	STDMETHOD_(void, OnVoiceError)(THIS_ void* pBufferContext, HRESULT error) {};
-};
 
 class Sound
 {
@@ -78,19 +35,42 @@ public:
 		WAVEFORMAT format;//波形フォーマット
 	};
 
+	//1音声につき1つ必要なデータ
+	struct WaveData
+	{
+		RIFFHeader riffHeader;
+		FormatChunk format;
+		Chunk data;
+		char* pBuffer = nullptr;
+	};
+
 public:
 	Sound();
 	~Sound();
 
-	void Play(const char* filename);
+	void LoadSound(const std::string& filename);
+
+	//再生(ファイル名・音量(通常は1.0))
+	void Play(const std::string& filename, float volume = 1.0f);
+
+	//ループ再生(ファイル名)
+	void PlayLoop(const std::string& filename, float volume = 1.0f);
 
 private:
 	void Initialize();
 
 private:
-	IXAudio2 *audio;
+	//Xaudio2生成
+	IXAudio2 *audio;                    
+	//MasteringVoice生成
 	IXAudio2MasteringVoice* masterVoice;
-	//インスタンス
-	XAudio2VoiceCallback voiceCallback;
+
+	//読み込んだ音データ
+	std::unordered_map<std::string, WaveData> soundList;
+
+	//再生する音声
+	std::vector<IXAudio2SourceVoice*> sourceData;
+
+	bool isPlay;
 };
 

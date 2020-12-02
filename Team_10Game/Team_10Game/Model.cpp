@@ -56,6 +56,8 @@ void Model::CreateModel(const std::string & path)
 	//一行ずつ読み取る
 	string line;
 
+	int IndexCountTex = 0;
+
 #pragma region ファイルの読み込み
 
 	while (std::getline(file, line))
@@ -164,14 +166,15 @@ void Model::CreateModel(const std::string & path)
 				//一行の読み込み数が3より多かったら
 				if (faceIndexCount >= 3)
 				{
-					indices.emplace_back(indices.size() - 1);
-					indices.emplace_back(indices.size() - 1);
-					indices.emplace_back(indices.size() - 5);
+					indices.emplace_back(IndexCountTex - 1);
+					indices.emplace_back(IndexCountTex);
+					indices.emplace_back(IndexCountTex - 3);
 				}
 				else
 				{
-					indices.emplace_back(indices.size());
+					indices.emplace_back(IndexCountTex);
 				}
+				IndexCountTex++;
 				faceIndexCount++;
 			}
 		}

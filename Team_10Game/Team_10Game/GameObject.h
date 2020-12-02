@@ -157,7 +157,7 @@ private://メンバ変数
 	XMMATRIX matWorld;            //ローカルワールド変換行列
 
 	//半径
-	float radius = 1.7f;
+	float radius = 1.0f;
 
 };
 
