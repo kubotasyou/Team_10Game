@@ -1,6 +1,6 @@
 #include "Collision.h"
 
-bool Collision::CircleToCircle(XMFLOAT3 centerPosA, int radiusA, XMFLOAT3 centerPosB, int radiusB)
+bool Collision::CircleToCircle(XMFLOAT3 centerPosA, float radiusA, XMFLOAT3 centerPosB, float radiusB)
 {
 	//auto x = abs((centerPosA.x + radiusA) - (centerPosB.x + radiusB));
 	//auto y = abs((centerPosA.y + radiusA) - (centerPosB.y + radiusB));

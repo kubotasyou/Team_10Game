@@ -71,6 +71,6 @@ private:
 	//Ä¶‚·‚é‰¹º
 	std::vector<IXAudio2SourceVoice*> sourceData;
 
-	bool isPlay;
+	bool isPlay = false;
 };
 

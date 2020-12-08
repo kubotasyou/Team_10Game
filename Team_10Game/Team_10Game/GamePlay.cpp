@@ -69,8 +69,7 @@ void GamePlay::Initialize(DirectXManager * dxManager, Input * input)
 	downTimer->SetTime(5.0f);
 
 	sound = new Sound();
-	//sound->Play("Resources/Sound/Alarm01.wav");
-	//sound->LoadSound("Alarm01");
+	sound->LoadSound("Alarm01");
 	//sound->Play("Alarm01",0.1f);
 
 	//sound->LoadSound("3MinutesCooking");
@@ -170,6 +169,10 @@ void GamePlay::Update()
 	}
 
 	if (input->GetKeyTrigger(KeyCode::Z))
+	{
+		sound->Play("GodisSaying", 0.1f);
+	}
+	if (input->GetJoyPadRelease(JoyPad::A))
 	{
 		sound->Play("Alarm01", 0.1f);
 	}

@@ -110,24 +110,38 @@ void Sound::Play(const std::string& filename, float volume)
 	audioBuff.pContext = test.pBuffer;
 	audioBuff.Flags = XAUDIO2_END_OF_STREAM;
 	audioBuff.AudioBytes = test.data.size;
+
+	//始まる場所を指定できる。
 	audioBuff.PlayBegin = 128 * 5;
-	//audioBuff.LoopCount = XAUDIO2_LOOP_INFINITE;
 
 	//ソースボイスにデータを送信
 	result = source->SubmitSourceBuffer(&audioBuff);
 
-	//if (isPlay) return;
-
 	//音量調節(通常は1.0)
 	result = source->SetVolume(volume);
 
+	//XAUDIO2_VOICE_STATE state;
+	//source->GetState(&state);
+
+	////再生中なら1が入る。
+	//UINT tester = state.BuffersQueued;
+
+	////再生が終わったら1or0が返るみたいな
+	//if (state.BuffersQueued <= 0)
+	//{
+	//	//再生が終わっている
+	//	isPlay = true;
+	//	UINT tester = state.BuffersQueued;
+
+	//}
+	//else
+	//{
+	//	//再生している
+	//	isPlay = false;
+	//}
+
 	//波形データの再生
 	result = source->Start();
-
-	//if SUCCEEDED(result)
-	//{
-	//	isPlay = true;
-	//}
 
 	sourceData.emplace_back(source);
 }
