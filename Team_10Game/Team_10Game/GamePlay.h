@@ -42,6 +42,9 @@ private:
 	GameObject * chara2 = nullptr;
 	Model * charaModel2 = nullptr;
 
+	GameObject * bullet[100];
+	Model * charaModel3 = nullptr;
+
 
 	XMFLOAT3 gNormal;
 

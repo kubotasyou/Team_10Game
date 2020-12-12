@@ -13,7 +13,11 @@ GamePlay::GamePlay()
 {
 
 }
-
+const int ObjectSize = 10;
+Object3D Transform[ObjectSize];
+float posx = 0;
+float posy = 0;
+float posz = 0;
 GamePlay::~GamePlay()
 {
 	safe_delete(sprite);
@@ -23,6 +27,7 @@ GamePlay::~GamePlay()
 	safe_delete(chara);
 	safe_delete(charaModel2);
 	safe_delete(chara2);
+	safe_delete(bullet[ObjectSize]);
 }
 
 void GamePlay::Initialize(DirectXManager * dxManager, Input * input)
@@ -62,9 +67,17 @@ void GamePlay::Initialize(DirectXManager * dxManager, Input * input)
 	charaModel2 = new Model(dxManager->GetDevice());
 	charaModel2->CreateModel("sphere2");
 	chara2 = GameObject::Create();
-	chara2->SetModel(charaModel);
+	chara2->SetModel(charaModel2);
 	chara2->SetPosition(XMFLOAT3(2.f, 5, 0));
 
+	charaModel3 = new Model(dxManager->GetDevice());
+	charaModel3->CreateModel("sphere2");
+	for (int i = 0; i < ObjectSize; i++)
+	{
+		bullet[i] = GameObject::Create();
+		bullet[i]->SetModel(charaModel3);
+		posz = 1000;
+	}
 	downTimer = new CountDownTimer();
 	downTimer->SetTime(5.0f);
 
@@ -81,6 +94,7 @@ void GamePlay::Initialize(DirectXManager * dxManager, Input * input)
 
 void GamePlay::Update()
 {
+
 #pragma region カメラの移動
 
 	if (input->GetKeyDown(KeyCode::A))
@@ -103,13 +117,13 @@ void GamePlay::Update()
 #pragma endregion
 
 #pragma region オブジェクトの移動
-
+	XMFLOAT3 position = chara->GetPosition();
 	if (input->GetKeyDown(KeyCode::RIGHT) ||
 		input->GetKeyDown(KeyCode::LEFT) ||
 		input->GetKeyDown(KeyCode::UP) ||
 		input->GetKeyDown(KeyCode::DOWN))
 	{
-		XMFLOAT3 position = chara->GetPosition();
+		
 
 		if (input->GetKeyDown(KeyCode::RIGHT))
 		{
@@ -135,6 +149,28 @@ void GamePlay::Update()
 #pragma endregion
 
 	//ReadMe : プレイヤーにカメラを追従させたい
+
+#pragma region 弾関連
+
+	for (int i = 0; i < ObjectSize; i++)
+	{
+		bullet[i]->SetPosition(XMFLOAT3(posx, posy, posz));
+	}
+	if (input->GetKeyTrigger(KeyCode::X))
+	{
+
+		for (int i = 0; i < ObjectSize; i++)
+		{		
+			posx = position.x;
+			posy = position.y;
+			posz = position.z;
+			bullet[i] = GameObject::Create();
+			bullet[i]->SetModel(charaModel3);	
+			break;
+		}
+	}
+	posz++;
+#pragma endregion
 
 #pragma region 球と地面
 
@@ -163,6 +199,7 @@ void GamePlay::Update()
 #pragma endregion
 
 
+
 	if (!hit && !hit2)
 	{
 		chara->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -182,7 +219,7 @@ void GamePlay::Update()
 	//時間になったらモデルチェンジ
 	if (downTimer->IsTime())
 	{
-		//sound->Play("Alarm01");
+		/*sound->Play("Alarm01");*/
 	}
 
 #pragma endregion
@@ -192,6 +229,11 @@ void GamePlay::Update()
 	obj->Update();
 	chara->Update();
 	chara2->Update();
+
+	for (int i = 0; i < ObjectSize; i++)
+	{
+		bullet[i]->Update();
+	}
 	downTimer->Update();
 }
 
@@ -205,5 +247,10 @@ void GamePlay::Draw()
 	obj->Draw();
 	chara->Draw();
 	chara2->Draw();
+
+	for (int i = 0; i < ObjectSize; i++)
+	{
+	    bullet[i]->Draw();
+    }
 	GameObject::EndDraw();
 }
