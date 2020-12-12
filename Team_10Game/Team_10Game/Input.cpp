@@ -3,6 +3,8 @@
 #pragma comment(lib, "dinput8.lib")
 #pragma comment(lib, "dxguid.lib")
 
+using namespace std;
+
 //デバイス発見時に実行される関数(デバイスの情報・EnumDevicesで渡した値)
 BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE* pdidInstance, VOID* pContext);
 
@@ -64,6 +66,13 @@ void Input::Initialize(HINSTANCE hInstance, HWND hwnd)
 		DIEDFL_ATTACHEDONLY//現在接続されているジョイスティック
 	);
 
+	connectPad = false;
+
+	//接続されていない
+	if (joypadDevice == nullptr) return;
+
+	connectPad = true;
+
 	//データの形式セット
 	result = joypadDevice->SetDataFormat(&c_dfDIJoystick);
 
@@ -117,6 +126,8 @@ void Input::Update()
 	//キーの入力
 	result = keybordDevice->GetDeviceState(sizeof(key), key);
 
+	//接続されていなかったら
+	if (!connectPad) return;
 
 	memcpy(joyPre, joyState.rgbButtons, sizeof(joyState.rgbButtons));
 
@@ -124,9 +135,14 @@ void Input::Update()
 	result = joypadDevice->GetDeviceState(sizeof(DIJOYSTATE), &joyState);
 	if FAILED(result)
 	{
-		//失敗したらココ
+		//if FAILED(joypadDevice->Acquire())
+		//{
+		//	while (result == DIERR_INPUTLOST)
+		//	{
+		//		result = joypadDevice->Acquire();
+		//	}
+		//}
 	}
-
 }
 
 bool Input::GetKeyDown(KeyCode keyNum)
@@ -188,6 +204,73 @@ bool Input::GetJoyPadRelease(JoyPad padnum)
 	return false;
 }
 
+float Input::GetStick(const std::string & str)
+{
+	string chara = str;
+	float result = 0.0f;
+
+	//横操作
+	if (chara == "Vertices")
+	{
+		//接続されていたら
+		if (connectPad)
+		{
+			//左に傾いていたら
+			if (joyState.lX < 0)
+			{
+				result = -1.0f;
+			}
+			//右に傾いていたら
+			else if (joyState.lX > 0)
+			{
+				result = +1.0f;
+			}
+		}
+		else
+		{
+			if (this->GetKeyDown(KeyCode::RIGHT))
+			{
+				result = +1.0f;
+			}
+			else if (this->GetKeyDown(KeyCode::LEFT))
+			{
+				result = -1.0f;
+			}
+		}
+	}
+	//縦操作
+	if (chara == "Horizontal")
+	{
+		//接続されていたら
+		if (connectPad)
+		{
+			//上に傾いていたら
+			if (joyState.lY < 0)
+			{
+				result = +1.0f;
+			}
+			//下に傾いていたら
+			else if (joyState.lY > 0)
+			{
+				result = -1.0f;
+			}
+		}
+		else
+		{
+			if (this->GetKeyDown(KeyCode::UP))
+			{
+				result = +1.0f;
+			}
+			else if (this->GetKeyDown(KeyCode::DOWN))
+			{
+				result = -1.0f;
+			}
+		}
+	}
+
+	return result;
+}
+
 //デバイス発見時に実行される関数(デバイスの情報・EnumDevicesで渡した値)
 BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE* pdidInstance, VOID* pContext)
 {
@@ -228,6 +311,12 @@ BOOL CALLBACK EnumAxesCallback(const DIDEVICEOBJECTINSTANCE* pdidoi, VOID* pCont
 	if FAILED(result)
 	{
 		return DIENUM_STOP;
+	}
+
+	DWORD *pdwNumForceFeedbackAxis = (DWORD*)pContext;
+	if ((pdidoi->dwFlags & DIDOI_FFACTUATOR) != 0)
+	{
+		(*pdwNumForceFeedbackAxis)++;
 	}
 
 	return DIENUM_CONTINUE;

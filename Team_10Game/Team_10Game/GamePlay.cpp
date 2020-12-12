@@ -17,12 +17,13 @@ GamePlay::GamePlay()
 GamePlay::~GamePlay()
 {
 	safe_delete(sprite);
-	safe_delete(mod);
-	safe_delete(obj);
+	safe_delete(groundModel);
+	safe_delete(ground);
 	safe_delete(charaModel);
 	safe_delete(chara);
 	safe_delete(charaModel2);
 	safe_delete(chara2);
+	safe_delete(player);
 }
 
 void GamePlay::Initialize(DirectXManager * dxManager, Input * input)
@@ -38,17 +39,16 @@ void GamePlay::Initialize(DirectXManager * dxManager, Input * input)
 
 	//readme : 1サウンドクラスを使いやすいようにする。
 	//readme : レイの当たり判定は使えそうだから作っておく。
-	//readme : 4頂点オブジェクトの描画をする
 	//readme : カメラを分離させる。
 	//readme : シーン遷移ちゃんとしたやつ
 	//readme : プレイヤー→キャラクター管理クラス→エネミー
 
 
 
-	mod = new Model(dxManager->GetDevice());
-	mod->CreateModel("ground");
-	obj = GameObject::Create();
-	obj->SetModel(mod);
+	groundModel = new Model(dxManager->GetDevice());
+	groundModel->CreateModel("ground");
+	ground = GameObject::Create();
+	ground->SetModel(groundModel);
 
 	gNormal = XMFLOAT3(0, 1, 0);
 
@@ -77,6 +77,10 @@ void GamePlay::Initialize(DirectXManager * dxManager, Input * input)
 
 	sound->LoadSound("GodisSaying");
 	//sound->PlayLoop("GodisSaying", 0.1f);
+
+
+	player = new Player(dxManager, input);
+	player->Initialize();
 }
 
 void GamePlay::Update()
@@ -102,50 +106,20 @@ void GamePlay::Update()
 
 #pragma endregion
 
-#pragma region オブジェクトの移動
-
-	if (input->GetKeyDown(KeyCode::RIGHT) ||
-		input->GetKeyDown(KeyCode::LEFT) ||
-		input->GetKeyDown(KeyCode::UP) ||
-		input->GetKeyDown(KeyCode::DOWN))
-	{
-		XMFLOAT3 position = chara->GetPosition();
-
-		if (input->GetKeyDown(KeyCode::RIGHT))
-		{
-			position.x += 0.05f;
-		}
-		else if (input->GetKeyDown(KeyCode::LEFT))
-		{
-			position.x -= 0.05f;
-		}
-		else if (input->GetKeyDown(KeyCode::UP))
-		{
-			position.y += 0.05f;
-		}
-		else if (input->GetKeyDown(KeyCode::DOWN))
-		{
-			position.y -= 0.05f;
-
-		}
-
-		chara->SetPosition(position);
-	}
-
-#pragma endregion
-
 	//ReadMe : プレイヤーにカメラを追従させたい
 
-#pragma region 球と地面
+#pragma region プレイヤーと地面
 
-	//球と地面
-	bool hit = Collision::CheckSphereToPanel(chara->GetPosition(), chara->GetRadius(), gNormal, 0.0f);
+	//プレイヤーと地面
+	bool isGround = Collision::CheckSphereToPanel(player->GetColliderPos(), player->GetColliderRadius() , gNormal, 0.0f);
 
-	if (hit)
-	{
-		//ReadMe : ここに当たった時のd処理を書く
-		chara->SetColor(XMFLOAT4(1, 0, 0, 1));
-	}
+	/*if (isGround)
+	{*/
+		//ReadMe : ここに当たった時の処理を書く
+
+		//プレイヤーに当たった判定を返す
+		player->SetisGround(isGround);
+	//}
 
 #pragma endregion
 
@@ -163,7 +137,7 @@ void GamePlay::Update()
 #pragma endregion
 
 
-	if (!hit && !hit2)
+	if (!isGround && !hit2)
 	{
 		chara->SetColor(XMFLOAT4(1, 1, 1, 1));
 	}
@@ -189,9 +163,10 @@ void GamePlay::Update()
 
 	chara->SetTarget(chara->GetPosition());
 
-	obj->Update();
-	chara->Update();
-	chara2->Update();
+	player->Update();
+	ground->Update();
+	//chara->Update();
+	//chara2->Update();
 	downTimer->Update();
 }
 
@@ -202,8 +177,9 @@ void GamePlay::Draw()
 	Sprite::EndDraw();
 
 	GameObject::BeginDraw(dxManager->GetcmdList());
-	obj->Draw();
-	chara->Draw();
-	chara2->Draw();
+	ground->Draw();
+	//chara->Draw();
+	//chara2->Draw();
+	player->Draw();
 	GameObject::EndDraw();
 }
