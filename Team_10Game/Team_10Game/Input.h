@@ -1,15 +1,10 @@
 #pragma once
-
 #include <Windows.h>
 #include <wrl.h>
-
-// DirectInputのバージョン指定
-#define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
+#include <string> 
 
-using namespace Microsoft::WRL;
-
-//
+#define DIRECTINPUT_VERSION 0x0800 // DirectInputのバージョン指定
 
 enum class KeyCode
 {
@@ -44,7 +39,11 @@ enum class JoyPad
 	Start,
 	LT = 10,
 	RT = 11,
+
+	Right = -1000,
 };
+
+using namespace Microsoft::WRL;
 
 class Input
 {
@@ -73,6 +72,8 @@ public:
 	bool GetJoyPadTrigger(JoyPad padNum);
 	//ボタンを離した瞬間
 	bool GetJoyPadRelease(JoyPad padNum);
+	//左スティック操作(Vertices・Horizontal)
+	float GetStick(const std::string& str);
 
 
 
@@ -89,9 +90,11 @@ private:
 	//ComPtr<IDirectInputDevice8> joypadDevice;
 	DIDEVCAPS            diDevCaps;//DIDEVCAPS構造体
 
-
+	//パッドの入力情報
 	DIJOYSTATE joyState;
-
+	//前フレームのボタンの情報
 	BYTE joyPre[32] = {};
+	//パッドが接続されているか
+	bool connectPad = false;
 };
 

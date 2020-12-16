@@ -46,7 +46,7 @@ void Model::CreateModel(const std::string & path)
 	if (file.fail())
 	{
 		//警告を出すやつ
-		assert(0);
+		assert(0 && "ファイルがねぇ");
 	}
 
 	vector<XMFLOAT3> positions;//頂点座標

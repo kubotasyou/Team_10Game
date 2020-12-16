@@ -101,15 +101,28 @@ public://ŠÖ”
 		this->position = position;
 	}
 
+	//F‚Ìİ’è
 	void SetColor(XMFLOAT4 color)
 	{
 		this->color = color;
+	}
+
+	//‘å‚«‚³‚Ìİ’è
+	void SetScale(XMFLOAT3 scale)
+	{
+		this->scale = scale;
 	}
 
 	//À•W‚Ìæ“¾
 	const XMFLOAT3& GetPosition()
 	{
 		return position;
+	}
+
+	//”¼Œa‚Ìİ’è
+	void SetRadius(float radius)
+	{
+		this->radius = radius;
 	}
 
 	//”¼Œaæ“¾

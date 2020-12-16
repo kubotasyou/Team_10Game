@@ -8,6 +8,8 @@
 #include "CountDownTimer.h"
 #include "Sound.h"
 
+#include "Player.h"
+
 class GamePlay
 {
 public:
@@ -35,6 +37,8 @@ private:
 	Sprite* sprite = nullptr;
 	GameObject* obj = nullptr;
 	Model* mod = nullptr;
+	GameObject* ground = nullptr;
+	Model* groundModel = nullptr;
 	
 	GameObject * chara = nullptr;
 	Model * charaModel = nullptr;
@@ -51,5 +55,7 @@ private:
 	CountDownTimer* downTimer;
 
 	Sound* sound = nullptr;
+
+	Player* player = nullptr;
 };
 
