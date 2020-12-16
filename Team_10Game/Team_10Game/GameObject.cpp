@@ -6,6 +6,8 @@
 #include <string> //文字列
 #include <vector> //頂点データまとめ
 
+#include <experimental/filesystem>
+
 #pragma comment(lib, "d3dcompiler.lib")
 
 using namespace std;
@@ -169,14 +171,7 @@ void GameObject::InitializeGraphicsPipeline()
 	ComPtr<ID3DBlob> errorBlob; // エラーオブジェクト
 
 	// 頂点シェーダの読み込みとコンパイル
-	result = D3DCompileFromFile(
-		L"ObjectVertexShader.hlsl",	// シェーダファイル名
-		nullptr,
-		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
-		"main", "vs_5_0",	// エントリーポイント名、シェーダーモデル指定
-		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
-		0,
-		&vsBlob, &errorBlob);
+	result = CompileShaderFromFileVS(L"ObjectVertexShader.hlsl", vsBlob, errorBlob);
 	if (FAILED(result)) {
 		// errorBlobからエラー内容をstring型にコピー
 		std::string errstr;
@@ -192,14 +187,7 @@ void GameObject::InitializeGraphicsPipeline()
 	}
 
 	// ピクセルシェーダの読み込みとコンパイル
-	result = D3DCompileFromFile(
-		L"ObjectPixelShader.hlsl",	// シェーダファイル名
-		nullptr,
-		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
-		"main", "ps_5_0",	// エントリーポイント名、シェーダーモデル指定
-		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
-		0,
-		&psBlob, &errorBlob);
+	result = CompileShaderFromFilePS(L"ObjectPixelShader.hlsl", psBlob, errorBlob);
 	if (FAILED(result)) {
 		// errorBlobからエラー内容をstring型にコピー
 		std::string errstr;
@@ -388,4 +376,68 @@ void GameObject::Draw()
 void GameObject::SetModel(Model * _model)
 {
 	model = _model;
+}
+
+HRESULT CompileShaderFromFileVS(const std::wstring & filename, Microsoft::WRL::ComPtr<ID3DBlob>& shaderBlob, Microsoft::WRL::ComPtr<ID3DBlob>& errorBlob)
+{
+	using namespace std::experimental::filesystem;
+	path filePath(filename);
+	std::ifstream infile(filePath, std::ifstream::binary);
+	std::vector<char> srcData;
+	if (!infile) throw std::runtime_error("shader not found");
+	srcData.resize(uint32_t(infile.seekg(0, infile.end).tellg()));
+	infile.seekg(0, infile.beg).read(srcData.data(), srcData.size());
+
+	HRESULT result;
+
+	LPCWSTR compilerFlags[] = {
+		#if _DEBUG
+	L"/Zi", L"/O0",
+#else
+	L"/O2" //リリースビルドでは最適化
+#endif
+	};
+	result = D3DCompileFromFile(
+		filePath.wstring().c_str(),//シェーダーファイル名
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE,//インクルード可能にする
+		"main", "vs_5_0",//エントリーポイント名、シェーダーモデル指定
+		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,//デバッグ用指定
+		0,
+		&shaderBlob, &errorBlob
+	);
+
+	return result;
+}
+
+HRESULT CompileShaderFromFilePS(const std::wstring & filename, Microsoft::WRL::ComPtr<ID3DBlob>& shaderBlob, Microsoft::WRL::ComPtr<ID3DBlob>& errorBlob)
+{
+	using namespace std::experimental::filesystem;
+	path filePath(filename);
+	std::ifstream infile(filePath, std::ifstream::binary);
+	std::vector<char> srcData;
+	if (!infile) throw std::runtime_error("shader not found");
+	srcData.resize(uint32_t(infile.seekg(0, infile.end).tellg()));
+	infile.seekg(0, infile.beg).read(srcData.data(), srcData.size());
+
+	HRESULT result;
+
+	LPCWSTR compilerFlags[] = {
+		#if _DEBUG
+	L"/Zi", L"/O0",
+#else
+	L"/O2" //リリースビルドでは最適化
+#endif
+	};
+	result = D3DCompileFromFile(
+		filePath.wstring().c_str(),//シェーダーファイル名
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE,//インクルード可能にする
+		"main", "ps_5_0",//エントリーポイント名、シェーダーモデル指定
+		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,//デバッグ用指定
+		0,
+		&shaderBlob, &errorBlob
+	);
+
+	return result;
 }
