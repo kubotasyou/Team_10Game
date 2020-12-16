@@ -1,20 +1,19 @@
 #pragma once
 
-typedef enum
+//各シーンの名前
+enum SceneType
 {
-	IScene_Title,
-	IScene_GamePlay,
-	IScene_Ending,
-	IScene_None,
-}IScene;
-
-//シーンを変更するためのインタフェースクラス
-class ISceneChanger
-{
-public:
-	virtual ~ISceneChanger() = 0;
-
-	//指定したシーンに変更する
-	virtual void ChangeScene(IScene nextScene) = 0;
+	SceneTitle,
+	SceneEnding,
+	SceneNone
 };
 
+//シーンを変更するためのインターフェース
+class ISceneChanger
+{
+public://virtualを付けたら、継承先でオーバーライドすることができる!
+
+	//シーン変更
+	virtual void ChangeScene(SceneType nextScene) = 0;
+
+};

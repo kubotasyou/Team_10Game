@@ -142,6 +142,7 @@ void Sound::Play(const std::string& filename, float volume)
 
 	//波形データの再生
 	result = source->Start();
+	result = source->Stop();
 
 	sourceData.emplace_back(source);
 }

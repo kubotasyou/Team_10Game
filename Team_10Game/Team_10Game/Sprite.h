@@ -99,6 +99,9 @@ public://メンバ関数
 	//サイズ設定(大きさ)
 	void SetScale(XMFLOAT2 size);
 
+	//色の変更(色)
+	void SetColor(XMFLOAT4 color);
+
 	//アンカーポイントの設定(中心点)
 	void SetAnchorPoint(XMFLOAT2 anchorPoint);
 

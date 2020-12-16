@@ -147,16 +147,17 @@
   <ItemGroup>
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CountDownTimer.cpp" />
-    <ClCompile Include="DebugText.cpp" />
     <ClCompile Include="DirectXManager.cpp" />
+    <ClCompile Include="Ending.cpp" />
+    <ClCompile Include="Fader.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GamePlay.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="ISceneChanger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -164,10 +165,12 @@
     <ClCompile Include="WinApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseScene.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CountDownTimer.h" />
-    <ClInclude Include="DebugText.h" />
     <ClInclude Include="DirectXManager.h" />
+    <ClInclude Include="Ending.h" />
+    <ClInclude Include="Fader.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GamePlay.h" />
     <ClInclude Include="Input.h" />
@@ -176,9 +179,9 @@
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SafeDelete.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
-    <ClInclude Include="Task.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="WinApp.h" />
