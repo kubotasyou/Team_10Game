@@ -1,10 +1,11 @@
 #include "Ending.h"
 #include "SafeDelete.h"
 
-Ending::Ending(ISceneChanger * sceneChanger, DirectXManager * manager, Input * input)
+Ending::Ending(ISceneChanger * sceneChanger, DirectXManager * manager, Input * input,Sound * sound)
 	:BaseScene(sceneChanger),//read ベースシーンをここで作っているのかな...
 	dxManager(manager),
-	input(input)
+	input(input),
+	sound(sound)
 {
 }
 

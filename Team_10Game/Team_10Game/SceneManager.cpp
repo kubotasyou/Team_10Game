@@ -3,14 +3,15 @@
 #include "Title.h"
 #include "Ending.h"
 
-SceneManager::SceneManager(DirectXManager * manager, Input * input)
+SceneManager::SceneManager(DirectXManager * manager, Input * input, Sound* sound)
 	:nextScene(SceneNone),    //最初は何も入れないでおく
 	dxManager(manager),
 	input(input),
+	sound(sound),
 	fader(new Fader(manager))//フェーダー生成
 {
 	//最初のシーンを設定
-	currentScene = (BaseScene*) new Title(this, dxManager, input);
+	currentScene = (BaseScene*) new Title(this, dxManager, input, sound);
 	fader->SetFaderType(FadeType::Expansion);
 }
 
@@ -44,10 +45,10 @@ void SceneManager::Update()
 			//Titleの第一引数はISceneChanger;
 			//SceneManagerもISceneChangerを継承するものなので
 			//thisを入れることで、TitleシーンでSceneManagerを使える!
-			currentScene = (BaseScene*) new Title(this, dxManager, input);
+			currentScene = (BaseScene*) new Title(this, dxManager, input,sound);
 			break;
 		case SceneEnding:
-			currentScene = (BaseScene*) new Ending(this, dxManager, input);
+			currentScene = (BaseScene*) new Ending(this, dxManager, input,sound);
 			break;
 
 		default:
@@ -58,7 +59,7 @@ void SceneManager::Update()
 		nextScene = SceneNone;
 		currentScene->Initialize();
 		//一秒かけてフェードアウト
-		fader->SetFadeOut(1.0f);
+		fader->SetFadeOut(5.0f);
 		fader->SwitchFade(true);
 	}
 

@@ -3,6 +3,7 @@
 #include "DirectXManager.h"
 #include "Input.h"
 #include "Sprite.h"
+#include "Sound.h"
 
 //タイトル画面シーン
 
@@ -11,7 +12,7 @@ class Title : public BaseScene
 public:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	//コンスト
-	Title(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input);
+	Title(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input,Sound* sound);
 	//デスト
 	~Title();
 	//初期化
@@ -27,5 +28,6 @@ private:
 	DirectXManager* dxManager = nullptr;
 	Input* input = nullptr;
 	Sprite* spriteBG = nullptr;
+	Sound* sound = nullptr;
 };
 

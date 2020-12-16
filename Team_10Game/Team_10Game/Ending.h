@@ -3,12 +3,13 @@
 #include "DirectXManager.h"
 #include "Input.h"
 #include "Sprite.h"
+#include "Sound.h"
 
 class Ending : public BaseScene
 {
 public:
 	//コンスト
-	Ending(ISceneChanger* sceneChanger, DirectXManager* dxcommon, Input* input);
+	Ending(ISceneChanger* sceneChanger, DirectXManager* dxcommon, Input* input,Sound* sound);
 	//デスト
 	~Ending();
 	//初期化
@@ -24,6 +25,7 @@ private:
 	DirectXManager* dxManager = nullptr;
 	Input* input = nullptr;
 	Sprite* spriteBG = nullptr;
+	Sound* sound = nullptr;
 
 	float test = 0;
 };

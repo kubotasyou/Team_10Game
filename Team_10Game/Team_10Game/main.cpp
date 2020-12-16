@@ -4,6 +4,7 @@
 #include "SafeDelete.h"
 #include "SceneManager.h"
 #include "GamePlay.h"
+#include "Sound.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -31,9 +32,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//GamePlay* gameplay = new GamePlay();
 	//gameplay->Initialize(dxManager, input);
 
+	Sound* sound = new Sound();
+	sound->LoadSound("3MinutesCooking");
 
-	SceneManager* sceneManager = new SceneManager(dxManager, input);
+	SceneManager* sceneManager = new SceneManager(dxManager, input, sound);
 	sceneManager->Initialize();
+
 
 	//ƒƒCƒ“ƒ‹[ƒv
 	while (true)
