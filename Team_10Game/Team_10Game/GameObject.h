@@ -3,8 +3,8 @@
 
 class GameObject
 {
-private:// Microsoft::WRL::を省略
-	
+protected:
+	// Microsoft::WRL::を省略	
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 public://サブクラス
@@ -84,16 +84,16 @@ private://一回しか読んじゃいけないやつらpart2
 public://関数
 
 	//初期化
-	void Initialize();
+	virtual void Initialize();
 
 	//更新
-	void Update();
+	virtual void Update();
 
 	//描画
-	void Draw();
+	virtual void Draw();
 
 	//モデルのセット
-	void SetModel(Model* _model);
+	virtual void SetModel(Model* _model);
 
 	//座標の設定
 	void SetPosition(XMFLOAT3 position)
@@ -174,3 +174,24 @@ private://メンバ変数
 
 };
 
+/// <summary>
+/// ピクセルシェーダー
+/// </summary>
+/// <param name="filename">ファイルの名前</param>
+/// <param name="shaderBlob"></param>
+/// <param name="errorBlob"></param>
+HRESULT CompileShaderFromFilePS(
+	const std::wstring& filename,
+	Microsoft::WRL::ComPtr<ID3DBlob>& shaderBlob,
+	Microsoft::WRL::ComPtr<ID3DBlob>& errorBlob);
+
+/// <summary>
+/// 頂点シェーダー
+/// </summary>
+/// <param name="filename">ファイルの名前</param>
+/// <param name="shaderBlob"></param>
+/// <param name="errorBlob"></param>
+HRESULT CompileShaderFromFileVS(
+	const std::wstring& filename,
+	Microsoft::WRL::ComPtr<ID3DBlob>& shaderBlob,
+	Microsoft::WRL::ComPtr<ID3DBlob>& errorBlob);
