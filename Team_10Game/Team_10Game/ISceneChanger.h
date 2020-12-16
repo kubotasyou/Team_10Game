@@ -4,6 +4,7 @@
 enum SceneType
 {
 	SceneTitle,
+	SceneGame,
 	SceneEnding,
 	SceneNone
 };

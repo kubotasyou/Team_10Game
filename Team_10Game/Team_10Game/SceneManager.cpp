@@ -2,6 +2,7 @@
 #include "SafeDelete.h"
 #include "Title.h"
 #include "Ending.h"
+#include "GamePlay.h"
 
 SceneManager::SceneManager(DirectXManager * manager, Input * input)
 	:nextScene(SceneNone),    //最初は何も入れないでおく
@@ -45,6 +46,9 @@ void SceneManager::Update()
 			//SceneManagerもISceneChangerを継承するものなので
 			//thisを入れることで、TitleシーンでSceneManagerを使える!
 			currentScene = (BaseScene*) new Title(this, dxManager, input);
+			break;
+		case SceneGame:
+			currentScene = (BaseScene*) new GamePlay(this, dxManager, input);
 			break;
 		case SceneEnding:
 			currentScene = (BaseScene*) new Ending(this, dxManager, input);

@@ -45,7 +45,9 @@ void Fader::Update()
 void Fader::Draw()
 {
 	// ”wŒiƒXƒvƒ‰ƒCƒg•`‰æ
+	Sprite::BeginDraw(dxManager->GetcmdList());
 	sprite->Draw();
+	Sprite::EndDraw();
 }
 
 void Fader::SetFaderType(FadeType type)

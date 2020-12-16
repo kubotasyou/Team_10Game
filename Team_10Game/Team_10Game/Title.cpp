@@ -31,18 +31,18 @@ void Title::Update()
 
 void Title::Draw()
 {
-	//ID3D12GraphicsCommandList* cmdList = dxManager->GetcmdList();
-	//Sprite::BeginDraw(cmdList);
+	ID3D12GraphicsCommandList* cmdList = dxManager->GetcmdList();
+	Sprite::BeginDraw(cmdList);
 	// 背景スプライト描画
 	spriteBG->Draw();
 
 	// スプライト描画後処理
-	//Sprite::EndDraw();
+	Sprite::EndDraw();
 }
 
 void Title::NextScene()
 {
 	//シーン変更(変更したいシーンを入れてね)
-	sceneChanger->ChangeScene(SceneEnding);
+	sceneChanger->ChangeScene(SceneGame);
 }
 

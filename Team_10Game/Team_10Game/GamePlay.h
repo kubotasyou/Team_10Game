@@ -7,28 +7,30 @@
 #include "Model.h"
 #include "CountDownTimer.h"
 #include "Sound.h"
-
+#include "BaseScene.h"
 #include "Player.h"
 
-class GamePlay
+class GamePlay:public BaseScene
 {
 public:
 
 	//コンストラクタ
-	GamePlay();
+	GamePlay(ISceneChanger* sceneChanger,DirectXManager* manager,Input* input);
 
 	//デストラクタ
 	~GamePlay();
 
 	//初期化
-	void Initialize(DirectXManager* dxManager, Input* input);
+	void Initialize()override;
 
 	//更新
-	void Update();
+	void Update()override;
 
 	//描画
-	void Draw();
+	void Draw()override;
 
+	//次のシーンへ
+	void NextScene();
 private:
 
 	DirectXManager* dxManager = nullptr;
