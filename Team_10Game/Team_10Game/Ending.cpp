@@ -1,27 +1,27 @@
-#include "Title.h"
+#include "Ending.h"
 #include "SafeDelete.h"
 
-Title::Title(ISceneChanger* sceneChanger, DirectXManager * manager, Input * input)
+Ending::Ending(ISceneChanger * sceneChanger, DirectXManager * manager, Input * input)
 	:BaseScene(sceneChanger),//read ベースシーンをここで作っているのかな...
 	dxManager(manager),
 	input(input)
 {
 }
 
-Title::~Title()
+Ending::~Ending()
 {
 	safe_delete(spriteBG);
 }
 
-void Title::Initialize()
+void Ending::Initialize()
 {
 	// テクスチャ読み込み(テストで５番)
-	Sprite::LoadTexture(5, L"Resources/Texture/tex1.png");
+	Sprite::LoadTexture(6, L"Resources/Texture/kirby.png");
 	// 背景スプライト生成
-	spriteBG = Sprite::Create(5, { 0.0f,0.0f });
+	spriteBG = Sprite::Create(6, { 0.0f,0.0f });
 }
 
-void Title::Update()
+void Ending::Update()
 {
 	if (input->GetKeyTrigger(KeyCode::SPACE))
 	{
@@ -29,7 +29,7 @@ void Title::Update()
 	}
 }
 
-void Title::Draw()
+void Ending::Draw()
 {
 	//ID3D12GraphicsCommandList* cmdList = dxManager->GetcmdList();
 	//Sprite::BeginDraw(cmdList);
@@ -40,9 +40,8 @@ void Title::Draw()
 	//Sprite::EndDraw();
 }
 
-void Title::NextScene()
+void Ending::NextScene()
 {
 	//シーン変更(変更したいシーンを入れてね)
-	sceneChanger->ChangeScene(SceneEnding);
+	sceneChanger->ChangeScene(SceneTitle);
 }
-

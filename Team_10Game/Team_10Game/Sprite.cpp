@@ -480,6 +480,13 @@ void Sprite::SetScale(XMFLOAT2 size)
 	SendVertexData();
 }
 
+void Sprite::SetColor(XMFLOAT4 color)
+{
+	this->color = color;
+
+	SendVertexData();
+}
+
 void Sprite::SetAnchorPoint(XMFLOAT2 anchorPoint)
 {
 	//値を引数で変更して、頂点バッファーへ転送する

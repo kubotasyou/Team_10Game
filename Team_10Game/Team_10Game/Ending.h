@@ -4,16 +4,13 @@
 #include "Input.h"
 #include "Sprite.h"
 
-//タイトル画面シーン
-
-class Title : public BaseScene
+class Ending : public BaseScene
 {
 public:
-	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	//コンスト
-	Title(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input);
+	Ending(ISceneChanger* sceneChanger, DirectXManager* dxcommon, Input* input);
 	//デスト
-	~Title();
+	~Ending();
 	//初期化
 	void Initialize() override;
 	//更新
@@ -27,5 +24,7 @@ private:
 	DirectXManager* dxManager = nullptr;
 	Input* input = nullptr;
 	Sprite* spriteBG = nullptr;
+
+	float test = 0;
 };
 

@@ -2,8 +2,7 @@
 #include "DirectXManager.h"
 #include "Input.h"
 #include "SafeDelete.h"
-
-#include "Title.h"
+#include "SceneManager.h"
 #include "GamePlay.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
@@ -28,12 +27,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Sprite::StaticInitialize(dxManager->GetDevice(), WinApp::window_width, WinApp::window_height);
 	GameObject::StaticInitialize(dxManager->GetDevice(), WinApp::window_width, WinApp::window_height);
 
-	//ゲームシーン初期化
-	GamePlay* gameplay = new GamePlay();
-	gameplay->Initialize(dxManager, input);
-	Title* title = new Title();
-	title->Initialize(dxManager, input);
-	bool test = false;
+	////ゲームシーン初期化
+	//GamePlay* gameplay = new GamePlay();
+	//gameplay->Initialize(dxManager, input);
+
+
+	SceneManager* sceneManager = new SceneManager(dxManager, input);
+	sceneManager->Initialize();
 
 	//メインループ
 	while (true)
@@ -45,36 +45,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		input->Update();
 
-		if (test == true &&input->GetKeyTrigger(KeyCode::SPACE))
-		{
-			test = false;
-		}
-		else if (test == false && input->GetKeyTrigger(KeyCode::SPACE))
-		{
-			test = true;
-		}
+		//gameScene->Update();
 
-		if (!test)
-		{
-			gameplay->Update();
-		}
-		else
-		{
-
-			title->Update();
-		}
+		sceneManager->Update();
 
 		//描画開始↓
 		dxManager->BeginDraw();
 
-		if (!test)
-		{
-			gameplay->Draw();
-		}
-		else
-		{
-			title->Draw();
-		}
+		//gameScene->Draw();
+		sceneManager->Draw();
 
 		//描画終了↑
 		dxManager->EndDraw();
@@ -83,8 +62,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//解放
 	safe_delete(dxManager);
 	safe_delete(input);
-	safe_delete(gameplay);
-	safe_delete(title);
+	//safe_delete(gameplay);
+	safe_delete(sceneManager);
 
 	//ゲームウィンドウの破棄
 	winApp->ReleaseGameWindow();
