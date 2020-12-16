@@ -1,5 +1,6 @@
 #pragma once
 #include "Input.h"
+#include "Sound.h"
 #include "Fader.h"
 #include "DirectXManager.h"
 #include "BaseScene.h"
@@ -8,7 +9,7 @@ class SceneManager : public ISceneChanger
 {
 public:
 	//コンスト
-	SceneManager(DirectXManager * manager, Input * input);
+	SceneManager(DirectXManager * manager, Input * input, Sound* sound);
 	//デスト
 	~SceneManager();
 
@@ -28,6 +29,7 @@ private:
 	SceneType nextScene;	//次回のシーン
 	DirectXManager* dxManager;
 	Input* input;
+	Sound* sound;
 	Fader* fader;
 };
 

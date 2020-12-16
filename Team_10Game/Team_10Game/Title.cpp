@@ -1,11 +1,13 @@
 #include "Title.h"
 #include "SafeDelete.h"
 
-Title::Title(ISceneChanger* sceneChanger, DirectXManager * manager, Input * input)
+Title::Title(ISceneChanger* sceneChanger, DirectXManager * manager, Input * input, Sound* sound)
 	:BaseScene(sceneChanger),//read ベースシーンをここで作っているのかな...
 	dxManager(manager),
-	input(input)
+	input(input),
+	sound(sound)
 {
+	
 }
 
 Title::~Title()
@@ -19,12 +21,14 @@ void Title::Initialize()
 	Sprite::LoadTexture(5, L"Resources/Texture/tex1.png");
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(5, { 0.0f,0.0f });
+	sound->Play("3MinutesCooking");
 }
 
 void Title::Update()
 {
 	if (input->GetKeyTrigger(KeyCode::SPACE))
 	{
+		
 		NextScene();
 	}
 }
