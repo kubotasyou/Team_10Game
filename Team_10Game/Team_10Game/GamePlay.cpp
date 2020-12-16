@@ -13,7 +13,11 @@ GamePlay::GamePlay()
 {
 
 }
-
+const int ObjectSize = 10;
+Object3D Transform[ObjectSize];
+float posx = 0;
+float posy = 0;
+float posz = 0;
 GamePlay::~GamePlay()
 {
 	safe_delete(sprite);
@@ -23,6 +27,7 @@ GamePlay::~GamePlay()
 	safe_delete(chara);
 	safe_delete(charaModel2);
 	safe_delete(chara2);
+	safe_delete(bullet[ObjectSize]);
 	safe_delete(player);
 }
 
@@ -62,9 +67,17 @@ void GamePlay::Initialize(DirectXManager * dxManager, Input * input)
 	charaModel2 = new Model(dxManager->GetDevice());
 	charaModel2->CreateModel("sphere2");
 	chara2 = GameObject::Create();
-	chara2->SetModel(charaModel);
+	chara2->SetModel(charaModel2);
 	chara2->SetPosition(XMFLOAT3(2.f, 5, 0));
 
+	charaModel3 = new Model(dxManager->GetDevice());
+	charaModel3->CreateModel("sphere2");
+	for (int i = 0; i < ObjectSize; i++)
+	{
+		bullet[i] = GameObject::Create();
+		bullet[i]->SetModel(charaModel3);
+		posz = 1000;
+	}
 	downTimer = new CountDownTimer();
 	downTimer->SetTime(5.0f);
 
@@ -85,6 +98,7 @@ void GamePlay::Initialize(DirectXManager * dxManager, Input * input)
 
 void GamePlay::Update()
 {
+
 #pragma region カメラの移動
 
 	if (input->GetKeyDown(KeyCode::A))
@@ -106,10 +120,74 @@ void GamePlay::Update()
 
 #pragma endregion
 
+#pragma region オブジェクトの移動
+	XMFLOAT3 position = chara->GetPosition();
+	if (input->GetKeyDown(KeyCode::RIGHT) ||
+		input->GetKeyDown(KeyCode::LEFT) ||
+		input->GetKeyDown(KeyCode::UP) ||
+		input->GetKeyDown(KeyCode::DOWN))
+	{
+		
+
+		if (input->GetKeyDown(KeyCode::RIGHT))
+		{
+			position.x += 0.05f;
+		}
+		else if (input->GetKeyDown(KeyCode::LEFT))
+		{
+			position.x -= 0.05f;
+		}
+		else if (input->GetKeyDown(KeyCode::UP))
+		{
+			position.y += 0.05f;
+		}
+		else if (input->GetKeyDown(KeyCode::DOWN))
+		{
+			position.y -= 0.05f;
+
+		}
+
+		chara->SetPosition(position);
+	}
+
+#pragma endregion
+
 	//ReadMe : プレイヤーにカメラを追従させたい
 
-#pragma region プレイヤーと地面
+#pragma region 弾関連
 
+	for (int i = 0; i < ObjectSize; i++)
+	{
+		bullet[i]->SetPosition(XMFLOAT3(posx, posy, posz));
+	}
+	if (input->GetKeyTrigger(KeyCode::X))
+	{
+		posx = position.x;
+		posy = position.y;
+		posz = position.z;
+		for (int i = 0; i < ObjectSize; i++)
+		{		
+		
+			bullet[i] = GameObject::Create();
+			bullet[i]->SetModel(charaModel3);	
+			break;
+		}
+	}
+	posz++;
+#pragma endregion
+
+#pragma region 球と地面
+
+	//ReadMe : プレイヤーにカメラを追従させたい
+	// 球と地面
+	bool hit = Collision::CheckSphereToPanel(chara->GetPosition(), chara->GetRadius(), gNormal, 0.0f);
+
+	if (hit)
+	{
+		//ReadMe : ここに当たった時のd処理を書く
+		chara->SetColor(XMFLOAT4(1, 0, 0, 1));
+	}
+#pragma region プレイヤーと地面
 	//プレイヤーと地面
 	bool isGround = Collision::CheckSphereToPanel(player->GetColliderPos(), player->GetColliderRadius() , gNormal, 0.0f);
 
@@ -137,6 +215,11 @@ void GamePlay::Update()
 #pragma endregion
 
 
+
+	if (!hit && !hit2)
+	{
+		chara->SetColor(XMFLOAT4(1, 1, 1, 1));
+	}
 	if (!isGround && !hit2)
 	{
 		chara->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -156,17 +239,23 @@ void GamePlay::Update()
 	//時間になったらモデルチェンジ
 	if (downTimer->IsTime())
 	{
-		//sound->Play("Alarm01");
+		/*sound->Play("Alarm01");*/
 	}
 
 #pragma endregion
 
 	chara->SetTarget(chara->GetPosition());
+	chara->Update();
+	chara2->Update();
 
+	for (int i = 0; i < ObjectSize; i++)
+	{
+		bullet[i]->Update();
+	}
 	player->Update();
 	ground->Update();
-	//chara->Update();
-	//chara2->Update();
+	chara->Update();
+	chara2->Update();
 	downTimer->Update();
 }
 
@@ -177,6 +266,13 @@ void GamePlay::Draw()
 	Sprite::EndDraw();
 
 	GameObject::BeginDraw(dxManager->GetcmdList());
+	chara->Draw();
+	chara2->Draw();
+
+	for (int i = 0; i < ObjectSize; i++)
+	{
+	    bullet[i]->Draw();
+    }
 	ground->Draw();
 	//chara->Draw();
 	//chara2->Draw();

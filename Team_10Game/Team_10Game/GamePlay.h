@@ -35,6 +35,8 @@ private:
 	Input* input = nullptr;
 
 	Sprite* sprite = nullptr;
+	GameObject* obj = nullptr;
+	Model* mod = nullptr;
 	GameObject* ground = nullptr;
 	Model* groundModel = nullptr;
 	
@@ -43,6 +45,9 @@ private:
 
 	GameObject * chara2 = nullptr;
 	Model * charaModel2 = nullptr;
+
+	GameObject * bullet[100];
+	Model * charaModel3 = nullptr;
 
 
 	XMFLOAT3 gNormal;
