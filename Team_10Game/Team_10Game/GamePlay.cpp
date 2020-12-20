@@ -83,13 +83,13 @@ void GamePlay::Initialize()
 	downTimer->SetTime(5.0f);
 
 	sound = new Sound();
-	sound->LoadSound("Alarm01");
+	sound->LoadSE("Alarm01");
 	//sound->Play("Alarm01",0.1f);
 
 	//sound->LoadSound("3MinutesCooking");
 	//sound->Play("3MinutesCooking",0.1f);
 
-	sound->LoadSound("GodisSaying");
+	sound->LoadSE("GodisSaying");
 	//sound->PlayLoop("GodisSaying", 0.1f);
 
 
@@ -228,11 +228,11 @@ void GamePlay::Update()
 
 	if (input->GetKeyTrigger(KeyCode::Z))
 	{
-		sound->Play("GodisSaying", 0.1f);
+		sound->PlaySE("GodisSaying", 0.1f);
 	}
 	if (input->GetJoyPadRelease(JoyPad::A))
 	{
-		sound->Play("Alarm01", 0.1f);
+		sound->PlaySE("Alarm01", 0.1f);
 	}
 
 #pragma region ŠÔ‚É‚È‚Á‚½‚çŒn

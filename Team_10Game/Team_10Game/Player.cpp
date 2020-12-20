@@ -29,7 +29,7 @@ Player::Player(DirectXManager * dxManager, Input * input)
 	collider->SetRadius(colliderRadius);
 
 	sound = new Sound();
-	sound->LoadSound("Alarm01");
+	sound->LoadSE("Alarm01");
 
 	timer = new CountDownTimer();
 	timer->SetTime(1.5f);
@@ -125,6 +125,6 @@ void Player::Jump()
 {
 	if (input->GetJoyPadRelease(JoyPad::B))
 	{
-		sound->Play("Alarm01", 0.2f);
+		sound->PlaySE("Alarm01", 0.2f);
 	}
 }

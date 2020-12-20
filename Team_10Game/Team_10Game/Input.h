@@ -4,8 +4,6 @@
 #include <dinput.h>
 #include <string> 
 
-#define DIRECTINPUT_VERSION 0x0800 // DirectInputのバージョン指定
-
 enum class KeyCode
 {
 	W = DIK_W,
@@ -80,6 +78,7 @@ public:
 private:
 	////DirectInputオブジェクト
 	//ComPtr<IDirectInput8> directInput;
+	//DIRECTINPUT_VERSION version = 0x0800;
 	//キーボードデバイスの生成
 	ComPtr<IDirectInputDevice8> keybordDevice;
 	//キーの入力情報

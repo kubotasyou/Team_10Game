@@ -4,6 +4,7 @@
 #include "Fader.h"
 #include "DirectXManager.h"
 #include "BaseScene.h"
+#include "GameObject.h"
 
 class SceneManager : public ISceneChanger
 {

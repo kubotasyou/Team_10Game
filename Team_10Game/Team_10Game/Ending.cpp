@@ -20,6 +20,11 @@ void Ending::Initialize()
 	Sprite::LoadTexture(6, L"Resources/Texture/kirby.png");
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(6, { 0.0f,0.0f });
+	/*sound->DirectShowInit();*/
+	/*sound->LoadBGM("testBgm.mp3");*/
+	sound->PlayLoopBGM("testBgm.mp3");
+	player = new Player(dxManager, input);
+	player->Initialize();
 }
 
 void Ending::Update()
@@ -28,21 +33,28 @@ void Ending::Update()
 	{
 		NextScene();
 	}
+
+	sound->CheckLoop("testBgm.mp3");
+	player->Update();
 }
 
 void Ending::Draw()
 {
-	//ID3D12GraphicsCommandList* cmdList = dxManager->GetcmdList();
-	//Sprite::BeginDraw(cmdList);
+	Sprite::BeginDraw(dxManager->GetcmdList());
 	// 背景スプライト描画
 	spriteBG->Draw();
 
 	// スプライト描画後処理
-	//Sprite::EndDraw();
+	Sprite::EndDraw();
+
+	GameObject::BeginDraw(dxManager->GetcmdList());
+	player->Draw();
+	GameObject::EndDraw();
 }
 
 void Ending::NextScene()
 {
+	sound->StopBGM();
 	//シーン変更(変更したいシーンを入れてね)
 	sceneChanger->ChangeScene(SceneTitle);
 }

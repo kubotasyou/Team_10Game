@@ -3,13 +3,15 @@
 #include <fstream>
 #include <cassert>
 
-#pragma comment(lib,"xaudio2.lib")
+#pragma comment(lib, "xaudio2.lib")//XAudio2のライブラリ
+#pragma comment(lib, "strmiids.lib")//DirectShowのライブラリ
 
 using namespace std;
 
 Sound::Sound()
 {
 	Initialize();
+	DirectShowInit();
 }
 
 Sound::~Sound()
@@ -23,7 +25,7 @@ Sound::~Sound()
 	masterVoice->DestroyVoice();
 }
 
-void Sound::LoadSound(const std::string& filename)
+void Sound::LoadSE(const std::string& filename)
 {
 	//ファイル入力ストリームのインスタンス
 	std::ifstream file;
@@ -37,7 +39,7 @@ void Sound::LoadSound(const std::string& filename)
 	//file.open(filename, std::ios_base::binary);
 	// ファイルオープン失敗をチェック
 	if (file.fail()) { assert(0 && "ファイルオープンに失敗"); }
-	
+
 	//データ格納用構造体
 	WaveData wavData;
 
@@ -80,18 +82,46 @@ void Sound::Initialize()
 	if FAILED(result) assert(0 && "MasteringVoiceがつくれませんでした");
 }
 
-void Sound::Play(const std::string& filename, float volume)
+BSTR Sound::StringToBSTR(const std::string & str)
+{
+	int wslen = ::MultiByteToWideChar(
+		CP_ACP,
+		0,
+		str.data(),
+		static_cast<int>(str.length()),
+		NULL,
+		0
+	);
+
+	BSTR wsdata = SysAllocStringLen(
+		NULL,
+		wslen
+	);
+
+	MultiByteToWideChar(
+		CP_ACP,
+		0,
+		str.data(),
+		static_cast<int>(str.length()),
+		wsdata,
+		wslen
+	);
+
+	return wsdata;
+}
+
+void Sound::PlaySE(const std::string& filename, float volume)
 {
 	HRESULT result;
 
 	//名前に対応したデータ構造体を持ってくる
-	WaveData& test = soundList[filename];
+	WaveData& waveData = soundList[filename];
 
 	WAVEFORMATEX waveFormatex{};
 
 	//波形フォーマットの設定
-	memcpy(&waveFormatex, &test.format.format, sizeof(test.format.format));
-	waveFormatex.wBitsPerSample = test.format.format.nBlockAlign * 8 / test.format.format.nChannels;
+	memcpy(&waveFormatex, &waveData.format.format, sizeof(waveData.format.format));
+	waveFormatex.wBitsPerSample = waveData.format.format.nBlockAlign * 8 / waveData.format.format.nChannels;
 
 	IXAudio2SourceVoice* source;
 
@@ -105,11 +135,11 @@ void Sound::Play(const std::string& filename, float volume)
 	XAUDIO2_BUFFER audioBuff{};
 
 	//再生する波形データを設定
-	audioBuff.pAudioData = (BYTE*)test.pBuffer;
+	audioBuff.pAudioData = (BYTE*)waveData.pBuffer;
 	//pContextにバッファのアドレスを渡す。
-	audioBuff.pContext = test.pBuffer;
+	audioBuff.pContext = waveData.pBuffer;
 	audioBuff.Flags = XAUDIO2_END_OF_STREAM;
-	audioBuff.AudioBytes = test.data.size;
+	audioBuff.AudioBytes = waveData.data.size;
 
 	//始まる場所を指定できる。
 	audioBuff.PlayBegin = 128 * 5;
@@ -122,17 +152,14 @@ void Sound::Play(const std::string& filename, float volume)
 
 	//XAUDIO2_VOICE_STATE state;
 	//source->GetState(&state);
-
 	////再生中なら1が入る。
 	//UINT tester = state.BuffersQueued;
-
 	////再生が終わったら1or0が返るみたいな
 	//if (state.BuffersQueued <= 0)
 	//{
 	//	//再生が終わっている
 	//	isPlay = true;
 	//	UINT tester = state.BuffersQueued;
-
 	//}
 	//else
 	//{
@@ -143,7 +170,17 @@ void Sound::Play(const std::string& filename, float volume)
 	//波形データの再生
 	result = source->Start();
 
+	//memo : ここで配列に追加するのって意味あるの？
+
 	sourceData.emplace_back(source);
+}
+
+void Sound::Stop()
+{
+	for (auto a : sourceData)
+	{
+		a->Stop();
+	}
 }
 
 void Sound::PlayLoop(const std::string & filename, float volume)
@@ -188,4 +225,113 @@ void Sound::PlayLoop(const std::string & filename, float volume)
 	result = source->Start();
 
 	sourceData.emplace_back(source);
+}
+
+//ファイルの読み込み：拡張子必須
+void Sound::DirectShowInit()
+{
+	HRESULT result;
+
+	//COMの初期化
+	CoInitialize(NULL);
+
+	//FillterGraphを作成
+	result = CoCreateInstance(
+		CLSID_FilterGraph,
+		NULL,
+		CLSCTX_INPROC,
+		IID_IGraphBuilder,
+		(LPVOID*)&graphBuffer
+	);
+}
+
+void Sound::LoadBGM(const std::string & filename)
+{
+	HRESULT result;
+
+	//memo: ここでローカルなMediaControlを作ればいいかな
+	IMediaControl* mediaControl;//作ってみた
+	//IMediaPosition* mediaPosition;//再生位置の指定
+
+	//MediaControlのインターフェース取得
+	result = graphBuffer->QueryInterface(
+		IID_IMediaControl,
+		(LPVOID*)&mediaControl
+	);
+
+	result = graphBuffer->QueryInterface(
+		IID_IMediaPosition,
+		(LPVOID*)&mediaPosition
+	);
+
+
+	const std::string directoryName = "Resources/Sound/";
+	const std::string str = directoryName + filename;
+
+	//ファイル名をBSTRに変換
+	BSTR bstr = SysAllocString(StringToBSTR(str));
+
+	//Graphを作成
+	result = mediaControl->RenderFile(bstr);
+	if FAILED(result)
+	{
+		assert(0 && "ファイルが読み込めませんでした。");
+	}
+
+	//読み込んだらリストに格納
+	bgmList.emplace(filename, mediaControl);
+
+	//解放処理
+	SysFreeString(bstr);
+	mediaControl->Release();
+	mediaPosition->Release();
+}
+
+void Sound::PlayBGM(const std::string& filename)
+{
+	auto list = bgmList[filename];
+	list->Run();
+	isPlay = true;
+	isLoop = false;
+}
+
+void Sound::PlayLoopBGM(const std::string& filename)
+{
+	auto list = bgmList[filename];
+	list->Run();
+	isPlay = true;
+	isLoop = true;
+}
+
+void Sound::CheckLoop(const std::string& filename)
+{
+	//再生してないか、ループモードじゃなければ処理しない
+	if (!isPlay || !isLoop) return;
+
+	REFTIME pos, end;
+	mediaPosition->get_CurrentPosition(&pos);
+	mediaPosition->get_StopTime(&end);
+	if (pos >= end)
+	{
+		StopBGM();
+		PlayLoopBGM(filename);
+	}
+}
+
+void Sound::StopBGM()
+{
+	//全てのBGMの停止
+	for (auto list : bgmList)
+	{
+		list.second->Stop();
+	}
+	mediaPosition->put_CurrentPosition(0);
+	isPlay = false;
+}
+
+void Sound::Release()
+{
+	//解放処理
+	graphBuffer->Release();
+	CoUninitialize();
 }
