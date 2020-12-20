@@ -9,18 +9,21 @@
 #include <sstream>
 #include <iomanip>
 
-GamePlay::GamePlay()
+GamePlay::GamePlay(ISceneChanger* sceneChanger,DirectXManager* manager,Input* input)
+	:BaseScene(sceneChanger),
+	dxManager(manager),
+	input(input)
 {
 
 }
 const int ObjectSize = 10;
 Object3D Transform[ObjectSize];
-float posx = 0;
-float posy = 0;
-float posz = 0;
+float posx;
+float posy;
+float posz;
 GamePlay::~GamePlay()
 {
-	safe_delete(sprite);
+	//safe_delete(sprite);
 	safe_delete(groundModel);
 	safe_delete(ground);
 	safe_delete(charaModel);
@@ -31,11 +34,9 @@ GamePlay::~GamePlay()
 	safe_delete(player);
 }
 
-void GamePlay::Initialize(DirectXManager * dxManager, Input * input)
+void GamePlay::Initialize()
 {
-	this->dxManager = dxManager;
-	this->input = input;
-
+	
 	////テクスチャ読み込み
 	//Sprite::LoadTexture(2, L"Resources/Texture/kirby.png");
 	////オブジェクト生成
@@ -162,13 +163,13 @@ void GamePlay::Update()
 	}
 	if (input->GetKeyTrigger(KeyCode::X))
 	{
-		posx = position.x;
-		posy = position.y;
-		posz = position.z;
+
 		for (int i = 0; i < ObjectSize; i++)
 		{		
-		
 			bullet[i] = GameObject::Create();
+			posx = position.x;
+			posy = position.y;
+			posz = position.z;
 			bullet[i]->SetModel(charaModel3);	
 			break;
 		}
@@ -254,28 +255,35 @@ void GamePlay::Update()
 	}
 	player->Update();
 	ground->Update();
-	chara->Update();
-	chara2->Update();
 	downTimer->Update();
 }
 
 void GamePlay::Draw()
 {
-	Sprite::BeginDraw(dxManager->GetcmdList());
+	//Sprite::BeginDraw(dxManager->GetcmdList());
 	//sprite->Draw();
-	Sprite::EndDraw();
+	//Sprite::EndDraw();
 
 	GameObject::BeginDraw(dxManager->GetcmdList());
 	chara->Draw();
+	GameObject::EndDraw();
+	GameObject::BeginDraw(dxManager->GetcmdList());
 	chara2->Draw();
-
+	GameObject::EndDraw();
+	GameObject::BeginDraw(dxManager->GetcmdList());
 	for (int i = 0; i < ObjectSize; i++)
 	{
 	    bullet[i]->Draw();
     }
+	GameObject::EndDraw();
+	GameObject::BeginDraw(dxManager->GetcmdList());
 	ground->Draw();
-	//chara->Draw();
-	//chara2->Draw();
+	GameObject::EndDraw();
+	GameObject::BeginDraw(dxManager->GetcmdList());
 	player->Draw();
 	GameObject::EndDraw();
+}
+void GamePlay::NextScene()
+{
+	sceneChanger->ChangeScene(SceneEnding);
 }
