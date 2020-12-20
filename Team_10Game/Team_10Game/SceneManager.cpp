@@ -12,7 +12,7 @@ SceneManager::SceneManager(DirectXManager * manager, Input * input, Sound* sound
 {
 	//最初のシーンを設定
 	currentScene = (BaseScene*) new Title(this, dxManager, input, sound);
-	fader->SetFaderType(FadeType::Expansion);
+	fader->SetFaderType(FadeType::Normal);
 }
 
 SceneManager::~SceneManager()
@@ -59,7 +59,7 @@ void SceneManager::Update()
 		nextScene = SceneNone;
 		currentScene->Initialize();
 		//一秒かけてフェードアウト
-		fader->SetFadeOut(5.0f);
+		fader->SetFadeOut(0.5f);
 		fader->SwitchFade(true);
 	}
 
@@ -71,17 +71,19 @@ void SceneManager::Update()
 
 void SceneManager::Draw()
 {
-	ID3D12GraphicsCommandList* cmdList = dxManager->GetcmdList();
-	Sprite::BeginDraw(cmdList);
+	//ID3D12GraphicsCommandList* cmdList = dxManager->GetcmdList();
+	//Sprite::BeginDraw(cmdList);
+	//GameObject::BeginDraw(cmdList);
 	currentScene->Draw();
 	fader->Draw();
+	//GameObject::EndDraw();
 	// スプライト描画後処理
-	Sprite::EndDraw();
+	//Sprite::EndDraw();
 }
 
 void SceneManager::ChangeScene(SceneType nextScene)
 {
-	fader->SetFadeIn(1.0f);
+	fader->SetFadeIn(0.5f);
 	fader->SwitchFade(false);
 	this->nextScene = nextScene;
 }

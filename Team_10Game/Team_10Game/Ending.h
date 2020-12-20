@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Sprite.h"
 #include "Sound.h"
+#include "Player.h"
 
 class Ending : public BaseScene
 {
@@ -28,5 +29,6 @@ private:
 	Sound* sound = nullptr;
 
 	float test = 0;
+	Player * player = nullptr;
 };
 

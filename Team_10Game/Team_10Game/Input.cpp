@@ -13,6 +13,7 @@ BOOL CALLBACK EnumAxesCallback(const DIDEVICEOBJECTINSTANCE* pdidoi, VOID* pCont
 //DirectInputオブジェクト
 ComPtr<IDirectInput8> directInput;
 ComPtr<IDirectInputDevice8> joypadDevice;
+//#define DIRECTINPUT_VERSION 0x0800 // DirectInputのバージョン指定
 
 Input::Input()
 {

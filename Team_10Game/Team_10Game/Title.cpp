@@ -21,7 +21,7 @@ void Title::Initialize()
 	Sprite::LoadTexture(5, L"Resources/Texture/tex1.png");
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(5, { 0.0f,0.0f });
-	sound->Play("3MinutesCooking");
+	//sound->PlaySE("3MinutesCooking",0.1f);
 }
 
 void Title::Update()
@@ -35,17 +35,18 @@ void Title::Update()
 
 void Title::Draw()
 {
-	//ID3D12GraphicsCommandList* cmdList = dxManager->GetcmdList();
-	//Sprite::BeginDraw(cmdList);
+	ID3D12GraphicsCommandList* cmdList = dxManager->GetcmdList();
+	Sprite::BeginDraw(cmdList);
 	// 背景スプライト描画
 	spriteBG->Draw();
 
 	// スプライト描画後処理
-	//Sprite::EndDraw();
+	Sprite::EndDraw();
 }
 
 void Title::NextScene()
 {
+	sound->Stop();
 	//シーン変更(変更したいシーンを入れてね)
 	sceneChanger->ChangeScene(SceneEnding);
 }

@@ -529,7 +529,7 @@ void Sprite::SetTextureRect(XMFLOAT2 texBasePos, XMFLOAT2 texSize)
 void Sprite::Draw()
 {
 	//ワールド行列の更新------------------------------------------------
-	this->matWorld = XMMatrixIdentity();
+	this->matWorld  = XMMatrixIdentity();
 	this->matWorld *= XMMatrixRotationZ(XMConvertToRadians(rotationZ));
 	this->matWorld *= XMMatrixTranslation(position.x, position.y, 0.0f);
 	//------------------------------------------------------------------
