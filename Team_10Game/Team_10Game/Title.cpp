@@ -48,6 +48,6 @@ void Title::NextScene()
 {
 	sound->Stop();
 	//シーン変更(変更したいシーンを入れてね)
-	sceneChanger->ChangeScene(SceneGame);
+	sceneChanger->ChangeScene(SceneEnding);
 }
 
