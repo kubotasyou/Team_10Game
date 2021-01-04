@@ -12,7 +12,7 @@ SceneManager::SceneManager(DirectXManager * manager, Input * input, Sound* sound
 	fader(new Fader(manager))//フェーダー生成
 {
 	//最初のシーンを設定
-	currentScene = (BaseScene*) new Title(this, dxManager, input, sound);
+	currentScene = (BaseScene*) new GamePlay(this, dxManager, input);
 	fader->SetFaderType(FadeType::Normal);
 }
 

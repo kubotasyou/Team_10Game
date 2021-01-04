@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CountDownTimer.cpp" />
     <ClCompile Include="DirectXManager.cpp" />
@@ -167,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseScene.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CountDownTimer.h" />
     <ClInclude Include="DirectXManager.h" />

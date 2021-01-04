@@ -190,14 +190,14 @@ void GamePlay::Update()
 	}
 #pragma region プレイヤーと地面
 	//プレイヤーと地面
-	bool isGround = Collision::CheckSphereToPanel(player->GetColliderPos(), player->GetColliderRadius() , gNormal, 0.0f);
+	//bool isGround = Collision::CheckSphereToPanel(player->GetColliderPos(), player->GetColliderRadius() , gNormal, 0.0f);
 
 	/*if (isGround)
 	{*/
 		//ReadMe : ここに当たった時の処理を書く
 
 		//プレイヤーに当たった判定を返す
-		player->SetisGround(isGround);
+		//player->SetisGround(isGround);
 	//}
 
 #pragma endregion
@@ -221,15 +221,15 @@ void GamePlay::Update()
 	{
 		chara->SetColor(XMFLOAT4(1, 1, 1, 1));
 	}
-	if (!isGround && !hit2)
-	{
-		chara->SetColor(XMFLOAT4(1, 1, 1, 1));
-	}
+	//if (!isGround && !hit2)
+	//{
+	//	chara->SetColor(XMFLOAT4(1, 1, 1, 1));
+	//}
 
-	if (input->GetKeyTrigger(KeyCode::Z))
-	{
-		sound->PlaySE("GodisSaying", 0.1f);
-	}
+	//if (input->GetKeyTrigger(KeyCode::Z))
+	//{
+	//	sound->PlaySE("GodisSaying", 0.1f);
+	//}
 	if (input->GetJoyPadRelease(JoyPad::A))
 	{
 		sound->PlaySE("Alarm01", 0.1f);
