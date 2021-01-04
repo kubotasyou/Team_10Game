@@ -60,6 +60,7 @@
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Ending.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -67,6 +68,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Fader.cpp">
+=======
+    <ClCompile Include="MosaicEffect.cpp">
+>>>>>>> mizunoya
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -119,6 +123,7 @@
     <ClInclude Include="Player.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="BaseScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -129,6 +134,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Fader.h">
+=======
+    <ClInclude Include="MosaicEffect.h">
+>>>>>>> mizunoya
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
