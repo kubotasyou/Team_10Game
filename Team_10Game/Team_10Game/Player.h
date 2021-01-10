@@ -21,6 +21,10 @@ public:
 
 	void Draw();
 
+	void Shot();
+
+	void BulletDel();
+
 	XMFLOAT3 GetPosition() { return position; }
 
 private:
@@ -39,6 +43,7 @@ private:
 
 	XMFLOAT3 position;
 	XMFLOAT3 velocity;
+	XMFLOAT3 bulletposition;
 
 	float speed = 0.1f;
 };

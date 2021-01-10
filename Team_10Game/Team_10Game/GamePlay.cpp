@@ -9,7 +9,7 @@
 #include <sstream>
 #include <iomanip>
 
-GamePlay::GamePlay(ISceneChanger* sceneChanger,DirectXManager* manager,Input* input)
+GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input)
 	:BaseScene(sceneChanger),
 	dxManager(manager),
 	input(input)
@@ -36,7 +36,7 @@ GamePlay::~GamePlay()
 
 void GamePlay::Initialize()
 {
-	
+
 	////テクスチャ読み込み
 	//Sprite::LoadTexture(2, L"Resources/Texture/kirby.png");
 	////オブジェクト生成
@@ -83,13 +83,21 @@ void GamePlay::Initialize()
 	downTimer->SetTime(5.0f);
 
 	sound = new Sound();
+<<<<<<< HEAD
 	sound->LoadSE("Alarm01");
+=======
+	//sound->LoadSE("Alarm01");
+>>>>>>> Masataka
 	//sound->Play("Alarm01",0.1f);
 
 	//sound->LoadSound("3MinutesCooking");
 	//sound->Play("3MinutesCooking",0.1f);
 
+<<<<<<< HEAD
 	sound->LoadSE("GodisSaying");
+=======
+//	sound->LoadSE("GodisSaying");
+>>>>>>> Masataka
 	//sound->PlayLoop("GodisSaying", 0.1f);
 
 
@@ -128,7 +136,7 @@ void GamePlay::Update()
 		input->GetKeyDown(KeyCode::UP) ||
 		input->GetKeyDown(KeyCode::DOWN))
 	{
-		
+
 
 		if (input->GetKeyDown(KeyCode::RIGHT))
 		{
@@ -165,12 +173,12 @@ void GamePlay::Update()
 	{
 
 		for (int i = 0; i < ObjectSize; i++)
-		{		
+		{
 			bullet[i] = GameObject::Create();
 			posx = position.x;
 			posy = position.y;
 			posz = position.z;
-			bullet[i]->SetModel(charaModel3);	
+			bullet[i]->SetModel(charaModel3);
 			break;
 		}
 	}
@@ -194,11 +202,11 @@ void GamePlay::Update()
 
 	/*if (isGround)
 	{*/
-		//ReadMe : ここに当たった時の処理を書く
+	//ReadMe : ここに当たった時の処理を書く
 
-		//プレイヤーに当たった判定を返す
-		//player->SetisGround(isGround);
-	//}
+	//プレイヤーに当たった判定を返す
+	//player->SetisGround(isGround);
+//}
 
 #pragma endregion
 
@@ -226,13 +234,23 @@ void GamePlay::Update()
 	//	chara->SetColor(XMFLOAT4(1, 1, 1, 1));
 	//}
 
+<<<<<<< HEAD
+	if (input->GetKeyTrigger(KeyCode::Z))
+	{
+		sound->PlaySE("GodisSaying", 0.1f);
+	}
+	if (input->GetJoyPadRelease(JoyPad::A))
+	{
+		sound->PlaySE("Alarm01", 0.1f);
+=======
 	//if (input->GetKeyTrigger(KeyCode::Z))
 	//{
 	//	sound->PlaySE("GodisSaying", 0.1f);
 	//}
 	if (input->GetJoyPadRelease(JoyPad::A))
 	{
-		sound->PlaySE("Alarm01", 0.1f);
+	//	sound->PlaySE("Alarm01", 0.1f);
+>>>>>>> Masataka
 	}
 
 #pragma region 時間になったら系
@@ -273,8 +291,8 @@ void GamePlay::Draw()
 	GameObject::BeginDraw(dxManager->GetcmdList());
 	for (int i = 0; i < ObjectSize; i++)
 	{
-	    bullet[i]->Draw();
-    }
+		bullet[i]->Draw();
+	}
 	GameObject::EndDraw();
 	GameObject::BeginDraw(dxManager->GetcmdList());
 	ground->Draw();

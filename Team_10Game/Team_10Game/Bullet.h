@@ -1,6 +1,5 @@
 #pragma once
 
-#include "DirectXManager.h"
 #include "GameObject.h"
 #include "Model.h"
 
@@ -9,30 +8,35 @@
 class Bullet
 {
 public:
-	Bullet(DirectXManager* dxManager, XMFLOAT3 position);
+	Bullet(XMFLOAT3 position,Model* model);
 	~Bullet();
 
 	void Update();
 
 	void Draw();
 
+	XMFLOAT3 Position() { return position; }
+
 	//使っているかどうかを切り替える
 	void ChangeUsed(bool flag);
+	void ChangeDelete(bool flag);
 
 	bool GetUsedFlag() { return isUsed; }
-
+	bool GetDeleteFlag() { return isDelete; }
 private:
-	DirectXManager* dxManager = nullptr;
 	GameObject* bullet = nullptr;
 	Model* sphereModel = nullptr;
 
+
 	XMFLOAT3 position;
 	XMFLOAT3 velocity;
+	XMFLOAT3 playerposition;
 
 	float speed = 0.1f;
 	float radius = 1.0f;
 
 	//使っているかどうかのフラグ
-	bool isUsed;
+    bool isUsed;
+	bool isDelete;
 };
 
