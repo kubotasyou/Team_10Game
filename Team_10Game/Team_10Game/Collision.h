@@ -1,5 +1,7 @@
 #pragma once
 
+#include "CollisionPrimitive.h"
+
 #include <DirectXMath.h>
 
 using namespace DirectX;
@@ -8,8 +10,10 @@ class Collision
 {
 public:
 	//円と円の衝突判定
-	static bool CircleToCircle(XMFLOAT3 centerPosA, float radiusA,
-		XMFLOAT3 centerPosB, float radiusB);
+	static bool SphereToSphere(
+		const Sphere& sphere1,
+		const Sphere& sphere2
+	);
 
 	//円と平面
 	//distanceは原点からの距離であり、上に行ったら+、下に行ったら-になる

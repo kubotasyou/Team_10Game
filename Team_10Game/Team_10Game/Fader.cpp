@@ -14,7 +14,7 @@ Fader::Fader(DirectXManager * manager)
 
 Fader::~Fader()
 {
-	safe_delete(sprite);
+	safedelete(sprite);
 }
 
 void Fader::Initialize()

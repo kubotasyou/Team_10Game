@@ -1,19 +1,14 @@
 #include "Collision.h"
 
-bool Collision::CircleToCircle(XMFLOAT3 centerPosA, float radiusA, XMFLOAT3 centerPosB, float radiusB)
+bool Collision::SphereToSphere(const Sphere & sphere1, const Sphere & sphere2)
 {
-	//auto x = abs((centerPosA.x + radiusA) - (centerPosB.x + radiusB));
-	//auto y = abs((centerPosA.y + radiusA) - (centerPosB.y + radiusB));
-	//auto z = abs((centerPosA.z + radiusA) - (centerPosB.z + radiusB));
+	float x = (sphere2.center.m128_f32[0] - sphere1.center.m128_f32[0]) * (sphere2.center.m128_f32[0] - sphere1.center.m128_f32[0]);
+	float y = (sphere2.center.m128_f32[1] - sphere1.center.m128_f32[1]) * (sphere2.center.m128_f32[1] - sphere1.center.m128_f32[1]);
+	float z = (sphere2.center.m128_f32[2] - sphere1.center.m128_f32[2]) * (sphere2.center.m128_f32[2] - sphere1.center.m128_f32[2]);
 
-	auto test = ((centerPosB.x - centerPosA.x) *(centerPosB.x - centerPosA.x)) +
-		        ((centerPosB.y - centerPosA.y) *(centerPosB.y - centerPosA.y)) +
-		        ((centerPosB.z - centerPosA.z) *(centerPosB.z - centerPosA.z));
+	float rad2 = (sphere1.radius + sphere2.radius) * (sphere1.radius + sphere2.radius);
 
-	int radius = (radiusA + radiusB) * (radiusA + radiusB);
-
-	//‚±‚ê‚Å“–‚½‚Á‚Ä‚é
-	if (test >= radius)
+	if (x + y + z >= rad2)
 	{
 		return false;
 	}

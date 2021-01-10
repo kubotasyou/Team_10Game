@@ -4,6 +4,8 @@
 #include "Ending.h"
 #include "GamePlay.h"
 
+#include "Sprite.h"
+
 SceneManager::SceneManager(DirectXManager * manager, Input * input, Sound* sound)
 	:nextScene(SceneNone),    //最初は何も入れないでおく
 	dxManager(manager),
@@ -25,6 +27,11 @@ SceneManager::~SceneManager()
 void SceneManager::Initialize()
 {
 	currentScene->Initialize();
+
+	// デバッグテキスト用テクスチャ読み込み
+	Sprite::LoadTexture(0, L"Resources/Texture/debugfont.png");
+
+	//Sprite::LoadTexture()
 }
 
 void SceneManager::Update()
@@ -75,14 +82,8 @@ void SceneManager::Update()
 
 void SceneManager::Draw()
 {
-	//ID3D12GraphicsCommandList* cmdList = dxManager->GetcmdList();
-	//Sprite::BeginDraw(cmdList);
-	//GameObject::BeginDraw(cmdList);
 	currentScene->Draw();
 	fader->Draw();
-	//GameObject::EndDraw();
-	// スプライト描画後処理
-	//Sprite::EndDraw();
 }
 
 void SceneManager::ChangeScene(SceneType nextScene)

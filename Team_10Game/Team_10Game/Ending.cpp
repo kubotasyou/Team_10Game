@@ -11,7 +11,7 @@ Ending::Ending(ISceneChanger * sceneChanger, DirectXManager * manager, Input * i
 
 Ending::~Ending()
 {
-	safe_delete(spriteBG);
+	safedelete(spriteBG);
 }
 
 void Ending::Initialize()
@@ -20,11 +20,7 @@ void Ending::Initialize()
 	Sprite::LoadTexture(6, L"Resources/Texture/kirby.png");
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(6, { 0.0f,0.0f });
-	/*sound->DirectShowInit();*/
-	/*sound->LoadBGM("testBgm.mp3");*/
 	sound->PlayLoopBGM("testBgm.mp3");
-	player = new Player(dxManager, input);
-	player->Initialize();
 }
 
 void Ending::Update()
@@ -35,7 +31,6 @@ void Ending::Update()
 	}
 
 	sound->CheckLoop("testBgm.mp3");
-	player->Update();
 }
 
 void Ending::Draw()
@@ -46,10 +41,6 @@ void Ending::Draw()
 
 	// スプライト描画後処理
 	Sprite::EndDraw();
-
-	GameObject::BeginDraw(dxManager->GetcmdList());
-	player->Draw();
-	GameObject::EndDraw();
 }
 
 void Ending::NextScene()

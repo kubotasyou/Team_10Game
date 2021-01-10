@@ -2,7 +2,7 @@
 
 //“ñ\‰ğ•ú‚Æ‚©‚ğ–h‚®
 template <class T>
-inline void safe_delete(T*& p)
+inline void safedelete(T*& p)
 {
 	delete p;
 	p = nullptr;

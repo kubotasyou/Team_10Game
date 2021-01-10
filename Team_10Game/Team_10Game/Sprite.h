@@ -5,11 +5,17 @@
 #include <d3d12.h>
 #include <DirectXMath.h>
 
-using namespace DirectX;
-using namespace Microsoft::WRL;
-
 class Sprite
 {
+private: // エイリアス
+    //Microsoft::WRL::を省略
+	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+	//DirectX::を省略
+	using XMFLOAT2 = DirectX::XMFLOAT2;
+	using XMFLOAT3 = DirectX::XMFLOAT3;
+	using XMFLOAT4 = DirectX::XMFLOAT4;
+	using XMMATRIX = DirectX::XMMATRIX;
+
 public://シェーダに送るデータ
 
 	//頂点データ

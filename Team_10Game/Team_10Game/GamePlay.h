@@ -2,18 +2,19 @@
 #include "DirectXManager.h"
 #include "Input.h"
 #include "Sprite.h"
-#include "Object3D.h"
 #include "GameObject.h"
 #include "Model.h"
 #include "CountDownTimer.h"
 #include "Sound.h"
 #include "BaseScene.h"
 #include "Player.h"
+#include "Enemy.h"
+
+#include "DebugText.h"
 
 class GamePlay :public BaseScene
 {
 public:
-
 	//コンストラクタ
 	GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input);
 
@@ -31,34 +32,28 @@ public:
 
 	//次のシーンへ
 	void NextScene();
+
 private:
 
-	DirectXManager* dxManager = nullptr;
-	Input* input = nullptr;
+	DirectXManager* dxManager;
+	Input* input;
 
-	Sprite* sprite = nullptr;
-	GameObject* obj = nullptr;
-	Model* mod = nullptr;
-	GameObject* ground = nullptr;
-	Model* groundModel = nullptr;
+	Model* skyDomeModel;//スカイドームモデル
+	Model* sphereModel; //球モデル
+	Model* groundModel; //グラウンドモデル
 
-	GameObject * chara = nullptr;
-	Model * charaModel = nullptr;
+	GameObject* skyDome;//スカイドームオブジェクト
+	GameObject* ground;	//グラウンドオブジェクト
 
-	GameObject * chara2 = nullptr;
-	Model * charaModel2 = nullptr;
-
-	GameObject * bullet[100];
-	Model * charaModel3 = nullptr;
+	Player* player;
+	std::vector<Enemy*> enemys;
+	int enemyNum = 10;//一度に表示する敵の数。
 
 
-	XMFLOAT3 gNormal;
+	DebugText debugText;
 
-	CountDownTimer* downTimer;
+	//memo : デバッグテキストが使えないので、Spriteクラスを確認する
 
-	Sound* sound = nullptr;
-
-	Player* player = nullptr;
 };
 
 

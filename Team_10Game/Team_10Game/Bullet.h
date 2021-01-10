@@ -2,41 +2,57 @@
 
 #include "GameObject.h"
 #include "Model.h"
+#include "CollisionPrimitive.h"
 
 //弾クラス
-
 class Bullet
 {
+private:
+	// DirectX::を省略
+	using float3 = DirectX::XMFLOAT3;
+
 public:
-	Bullet(XMFLOAT3 position,Model* model);
+	Bullet(float3 position,Model* model);
 	~Bullet();
 
 	void Update();
 
 	void Draw();
 
-	XMFLOAT3 Position() { return position; }
+	float3 Position() { return position; }
 
 	//使っているかどうかを切り替える
-	void ChangeUsed(bool flag);
-	void ChangeDelete(bool flag);
+	void ChangeUseFlag(bool flag);
+	//死んでいるかどうかを切り替える
+	void ChangeDeadFlag(bool flag);
 
+	//使っているかどうかを切り替える
 	bool GetUsedFlag() { return isUsed; }
-	bool GetDeleteFlag() { return isDelete; }
+	//死んでいるかどうかを切り替える
+	bool GetDeadFlag() { return isDeadFlag; }
+
+	//当たり判定を取得
+	Sphere GetSphere() { return sphere; }
+
+private:
+
+	//弾の移動
+	void Move();
+
 private:
 	GameObject* bullet = nullptr;
 	Model* sphereModel = nullptr;
 
+	float3 position;//位置
+	float3 velocity;//移動量
 
-	XMFLOAT3 position;
-	XMFLOAT3 velocity;
-	XMFLOAT3 playerposition;
-
-	float speed = 0.1f;
-	float radius = 1.0f;
+	float speed = 0.1f;//移動速度
 
 	//使っているかどうかのフラグ
     bool isUsed;
-	bool isDelete;
+	bool isDeadFlag;
+
+	//当たり判定：球
+	Sphere sphere;
 };
 

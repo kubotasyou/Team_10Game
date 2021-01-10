@@ -148,8 +148,10 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CountDownTimer.cpp" />
+    <ClCompile Include="DebugText.cpp" />
     <ClCompile Include="DirectXManager.cpp" />
     <ClCompile Include="Ending.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Fader.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GamePlay.cpp" />
@@ -160,6 +162,7 @@
     <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerBullet.cpp" />
+    <ClCompile Include="Random.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -172,9 +175,12 @@
     <ClInclude Include="BaseScene.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="CollisionPrimitive.h" />
     <ClInclude Include="CountDownTimer.h" />
+    <ClInclude Include="DebugText.h" />
     <ClInclude Include="DirectXManager.h" />
     <ClInclude Include="Ending.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Fader.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GamePlay.h" />
@@ -185,6 +191,7 @@
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerBullet.h" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="SafeDelete.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sound.h" />

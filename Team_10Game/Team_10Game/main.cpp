@@ -65,14 +65,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	}
 
 	//解放
-	safe_delete(dxManager);
-	safe_delete(input);
+	safedelete(dxManager);
+	safedelete(input);
 	//safe_delete(gameplay);
-	safe_delete(sceneManager);
+	safedelete(sceneManager);
 
 	//ゲームウィンドウの破棄
 	winApp->ReleaseGameWindow();
-	safe_delete(winApp);
+	safedelete(winApp);
 
 	return 0;
 }

@@ -12,7 +12,7 @@ Title::Title(ISceneChanger* sceneChanger, DirectXManager * manager, Input * inpu
 
 Title::~Title()
 {
-	safe_delete(spriteBG);
+	safedelete(spriteBG);
 }
 
 void Title::Initialize()
@@ -27,8 +27,7 @@ void Title::Initialize()
 void Title::Update()
 {
 	if (input->GetKeyTrigger(KeyCode::SPACE))
-	{
-		
+	{	
 		NextScene();
 	}
 }

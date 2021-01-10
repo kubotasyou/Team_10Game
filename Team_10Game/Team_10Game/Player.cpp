@@ -1,43 +1,35 @@
 #include "Player.h"
-
 #include "SafeDelete.h"
 
 #include <DirectXMath.h>
 
-Player::Player(DirectXManager * dxManager, Input * input)
+Player::Player(Input * input, Model* model)
 {
-	this->dxManager = dxManager;
 	this->input = input;
+	this->sphereModel = model;
 
 	//プレイヤー生成
-	sphereModel = new Model(this->dxManager->GetDevice());
-	sphereModel->CreateModel("sphere2");
 	player = GameObject::Create();
 	player->SetModel(sphereModel);
-	player->SetPosition(XMFLOAT3(0, 5, 0));
-
 }
 
 Player::~Player()
 {
-	safe_delete(player);
-	safe_delete(sphereModel);
-	//std::vector<Bullet*>::iterator it = bl.begin();
-	//for (; it != bl.end(); ++it) {
-	//	delete *it;
-	//}
+	safedelete(player);
+	safedelete(sphereModel);
 }
 
 void Player::Initialize()
 {
+	//一応初期化
 	velocity = { 0,0,0 };
 
-	//たくさん作っておく
-	//for (int i = 0; i < 10; i++)
-	//{
-	//	bl.emplace_back(new Bullet(dxManager, player->GetPosition()));
-	//}
-
+	//位置初期化
+	position = float3(0, 1, 0);
+	player->SetPosition(position);
+	//自機：当たり判定初期化
+	sphere.center = XMVectorSet(position.x, position.y, position.z, 0);//位置
+	sphere.radius = 1.0f;//半径
 }
 
 void Player::Update()
@@ -49,23 +41,23 @@ void Player::Update()
 	//ボタンを押したら使用される
 	if (input->GetKeyTrigger(KeyCode::Z))
 	{
+		Shot();
+		//memo : ホントにメモ
 		////リストの中を全検索して、フラグがfalseなのを探す。
 		//for (auto test : bl)
 		//{
 		//	if (!test->GetUsedFlag())
 		//	{
 		//		//falseのフラグを1つ見つけたら、代入して処理を中断。
-
 		//		break;
 		//	}
 		//	//falseのフラグを見つけたらtureに変える。
 		//	test->ChangeUsed(true);
 		//}
-		Shot();
 
 	}
 	//リストの中を全検索して、フラグがtrueなのを探す。
-	for (auto test : bl)
+	for (auto test : bulletList)
 	{
 		//tureのフラグを見つけたら更新する
 		test->Update();
@@ -74,31 +66,25 @@ void Player::Update()
 }
 void Player::Shot()
 {
-	bl.emplace_back(new Bullet(player->GetPosition(), sphereModel));
-	for (int i = 0; i < bl.size(); i++)
+	bulletList.emplace_back(new Bullet(player->GetPosition(), sphereModel));
+	for (int i = 0; i < bulletList.size(); i++)
 	{
-		////リスト内のフラグがfalseのものを探す
-		if (!bl[i]->GetUsedFlag())
+		//リスト内のフラグがfalseのものを探す
+		if (!bulletList[i]->GetUsedFlag())
 		{
 			//falseのフラグを見つけたら、trueに変える
-			bl[i]->ChangeUsed(true);
+			bulletList[i]->ChangeUseFlag(true);
 			break;
 		}
 	}
-
 }
-
-void Player::BulletDel()
-{
-}
-
 
 void Player::Draw()
 {
 	player->Draw();
 
 	//リストの中を全検索して、フラグがtrueなのを探す。
-	for (auto test : bl)
+	for (auto test : bulletList)
 	{
 		//trueのフラグを見つけたら更新する
 		test->Draw();
@@ -115,7 +101,13 @@ void Player::Move()
 	velocity.x += input->GetStick("Vertices") * speed;
 	velocity.y += input->GetStick("Horizontal") * speed;
 
-	position = XMFLOAT3(position.x + velocity.x, position.y + velocity.y, position.z + velocity.z);
+	//float3に+=のoperatorがない。
+	position.x += velocity.x;
+	position.y += velocity.y;
+	position.z += velocity.z;
+
+	//当たり判定も一緒に動かす
+	sphere.center = XMVectorSet(position.x, position.y, position.z, 0);
 
 	player->SetPosition(position);
 }
