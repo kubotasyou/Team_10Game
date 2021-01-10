@@ -10,12 +10,12 @@
 #include "BaseScene.h"
 #include "Player.h"
 
-class GamePlay:public BaseScene
+class GamePlay :public BaseScene
 {
 public:
 
 	//コンストラクタ
-	GamePlay(ISceneChanger* sceneChanger,DirectXManager* manager,Input* input);
+	GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input);
 
 	//デストラクタ
 	~GamePlay();
@@ -41,7 +41,7 @@ private:
 	Model* mod = nullptr;
 	GameObject* ground = nullptr;
 	Model* groundModel = nullptr;
-	
+
 	GameObject * chara = nullptr;
 	Model * charaModel = nullptr;
 
@@ -60,4 +60,6 @@ private:
 
 	Player* player = nullptr;
 };
+
+
 
