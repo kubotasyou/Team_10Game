@@ -11,36 +11,11 @@ Player::Player(DirectXManager * dxManager, Input * input)
 
 	//プレイヤー生成
 	sphereModel = new Model(this->dxManager->GetDevice());
-<<<<<<< HEAD
 	sphereModel->CreateModel("sphere2");
 	player = GameObject::Create();
 	player->SetModel(sphereModel);
 	player->SetPosition(XMFLOAT3(0, 5, 0));
 
-	//足元の球の生成
-	collider = GameObject::Create();
-	collider->SetModel(sphereModel);
-	//足元となる位置に設置!
-	collider->SetPosition(XMFLOAT3(player->GetPosition().x, player->GetPosition().y - player->GetRadius(), player->GetPosition().z));
-	//サイズは小さめ
-	collider->SetScale(XMFLOAT3(0.1f, 0.1f, 0.1f));
-	//色は赤色
-	collider->SetColor({ 1,0,0,1 });
-	//足元の球の半径を変更
-	collider->SetRadius(colliderRadius);
-
-	sound = new Sound();
-	sound->LoadSE("Alarm01");
-
-	timer = new CountDownTimer();
-	timer->SetTime(1.5f);
-=======
-	sphereModel->CreateModel("sphere2");   //モデル生成
-	player = GameObject::Create();         //オブジェクト生成
-	player->SetModel(sphereModel);         //モデルセット
-	player->SetPosition(XMFLOAT3(0, 5, 0));//位置初期化
-
->>>>>>> Masataka
 }
 
 Player::~Player()
@@ -132,12 +107,6 @@ void Player::Draw()
 
 void Player::Move()
 {
-<<<<<<< HEAD
-	if (input->GetJoyPadRelease(JoyPad::B))
-	{
-		sound->PlaySE("Alarm01", 0.2f);
-	}
-=======
 	//これ必須
 	velocity = { 0,0,0 };
 
@@ -149,5 +118,4 @@ void Player::Move()
 	position = XMFLOAT3(position.x + velocity.x, position.y + velocity.y, position.z + velocity.z);
 
 	player->SetPosition(position);
->>>>>>> Masataka
 }

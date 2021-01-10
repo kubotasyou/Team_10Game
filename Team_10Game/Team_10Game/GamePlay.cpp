@@ -16,11 +16,8 @@ GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* 
 {
 
 }
-const int ObjectSize = 10;
-Object3D Transform[ObjectSize];
-float posx;
-float posy;
-float posz;
+
+
 GamePlay::~GamePlay()
 {
 	//safe_delete(sprite);
@@ -30,7 +27,7 @@ GamePlay::~GamePlay()
 	safe_delete(chara);
 	safe_delete(charaModel2);
 	safe_delete(chara2);
-	safe_delete(bullet[ObjectSize]);
+	/*safe_delete(bullet[ObjectSize]);*/
 	safe_delete(player);
 }
 
@@ -73,32 +70,8 @@ void GamePlay::Initialize()
 
 	charaModel3 = new Model(dxManager->GetDevice());
 	charaModel3->CreateModel("sphere2");
-	for (int i = 0; i < ObjectSize; i++)
-	{
-		bullet[i] = GameObject::Create();
-		bullet[i]->SetModel(charaModel3);
-		posz = 1000;
-	}
 	downTimer = new CountDownTimer();
 	downTimer->SetTime(5.0f);
-
-	sound = new Sound();
-<<<<<<< HEAD
-	sound->LoadSE("Alarm01");
-=======
-	//sound->LoadSE("Alarm01");
->>>>>>> Masataka
-	//sound->Play("Alarm01",0.1f);
-
-	//sound->LoadSound("3MinutesCooking");
-	//sound->Play("3MinutesCooking",0.1f);
-
-<<<<<<< HEAD
-	sound->LoadSE("GodisSaying");
-=======
-//	sound->LoadSE("GodisSaying");
->>>>>>> Masataka
-	//sound->PlayLoop("GodisSaying", 0.1f);
 
 
 	player = new Player(dxManager, input);
@@ -165,27 +138,21 @@ void GamePlay::Update()
 
 #pragma region 弾関連
 
-	for (int i = 0; i < ObjectSize; i++)
-	{
-		bullet[i]->SetPosition(XMFLOAT3(posx, posy, posz));
-	}
-	if (input->GetKeyTrigger(KeyCode::X))
-	{
+	//if (input->GetKeyTrigger(KeyCode::X))
+	//{
 
-		for (int i = 0; i < ObjectSize; i++)
-		{
-			bullet[i] = GameObject::Create();
-			posx = position.x;
-			posy = position.y;
-			posz = position.z;
-			bullet[i]->SetModel(charaModel3);
-			break;
-		}
-	}
-	posz++;
+	//	for (int i = 0; i < ObjectSize; i++)
+	//	{
+	//		bullet[i] = GameObject::Create();
+	//		posx = position.x;
+	//		posy = position.y;
+	//		posz = position.z;
+	//		bullet[i]->SetModel(charaModel3);
+	//		break;
+	//	}
+	//}
+	//posz++;
 #pragma endregion
-
-#pragma region 球と地面
 
 	//ReadMe : プレイヤーにカメラを追従させたい
 	// 球と地面
@@ -233,47 +200,44 @@ void GamePlay::Update()
 	//{
 	//	chara->SetColor(XMFLOAT4(1, 1, 1, 1));
 	//}
-
-<<<<<<< HEAD
 	if (input->GetKeyTrigger(KeyCode::Z))
 	{
-		sound->PlaySE("GodisSaying", 0.1f);
+		//sound->PlaySE("GodisSaying", 0.1f);
 	}
 	if (input->GetJoyPadRelease(JoyPad::A))
 	{
-		sound->PlaySE("Alarm01", 0.1f);
-=======
-	//if (input->GetKeyTrigger(KeyCode::Z))
-	//{
-	//	sound->PlaySE("GodisSaying", 0.1f);
-	//}
-	if (input->GetJoyPadRelease(JoyPad::A))
-	{
-	//	sound->PlaySE("Alarm01", 0.1f);
->>>>>>> Masataka
-	}
+		//sound->PlaySE("Alarm01", 0.1f);
+		//if (input->GetKeyTrigger(KeyCode::Z))
+		//{
+		//	sound->PlaySE("GodisSaying", 0.1f);
+		//}
+		if (input->GetJoyPadRelease(JoyPad::A))
+		{
+			//	sound->PlaySE("Alarm01", 0.1f);
+		}
 
 #pragma region 時間になったら系
 
-	//時間になったらモデルチェンジ
-	if (downTimer->IsTime())
-	{
-		/*sound->Play("Alarm01");*/
-	}
+		//時間になったらモデルチェンジ
+		if (downTimer->IsTime())
+		{
+			/*sound->Play("Alarm01");*/
+		}
 
 #pragma endregion
 
-	chara->SetTarget(chara->GetPosition());
-	chara->Update();
-	chara2->Update();
-
-	for (int i = 0; i < ObjectSize; i++)
-	{
-		bullet[i]->Update();
 	}
-	player->Update();
-	ground->Update();
-	downTimer->Update();
+		chara->SetTarget(chara->GetPosition());
+		chara->Update();
+		chara2->Update();
+
+		//for (int i = 0; i < ObjectSize; i++)
+		//{
+		//	bullet[i]->Update();
+		//}
+		player->Update();
+		ground->Update();
+		downTimer->Update();
 }
 
 void GamePlay::Draw()
@@ -289,10 +253,7 @@ void GamePlay::Draw()
 	chara2->Draw();
 	GameObject::EndDraw();
 	GameObject::BeginDraw(dxManager->GetcmdList());
-	for (int i = 0; i < ObjectSize; i++)
-	{
-		bullet[i]->Draw();
-	}
+
 	GameObject::EndDraw();
 	GameObject::BeginDraw(dxManager->GetcmdList());
 	ground->Draw();
