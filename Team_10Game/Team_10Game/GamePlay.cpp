@@ -33,7 +33,16 @@ GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* 
 
 GamePlay::~GamePlay()
 {
-
+	safedelete(skyDomeModel);
+	safedelete(sphereModel);
+	safedelete(groundModel);
+	safedelete(ground);
+	safedelete(skyDome);
+	for(auto e:enemys)
+	{
+		safedelete(e);
+	}
+	safedelete(player);
 }
 
 void GamePlay::Initialize()

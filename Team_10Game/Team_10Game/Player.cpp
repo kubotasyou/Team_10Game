@@ -15,8 +15,13 @@ Player::Player(Input * input, Model* model)
 
 Player::~Player()
 {
-	safedelete(player);
-	safedelete(sphereModel);
+//	safedelete(input);
+//	safedelete(player);
+//	safedelete(sphereModel);
+	//for (auto test : bulletList)
+	//{
+	//	safedelete(test);
+	//}
 }
 
 void Player::Initialize()

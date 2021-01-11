@@ -14,7 +14,7 @@ Enemy::Enemy(Model * model)
 
 Enemy::~Enemy()
 {
-	safedelete(enemyModel);
+    //safedelete(enemyModel);
 	safedelete(enemy);
 }
 

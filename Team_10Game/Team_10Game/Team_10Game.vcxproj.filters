@@ -1,73 +1,208 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <FxCompile Include="BasicPixelShader.hlsl" />
-    <FxCompile Include="BasicVertexShader.hlsl" />
-    <FxCompile Include="ObjectPixelShader.hlsl" />
-    <FxCompile Include="ObjectVertexShader.hlsl" />
-    <FxCompile Include="SpritePixelShader.hlsl" />
-    <FxCompile Include="SpriteVertexShader.hlsl" />
+    <FxCompile Include="BasicPixelShader.hlsl">
+      <Filter>リソースファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="BasicVertexShader.hlsl">
+      <Filter>リソースファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="SpriteVertexShader.hlsl">
+      <Filter>リソースファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="ObjectPixelShader.hlsl">
+      <Filter>リソースファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="ObjectVertexShader.hlsl">
+      <Filter>リソースファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="SpritePixelShader.hlsl">
+      <Filter>リソースファイル</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="CountDownTimer.cpp" />
-    <ClCompile Include="DirectXManager.cpp" />
-    <ClCompile Include="Ending.cpp" />
-    <ClCompile Include="Fader.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GamePlay.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="MosaicEffect.cpp" />
-    <ClCompile Include="Object3D.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerBullet.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="Sound.cpp" />
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="Title.cpp" />
-    <ClCompile Include="Vector3D.cpp" />
-    <ClCompile Include="WinApp.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="Random.cpp" />
-    <ClCompile Include="DebugText.cpp" />
+    <ClCompile Include="Bullet.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CountDownTimer.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugText.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXManager.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Ending.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Fader.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlay.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MosaicEffect.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Object3D.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerBullet.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3D.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="WinApp.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BaseScene.h" />
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Collision.h" />
-    <ClInclude Include="CountDownTimer.h" />
-    <ClInclude Include="DirectXManager.h" />
-    <ClInclude Include="Ending.h" />
-    <ClInclude Include="Fader.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GamePlay.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="ISceneChanger.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="MosaicEffect.h" />
-    <ClInclude Include="Object3D.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerBullet.h" />
-    <ClInclude Include="SafeDelete.h" />
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="Sound.h" />
-    <ClInclude Include="Sprite.h" />
-    <ClInclude Include="Timer.h" />
-    <ClInclude Include="Title.h" />
-    <ClInclude Include="Vector3D.h" />
-    <ClInclude Include="WinApp.h" />
-    <ClInclude Include="CollisionPrimitive.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Random.h" />
-    <ClInclude Include="DebugText.h" />
+    <ClInclude Include="BaseScene.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionPrimitive.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CountDownTimer.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugText.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXManager.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Ending.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Fader.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlay.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ISceneChanger.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MosaicEffect.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Object3D.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBullet.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SafeDelete.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3D.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="WinApp.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="BasicShaderHeader.hlsli" />
-    <None Include="ObjectShaderHeader.hlsli" />
-    <None Include="SpriteShaderHeader.hlsli" />
+    <None Include="BasicShaderHeader.hlsli">
+      <Filter>リソースファイル</Filter>
+    </None>
+    <None Include="ObjectShaderHeader.hlsli">
+      <Filter>リソースファイル</Filter>
+    </None>
+    <None Include="SpriteShaderHeader.hlsli">
+      <Filter>リソースファイル</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ヘッダーファイル">
+      <UniqueIdentifier>{1bb8b6a5-e607-4307-9eee-3f220341991d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル">
+      <UniqueIdentifier>{16091630-6a95-4ffa-9d37-5ad7d813930b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソースファイル">
+      <UniqueIdentifier>{0ed5b799-0d17-4a23-8820-99815cc401a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
