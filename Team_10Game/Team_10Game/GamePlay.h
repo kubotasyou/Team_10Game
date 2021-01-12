@@ -51,11 +51,13 @@ private:
 	Player* player;
 	std::vector<Enemy*> enemys;
 	int enemyNum = 10;//一度に表示する敵の数。
-
+	bool hit = false;//多段ヒットしないように条件追加
+	bool timer = false;//追加
+	int t = 0;//追加
+	int d = 1;//追加
 	DebugText debugText;
 	HpText hpText;
 	//memo : デバッグテキストが使えないので、Spriteクラスを確認する
-
 };
 
 

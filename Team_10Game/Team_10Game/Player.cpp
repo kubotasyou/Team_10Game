@@ -86,8 +86,10 @@ void Player::Shot()
 
 void Player::Draw()
 {
-	player->Draw();
-
+	if (!DamageFlag)
+	{
+		player->Draw();
+	}
 	//リストの中を全検索して、フラグがtrueなのを探す。
 	for (auto test : bulletList)
 	{
@@ -115,4 +117,9 @@ void Player::Move()
 	sphere.center = XMVectorSet(position.x, position.y, position.z, 0);
 
 	player->SetPosition(position);
+}
+
+void Player::ChangeDamageFlag(bool flag)
+{
+	DamageFlag = flag;
 }

@@ -34,6 +34,11 @@ public:
 	//弾のリストを取得したい
 	std::vector<Bullet*> GetBulletList() { return bulletList; }
 
+	//追加
+	void ChangeDamageFlag(bool flag);
+	bool GetDamageFlag() { return DamageFlag; }
+	///
+
 private:
 
 	//自機の移動
@@ -49,6 +54,8 @@ private:
 
 	float speed = 0.1f;
 	float hp = 3;
+
+	bool DamageFlag =false;
 
 	//弾のリスト
 	std::vector<Bullet*> bulletList;

@@ -55,6 +55,12 @@ void Enemy::Update()
 	{
 		enemy->SetColor({ 1, 1, 1, 1 });
 	}
+	///////////‰æ–Ê‰œ‚Ü‚Ås‚Á‚½‚çÁ‚¦‚é‚æ‚¤‚É
+	if (position.z <= -5)
+	{
+		isDead = true;
+	}
+	/////////////////////////////////////////
 }
 
 void Enemy::Draw()

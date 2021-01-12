@@ -6,6 +6,9 @@
 #include <sstream>
 #include <iomanip>
 
+//プレイヤーのHP 
+int hp = 3;
+///////////////
 
 GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input, Score* score)
 	:BaseScene(sceneChanger),
@@ -45,8 +48,9 @@ GamePlay::~GamePlay()
 		safedelete(e);
 	}
 	safedelete(player);
+
 }
-int hp = 3;
+
 void GamePlay::Initialize()
 {
 
@@ -93,17 +97,17 @@ void GamePlay::Update()
 	skyDome->Update();
 	ground->Update();
 
-	if (input->GetKeyTrigger(KeyCode::SPACE))
-	{
-		NextScene();
-	}
+	//if (input->GetKeyTrigger(KeyCode::SPACE))
+	//{
+	//	NextScene();
+	//}
 
-	if (input->GetKeyTrigger(KeyCode::A))
-	{
-		hp--;
-		score->AddScore(10);
-	}
-	if (hp < 0)
+	//if (input->GetKeyTrigger(KeyCode::A))
+	//{
+	//	hp--;
+	//	score->AddScore(10);
+	//}
+	if (hp <= 0)
 	{
 		NextScene();
 	}
@@ -131,20 +135,42 @@ void GamePlay::Update()
 	for (int j = 0; j < enemys.size(); j++)
 	{
 		bool BstoEs = Collision::SphereToSphere(player->GetSphere(), enemys[j]->GetSphere());
-		if (BstoEs)
+		if (BstoEs&&hit==false)
 		{
 			enemys[j]->ChangeDeadFlag(true);
 			hp--;
+			hit = true;
+			timer = true;
+			player->ChangeDamageFlag(true);
 		}
 	}
-
+	if (timer==true)
+	{
+		t++;
+		player->ChangeDamageFlag(true);
+		if (t > 20 * d)
+		{
+			player->ChangeDamageFlag(false);
+			d++;
+		}
+		if(t>180)
+		{
+			timer = false;
+			hit = false;
+			t = 0;
+			d = 1;
+			player->ChangeDamageFlag(false);
+		}
+	}
 #pragma endregion
 
 	//残り時間を表示
 	std::ostringstream timerstr;
 	timerstr.clear();
-	timerstr << "Time:" << std::fixed << std::setprecision(1) << "Test";
-	debugText.Print(timerstr.str(), 800, 0, 5.0f);
+	///////////
+	//timerstr << "Time:" << std::fixed << std::setprecision(1) << "Test";
+	//debugText.Print(timerstr.str(), 800, 0, 5.0f);
+	//////////
 	std::ostringstream hpstr;
 	hpstr.clear();
 	hpstr << "HP:" << std::fixed << std::setprecision(1) << hp;
@@ -174,7 +200,7 @@ void GamePlay::Draw()
 	//2Dテクスチャ描画前処理
 	Sprite::BeginDraw(cmdList);
 
-	score->Draw(500, 0, 8);
+	score->Draw(400, 0, 8);
 	debugText.DrawAll(cmdList);
 	hpText.DrawAll(cmdList);
 
