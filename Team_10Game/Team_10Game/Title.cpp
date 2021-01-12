@@ -17,10 +17,8 @@ Title::~Title()
 
 void Title::Initialize()
 {
-	// テクスチャ読み込み(テストで５番)
-	Sprite::LoadTexture(5, L"Resources/Texture/tex1.png");
 	// 背景スプライト生成
-	spriteBG = Sprite::Create(5, { 0.0f,0.0f });
+	spriteBG = Sprite::Create(2, { 0.0f,0.0f });
 	//sound->PlaySE("3MinutesCooking",0.1f);
 }
 

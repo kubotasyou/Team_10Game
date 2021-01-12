@@ -11,27 +11,38 @@ SceneManager::SceneManager(DirectXManager * manager, Input * input, Sound* sound
 	dxManager(manager),
 	input(input),
 	sound(sound),
-	fader(new Fader(manager))//フェーダー生成
+	fader(new Fader(manager)),//フェーダー生成
+	score(new Score(dxManager))
 {
 	//最初のシーンを設定
-	currentScene = (BaseScene*) new GamePlay(this, dxManager, input);
+	currentScene = (BaseScene*) new GamePlay(this, dxManager, input,score);
+
+	//フェードのタイプを設定
 	fader->SetFaderType(FadeType::Normal);
+
+	//スコアを初期化
+	score->Initialize();
 }
 
 SceneManager::~SceneManager()
 {
 	delete(currentScene);
 	delete(fader);
+	delete(score);
 }
 
 void SceneManager::Initialize()
 {
 	currentScene->Initialize();
 
-	// デバッグテキスト用テクスチャ読み込み
+	// 0デバッグテキスト
 	Sprite::LoadTexture(0, L"Resources/Texture/debugfont.png");
-
-	//Sprite::LoadTexture()
+	// 1フェード用黒画像
+	Sprite::LoadTexture(1, L"Resources/Texture/black.png");
+	// 5タイトルの画像
+	Sprite::LoadTexture(2, L"Resources/Texture/Title.png");
+	// 6エンディングの画像
+    Sprite::LoadTexture(3, L"Resources/Texture/Ending.png");
 }
 
 void SceneManager::Update()
@@ -56,10 +67,10 @@ void SceneManager::Update()
 			currentScene = (BaseScene*) new Title(this, dxManager, input,sound);
 			break;
 		case SceneGame:
-			currentScene = (BaseScene*) new GamePlay(this, dxManager, input);
+			currentScene = (BaseScene*) new GamePlay(this, dxManager, input,score);
 			break;
 		case SceneEnding:
-			currentScene = (BaseScene*) new Ending(this, dxManager, input,sound);
+			currentScene = (BaseScene*) new Ending(this, dxManager, input,sound,score);
 			break;
 
 		default:

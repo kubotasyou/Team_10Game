@@ -4,12 +4,13 @@
 #include "Input.h"
 #include "Sprite.h"
 #include "Sound.h"
+#include "Score.h"
 
 class Ending : public BaseScene
 {
 public:
 	//コンスト
-	Ending(ISceneChanger* sceneChanger, DirectXManager* dxcommon, Input* input,Sound* sound);
+	Ending(ISceneChanger* sceneChanger, DirectXManager* dxcommon, Input* input,Sound* sound, Score* score);
 	//デスト
 	~Ending();
 	//初期化
@@ -26,6 +27,7 @@ private:
 	Input* input = nullptr;
 	Sprite* spriteBG = nullptr;
 	Sound* sound = nullptr;
+	Score* score = nullptr;
 
 	float test = 0;
 };

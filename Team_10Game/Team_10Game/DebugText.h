@@ -20,7 +20,7 @@ public:
 
 	void Initialize(UINT texnumber);
 
-	void Print(const std::string & text, float x, float y, float size);
+	void Print(const std::string & text, float x, float y, float size, DirectX::XMFLOAT4 color = {1,1,1,1});
 
 	void DrawAll(ID3D12GraphicsCommandList * cmdList);
 

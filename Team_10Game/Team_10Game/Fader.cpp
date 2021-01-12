@@ -4,10 +4,8 @@
 Fader::Fader(DirectXManager * manager)
 	:dxManager(manager)
 {
-	// テクスチャ読み込み(テストで10番)
-	Sprite::LoadTexture(10, L"Resources/Texture/black.png");
 	//背景スプライト生成
-	sprite = Sprite::Create(10, { 0,0 });
+	sprite = Sprite::Create(1, { 0,0 });
 
 	Initialize();
 }

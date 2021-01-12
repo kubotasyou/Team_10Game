@@ -5,6 +5,7 @@
 #include "DirectXManager.h"
 #include "BaseScene.h"
 #include "GameObject.h"
+#include "Score.h"
 
 class SceneManager : public ISceneChanger
 {
@@ -32,6 +33,7 @@ private:
 	Input* input;
 	Sound* sound;
 	Fader* fader;
+	Score* score;
 };
 
 

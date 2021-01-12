@@ -11,13 +11,14 @@
 #include "Enemy.h"
 
 #include "DebugText.h"
+#include "Score.h"
 #include "HpText.h"
 
 class GamePlay :public BaseScene
 {
 public:
 	//コンストラクタ
-	GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input);
+	GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input, Score* score);
 
 	//デストラクタ
 	~GamePlay();
@@ -38,6 +39,7 @@ private:
 
 	DirectXManager* dxManager;
 	Input* input;
+	Score* score;
 
 	Model* skyDomeModel;//スカイドームモデル
 	Model* sphereModel; //球モデル

@@ -7,10 +7,11 @@
 #include <iomanip>
 
 
-GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input)
+GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input, Score* score)
 	:BaseScene(sceneChanger),
 	dxManager(manager),
-	input(input)
+	input(input),
+	score(score)
 {
 
 #pragma region モデルの読み込みと作成
@@ -80,6 +81,8 @@ void GamePlay::Initialize()
 
 void GamePlay::Update()
 {
+	score->Update();
+
 	player->Update();
 
 	for (auto& e : enemys)
@@ -98,6 +101,7 @@ void GamePlay::Update()
 	if (input->GetKeyTrigger(KeyCode::A))
 	{
 		hp--;
+		score->AddScore(10);
 	}
 	if (hp < 0)
 	{
@@ -118,6 +122,8 @@ void GamePlay::Update()
 				player->GetBulletList()[i]->ChangeDeadFlag(true);
 				//敵を削除
 				enemys[j]->ChangeDeadFlag(true);
+				//スコアを追加
+				score->AddScore(20);
 			}
 		}
 	}
@@ -165,11 +171,14 @@ void GamePlay::Draw()
 	// 3Dオブジェクト描画後処理
 	GameObject::EndDraw();
 
+	//2Dテクスチャ描画前処理
 	Sprite::BeginDraw(cmdList);
 
+	score->Draw(500, 0, 8);
 	debugText.DrawAll(cmdList);
 	hpText.DrawAll(cmdList);
 
+	//2Dテクスチャ描画後処理
 	Sprite::EndDraw();
 }
 

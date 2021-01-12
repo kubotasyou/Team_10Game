@@ -22,7 +22,7 @@ void DebugText::Initialize(UINT texnumber)
 }
 
 // 1•¶š—ñ’Ç‰Á
-void DebugText::Print(const std::string & text, float x, float y, float scale = 1.0f)
+void DebugText::Print(const std::string & text, float x, float y, float scale = 1.0f, DirectX::XMFLOAT4 color)
 {
 	// ‘S‚Ä‚Ì•¶š‚É‚Â‚¢‚Ä
 	for (int i = 0; i < text.size(); i++)
@@ -47,6 +47,7 @@ void DebugText::Print(const std::string & text, float x, float y, float scale = 
 		spriteDatas[spriteIndex]->SetPosition({ x + fontWidth * scale * i, y });
 		spriteDatas[spriteIndex]->SetTextureRect({ (float)fontIndexX * fontWidth, (float)fontIndexY * fontHeight }, { (float)fontWidth, (float)fontHeight });
 		spriteDatas[spriteIndex]->SetScale({ fontWidth * scale, fontHeight * scale });
+		spriteDatas[spriteIndex]->SetColor(color);
 
 		// •¶š‚ğ‚P‚Âi‚ß‚é
 		spriteIndex++;

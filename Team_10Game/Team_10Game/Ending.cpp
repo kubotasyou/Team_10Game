@@ -1,11 +1,12 @@
 #include "Ending.h"
 #include "SafeDelete.h"
 
-Ending::Ending(ISceneChanger * sceneChanger, DirectXManager * manager, Input * input,Sound * sound)
+Ending::Ending(ISceneChanger* sceneChanger, DirectXManager* dxcommon, Input* input, Sound* sound, Score* score)
 	:BaseScene(sceneChanger),//read ベースシーンをここで作っているのかな...
-	dxManager(manager),
+	dxManager(dxcommon),
 	input(input),
-	sound(sound)
+	sound(sound),
+	score(score)
 {
 }
 
@@ -16,10 +17,8 @@ Ending::~Ending()
 
 void Ending::Initialize()
 {
-	// テクスチャ読み込み(テストで５番)
-	Sprite::LoadTexture(6, L"Resources/Texture/kirby.png");
 	// 背景スプライト生成
-	spriteBG = Sprite::Create(6, { 0.0f,0.0f });
+	spriteBG = Sprite::Create(3, { 0.0f,0.0f });
 	sound->PlayLoopBGM("testBgm.mp3");
 }
 
@@ -38,6 +37,7 @@ void Ending::Draw()
 	Sprite::BeginDraw(dxManager->GetcmdList());
 	// 背景スプライト描画
 	spriteBG->Draw();
+	score->Draw(300, 350, 8, { 1,0,0,1 });
 
 	// スプライト描画後処理
 	Sprite::EndDraw();
