@@ -11,6 +11,7 @@
 #include "Enemy.h"
 
 #include "DebugText.h"
+#include "HpText.h"
 
 class GamePlay :public BaseScene
 {
@@ -49,9 +50,8 @@ private:
 	std::vector<Enemy*> enemys;
 	int enemyNum = 10;//一度に表示する敵の数。
 
-
 	DebugText debugText;
-
+	HpText hpText;
 	//memo : デバッグテキストが使えないので、Spriteクラスを確認する
 
 };

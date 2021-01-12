@@ -48,6 +48,7 @@ private:
 	float3 velocity;
 
 	float speed = 0.1f;
+	float hp = 3;
 
 	//’e‚ÌƒŠƒXƒg
 	std::vector<Bullet*> bulletList;

@@ -6,6 +6,7 @@
 #include <sstream>
 #include <iomanip>
 
+
 GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input)
 	:BaseScene(sceneChanger),
 	dxManager(manager),
@@ -27,7 +28,7 @@ GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* 
 #pragma endregion
 
 	debugText.Initialize(0);
-
+	hpText.Initialie(0);
 }
 
 
@@ -44,7 +45,7 @@ GamePlay::~GamePlay()
 	}
 	safedelete(player);
 }
-
+int hp = 3;
 void GamePlay::Initialize()
 {
 
@@ -61,6 +62,8 @@ void GamePlay::Initialize()
 		enemys[i] = new Enemy(sphereModel);
 		enemys[i]->Initialize();
 	}
+
+	hp = 3;
 
 	//スカイドーム
 	skyDome = GameObject::Create();
@@ -92,6 +95,14 @@ void GamePlay::Update()
 		NextScene();
 	}
 
+	if (input->GetKeyTrigger(KeyCode::A))
+	{
+		hp--;
+	}
+	if (hp < 0)
+	{
+		NextScene();
+	}
 #pragma region 当たり判定処理
 
 	//弾を全検索
@@ -111,6 +122,16 @@ void GamePlay::Update()
 		}
 	}
 
+	for (int j = 0; j < enemys.size(); j++)
+	{
+		bool BstoEs = Collision::SphereToSphere(player->GetSphere(), enemys[j]->GetSphere());
+		if (BstoEs)
+		{
+			enemys[j]->ChangeDeadFlag(true);
+			hp--;
+		}
+	}
+
 #pragma endregion
 
 	//残り時間を表示
@@ -118,7 +139,10 @@ void GamePlay::Update()
 	timerstr.clear();
 	timerstr << "Time:" << std::fixed << std::setprecision(1) << "Test";
 	debugText.Print(timerstr.str(), 800, 0, 5.0f);
-
+	std::ostringstream hpstr;
+	hpstr.clear();
+	hpstr << "HP:" << std::fixed << std::setprecision(1) << hp;
+	hpText.Print(hpstr.str(), 200, 0, 5.0f);
 }
 
 void GamePlay::Draw()
@@ -144,6 +168,7 @@ void GamePlay::Draw()
 	Sprite::BeginDraw(cmdList);
 
 	debugText.DrawAll(cmdList);
+	hpText.DrawAll(cmdList);
 
 	Sprite::EndDraw();
 }

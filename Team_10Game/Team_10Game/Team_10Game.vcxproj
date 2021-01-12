@@ -155,6 +155,7 @@
     <ClCompile Include="Fader.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GamePlay.cpp" />
+    <ClCompile Include="HpText.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Fader.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GamePlay.h" />
+    <ClInclude Include="HpText.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="ISceneChanger.h" />
     <ClInclude Include="Model.h" />

@@ -96,6 +96,9 @@
     <ClCompile Include="WinApp.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="HpText.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseScene.h">
@@ -180,6 +183,9 @@
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="WinApp.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="HpText.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
