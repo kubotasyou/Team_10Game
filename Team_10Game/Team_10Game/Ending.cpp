@@ -47,7 +47,28 @@ void Ending::Draw()
 	{
 	case 0:
 		curssor->Draw();
-		curssor->SetPosition({ 50.0f,50.0f });
+		curssor->SetPosition({ 50.0f,490.0f });
+		if (input->GetKeyTrigger(KeyCode::RIGHT))
+		{
+			selectCount = 1;
+		}
+		if (input->GetKeyTrigger(KeyCode::LEFT))
+		{
+			selectCount = 1;
+		}
+		break;
+	case 1:
+		curssor->Draw();
+		curssor->SetPosition({ 800.0f,490.0f });
+		if (input->GetKeyTrigger(KeyCode::RIGHT))
+		{
+			selectCount = 0;
+		}
+		if (input->GetKeyTrigger(KeyCode::LEFT))
+		{
+			selectCount = 0;
+		}
+		break;
 	}
 
 	// スプライト描画後処理
@@ -59,4 +80,13 @@ void Ending::NextScene()
 	sound->Stop();
 	//シーン変更(変更したいシーンを入れてね)
 	sceneChanger->ChangeScene(SceneTitle);
+	switch (selectCount)
+	{
+	case 0:
+		sceneChanger->ChangeScene(SceneTitle);
+		break;
+	case 1:
+		sceneChanger->ChangeScene(SceneGame);
+		break;
+	}
 }
