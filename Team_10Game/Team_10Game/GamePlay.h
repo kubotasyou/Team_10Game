@@ -42,11 +42,11 @@ private:
 	Input* input;
 	Score* score;
 
-	Model* skyDomeModel;//スカイドームモデル
+	//Model* skyDomeModel;//スカイドームモデル
 	Model* sphereModel; //球モデル
 	//Model* groundModel; //グラウンドモデル
 
-	GameObject* skyDome;//スカイドームオブジェクト
+	//GameObject* skyDome;//スカイドームオブジェクト
 	GameObject* ground;	//グラウンドオブジェクト
 
 	Player* player;

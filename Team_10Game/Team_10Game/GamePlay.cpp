@@ -40,7 +40,7 @@ GamePlay::~GamePlay()
 	safedelete(sphereModel);
 	//safedelete(groundModel);
 	safedelete(ground);
-	safedelete(skyDome);
+	//safedelete(skyDome);
 	for(auto e:enemys)
 	{
 		safedelete(e);
@@ -93,7 +93,7 @@ void GamePlay::Update()
 		e->Update(player->GetPosition());
 	}
 
-	skyDome->Update();
+	//skyDome->Update();
 	//ground->Update();
 
 	//体力がなくなったら次のシーンへ
@@ -198,7 +198,7 @@ void GamePlay::Draw()
 		e->Draw();
 	}
 
-	skyDome->Draw();
+	//skyDome->Draw();
 	//ground->Draw();
 
 	// 3Dオブジェクト描画後処理
@@ -224,5 +224,6 @@ void GamePlay::Draw()
 
 void GamePlay::NextScene()
 {
+	sound->Stop();
 	sceneChanger->ChangeScene(SceneEnding);
 }
