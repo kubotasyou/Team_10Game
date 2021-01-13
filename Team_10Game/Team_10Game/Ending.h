@@ -30,5 +30,9 @@ private:
 	Score* score = nullptr;
 
 	float test = 0;
+
+	Sprite* curssor = nullptr;
+
+	int selectCount = 0;
 };
 
