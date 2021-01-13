@@ -7,7 +7,7 @@
 #include <iomanip>
 
 //プレイヤーのHP 
-int hp = 3;
+int hp = 10;
 ///////////////
 
 GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input, Score* score)
@@ -94,11 +94,11 @@ void GamePlay::Update()
 
 	for (auto& e : enemys)
 	{
-		e->Update();
+		e->Update(player->GetPosition());
 	}
 
 	skyDome->Update();
-	ground->Update();
+	//ground->Update();
 
 	//if (input->GetKeyTrigger(KeyCode::SPACE))
 	//{
@@ -136,6 +136,7 @@ void GamePlay::Update()
 		}
 	}
 
+	//敵とプレイヤーの当たり判定
 	for (int j = 0; j < enemys.size(); j++)
 	{
 		bool BstoEs = Collision::SphereToSphere(player->GetSphere(), enemys[j]->GetSphere());
@@ -175,10 +176,16 @@ void GamePlay::Update()
 	//timerstr << "Time:" << std::fixed << std::setprecision(1) << "Test";
 	//debugText.Print(timerstr.str(), 800, 0, 5.0f);
 	//////////
+	//std::ostringstream hpstr;
+	//hpstr.clear();
+	//hpstr << "HP:" << std::fixed << std::setprecision(1) << hp;
+	//hpText.Print(hpstr.str(), 200, 0, 5.0f);
+
+
 	std::ostringstream hpstr;
 	hpstr.clear();
-	hpstr << "HP:" << std::fixed << std::setprecision(1) << hp;
-	hpText.Print(hpstr.str(), 200, 0, 5.0f);
+	hpstr << "HP:" << std::fixed << std::setprecision(1) << player->GetPosition().x << player->GetPosition().y;
+	hpText.Print(hpstr.str(), 200, 0, 2.0f);
 
 	for (auto& e : enemys)
 	{
@@ -225,7 +232,7 @@ void GamePlay::Draw()
 	}
 
 	skyDome->Draw();
-	ground->Draw();
+	//ground->Draw();
 
 	// 3Dオブジェクト描画後処理
 	GameObject::EndDraw();

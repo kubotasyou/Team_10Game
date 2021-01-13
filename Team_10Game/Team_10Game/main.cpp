@@ -41,8 +41,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//gameplay->Initialize(dxManager, input);
 
 	Sound* sound = new Sound();
-	sound->LoadSE("3MinutesCooking");
-	sound->LoadBGM("testBgm.mp3");
 
 	SceneManager* sceneManager = new SceneManager(dxManager, input, sound);
 	sceneManager->Initialize();

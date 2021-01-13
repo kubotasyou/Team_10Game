@@ -20,7 +20,7 @@ public:
 
 	void Initialize();
 
-	void Update();
+	void Update(float3 playerPosition);
 
 	void Draw();
 
@@ -44,7 +44,7 @@ private:
 
 	float3 position;
 	float3 velocity;
-	float speed = 0.05f;
+	float speed = 0.1f;
 
 	float3 playerPosition;//プレイヤーの位置(今回は固定。)
 	float3 dist;//プレイヤーと敵との距離
@@ -53,9 +53,6 @@ private:
 	//当たり判定：球
 	Sphere sphere;
 
-	bool isDead = false;//死亡判定。
-
-	ParticleManager* particleMan = nullptr;
-	float3 deadPos;
+	bool isDead = false;//死亡判定
 };
 

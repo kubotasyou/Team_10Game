@@ -15,7 +15,7 @@ SceneManager::SceneManager(DirectXManager * manager, Input * input, Sound* sound
 	score(new Score(dxManager))
 {
 	//最初のシーンを設定
-	currentScene = (BaseScene*) new GamePlay(this, dxManager, input,score);
+	currentScene = (BaseScene*) new GamePlay(this, dxManager, input, score);
 
 	//フェードのタイプを設定
 	fader->SetFaderType(FadeType::Normal);
@@ -33,7 +33,7 @@ SceneManager::~SceneManager()
 
 void SceneManager::Initialize()
 {
-	currentScene->Initialize();
+#pragma region テクスチャ読み込み
 
 	// 0デバッグテキスト
 	Sprite::LoadTexture(0, L"Resources/Texture/debugfont.png");
@@ -42,7 +42,19 @@ void SceneManager::Initialize()
 	// 5タイトルの画像
 	Sprite::LoadTexture(2, L"Resources/Texture/Title.png");
 	// 6エンディングの画像
-    Sprite::LoadTexture(3, L"Resources/Texture/Ending.png");
+	Sprite::LoadTexture(3, L"Resources/Texture/Ending.png");
+
+#pragma endregion
+
+#pragma region サウンド読み込み
+
+	sound->LoadSE("3MinutesCooking");
+	sound->LoadBGM("testBgm.mp3");
+
+#pragma endregion
+
+	currentScene->Initialize();
+
 }
 
 void SceneManager::Update()

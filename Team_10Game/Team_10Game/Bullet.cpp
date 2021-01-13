@@ -39,7 +39,7 @@ void Bullet::Update()
 	if (!isUsed) return;
 
 	bullet->Update();
-	if (position.z > 10)
+	if (position.z > 15)
 	{
 		isDeadFlag = true;
 	}
@@ -54,7 +54,7 @@ void Bullet::Update()
 		//ˆÊ’u‚ğ‰Šú‰»‚µ‚Ä
 		sphere.center = { 0, 0, 0, 1 };
 		//”¼Œa‚à¬‚³‚­‚·‚é
-		sphere.radius = 0.01f;
+		sphere.radius = 0.0f;
 	}
 
 #pragma endregion
