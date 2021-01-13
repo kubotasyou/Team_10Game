@@ -9,7 +9,6 @@
 #include "BaseScene.h"
 #include "Player.h"
 #include "Enemy.h"
-
 #include "DebugText.h"
 #include "Score.h"
 #include "HpText.h"
@@ -20,7 +19,7 @@ class GamePlay :public BaseScene
 {
 public:
 	//コンストラクタ
-	GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input, Score* score);
+	GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input, Score* score,Sound* sound);
 
 	//デストラクタ
 	~GamePlay();
@@ -43,11 +42,11 @@ private:
 	Input* input;
 	Score* score;
 
-	Model* skyDomeModel;//スカイドームモデル
+	//Model* skyDomeModel;//スカイドームモデル
 	Model* sphereModel; //球モデル
 	//Model* groundModel; //グラウンドモデル
 
-	GameObject* skyDome;//スカイドームオブジェクト
+	//GameObject* skyDome;//スカイドームオブジェクト
 	GameObject* ground;	//グラウンドオブジェクト
 
 	Player* player;
@@ -62,6 +61,7 @@ private:
 
 	ParticleManager* particleMan = nullptr;
 	DirectX::XMFLOAT3 deadPos;
+	Sound* sound =nullptr;
 };
 
 

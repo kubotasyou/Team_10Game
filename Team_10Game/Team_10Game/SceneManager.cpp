@@ -87,7 +87,7 @@ void SceneManager::Update()
 			currentScene = (BaseScene*) new Title(this, dxManager, input,sound);
 			break;
 		case SceneGame:
-			currentScene = (BaseScene*) new GamePlay(this, dxManager, input,score);
+			currentScene = (BaseScene*) new GamePlay(this, dxManager, input,score,sound);
 			break;
 		case SceneEnding:
 			currentScene = (BaseScene*) new Ending(this, dxManager, input,sound,score);
