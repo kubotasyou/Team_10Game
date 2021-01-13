@@ -1,6 +1,7 @@
 #include "GamePlay.h"
 #include "SafeDelete.h"
 #include "Collision.h"
+#include "Random.h"
 
 //文字描画用
 #include <sstream>
@@ -140,6 +141,7 @@ void GamePlay::Update()
 			hit = true;
 			timer = true;
 			player->ChangeDamageFlag(true);
+			deadPos = enemys[j]->GetPosition();
 		}
 	}
 	//if (timer==true)
@@ -184,10 +186,10 @@ void GamePlay::Update()
 	{
 		if (e->GetDeadFlag())
 		{
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 100; i++)
 			{
 				//X,Y,Z全ての座標で{-0.05f,+0.05f}でランダムに分布
-				const float rnd_vel = 0.1f;
+				const float rnd_vel = 0.15f;
 				XMFLOAT3 vel{};
 				vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 				vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
@@ -197,8 +199,8 @@ void GamePlay::Update()
 				const float rnd_acc = 0.001f;
 				acc.y = -(float)rand() / RAND_MAX * rnd_acc;
 
-				XMFLOAT4 color = { 0.0f, 1.0f, 0.0f, 0.0f };
-				float t = 1;
+				XMFLOAT4 color = { 1.0f, 0.0f, 0.0f, 0.0f };
+				float t = 2;
 
 				deadPos = { deadPos.x, deadPos.y + t, deadPos.z };
 
