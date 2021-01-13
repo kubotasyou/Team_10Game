@@ -7,6 +7,8 @@
 #include "CollisionPrimitive.h"
 #include "Bullet.h"
 
+#include "CountDownTimer.h"
+
 class Player
 {
 private:
@@ -42,7 +44,6 @@ public:
 	//追加
 	void ChangeDamageFlag(bool flag);
 	bool GetDamageFlag() { return DamageFlag; }
-	///
 
 private:
 
@@ -70,5 +71,14 @@ private:
 
 	//ダメージフラグ
 	bool dFlag = false;
+
+	//ダメージ用タイマー
+	CountDownTimer* downTimer;
+
+	//無敵時間
+	float noDamageTime = 3.0f;
+
+	//点滅用カウント
+	int count = 0;
 };
 

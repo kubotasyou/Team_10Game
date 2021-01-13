@@ -38,11 +38,15 @@ void Player::Initialize()
 
 	//体力初期化
 	hp = 5;
+
+	downTimer = new CountDownTimer();
+	downTimer->SetTime(noDamageTime);
 }
 
 void Player::Update()
 {
 	player->Update();
+	//downTimer->Update();
 
 	Move();
 
@@ -71,9 +75,35 @@ void Player::Update()
 		test->Update();
 	}
 
+	//ダメージを受けているとき
 	if (dFlag == true)
 	{
+		//時間を進める
+		downTimer->Update();
 
+		//カウントを増やす
+		count++;
+
+		//カウントが10で割り切れるとき
+		if (count % 10 == 0)
+		{
+			//色を変える
+			player->SetColor({ 1, 0, 0, 1 });
+		}
+		else
+		{
+			//割り切れないときは通常色
+			player->SetColor({ 1, 1, 1, 1 });
+		}
+
+		//時間になったら
+		if (downTimer->IsTime())
+		{
+			player->SetColor({ 1, 1, 1, 1 });
+			//ダメージを受けていない状態にする
+			count = 0;
+			dFlag = false;
+		}
 	}
 
 }
@@ -94,21 +124,17 @@ void Player::Shot()
 
 void Player::Damage(int damage)
 {
-	hp -= damage;
-
 	if (!dFlag)
 	{
-		
-		/*dFlag = true;*/
+		hp -= damage;                    //ダメージ受ける
+		downTimer->SetTime(noDamageTime);//無敵時間初期化
+		dFlag = true;                    //無敵突入
 	}
 }
 
 void Player::Draw()
 {
-	if (!DamageFlag)
-	{
-		player->Draw();
-	}
+	player->Draw();
 	//リストの中を全検索して、フラグがtrueなのを探す。
 	for (auto test : bulletList)
 	{
