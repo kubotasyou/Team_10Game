@@ -43,6 +43,8 @@ void SceneManager::Initialize()
 	Sprite::LoadTexture(2, L"Resources/Texture/Title.png");
 	// 6エンディングの画像
 	Sprite::LoadTexture(3, L"Resources/Texture/Ending.png");
+	//カーソルの画像
+	Sprite::LoadTexture(4, L"Resources/Texture/curssor.png");
 
 #pragma endregion
 
