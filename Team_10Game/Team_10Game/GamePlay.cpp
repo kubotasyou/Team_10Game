@@ -152,7 +152,7 @@ void GamePlay::Update()
 	std::ostringstream hpstr;
 	hpstr.clear();
 	hpstr << "HP:" << std::fixed << std::setprecision(1) << player->GetHp();
-	hpText.Print(hpstr.str(), 200, 0, 2.0f);
+	hpText.Print(hpstr.str(), 0, 0, 5.0f);
 
 	for (auto& e : enemys)
 	{
@@ -201,22 +201,24 @@ void GamePlay::Draw()
 	// 3Dオブジェクト描画後処理
 	GameObject::EndDraw();
 
-	//2Dテクスチャ描画前処理
-	Sprite::BeginDraw(cmdList);
-
-	score->Draw(400, 0, 8);
-	debugText.DrawAll(cmdList);
-	hpText.DrawAll(cmdList);
-
-	//2Dテクスチャ描画後処理
-	Sprite::EndDraw();
-
 	//パーティクル描画
 	ParticleManager::PreDraw(cmdList);
 
 	particleMan->Draw();
 
 	ParticleManager::PostDraw();
+
+	//2Dテクスチャ描画前処理
+	Sprite::BeginDraw(cmdList);
+
+	score->Draw(800, 0, 5);
+	debugText.DrawAll(cmdList);
+	hpText.DrawAll(cmdList);
+
+	//2Dテクスチャ描画後処理
+	Sprite::EndDraw();
+
+
 }
 
 void GamePlay::NextScene()
