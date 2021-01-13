@@ -224,5 +224,6 @@ void GamePlay::Draw()
 
 void GamePlay::NextScene()
 {
+	sound->Stop();
 	sceneChanger->ChangeScene(SceneEnding);
 }
