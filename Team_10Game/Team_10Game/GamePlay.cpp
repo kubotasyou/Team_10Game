@@ -172,12 +172,9 @@ void GamePlay::Update()
 				acc.y = -(float)rand() / RAND_MAX * rnd_acc;
 
 				XMFLOAT4 color = { 1.0f, 0.0f, 0.0f, 0.0f };
-				float t = 2;
-
-				deadPos = { deadPos.x, deadPos.y + t, deadPos.z };
 
 				//’Ç‰Á
-				particleMan->Add(120, deadPos, vel, acc, 1.0f, 0.0f, color);
+				particleMan->Add(60, deadPos, vel, acc, 1.0f, 0.0f, color);
 			}
 		}
 	}

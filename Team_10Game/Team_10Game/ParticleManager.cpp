@@ -407,7 +407,7 @@ bool ParticleManager::LoadTexture()
 	ScratchImage scratchImg{};
 
 	result = LoadFromWICFile(
-		L"Resources/120.png", WIC_FLAGS_NONE,
+		L"Resources/Texture/curssor.png", WIC_FLAGS_NONE,
 		&metadata, scratchImg);
 	if (FAILED(result)) {
 		return result;
