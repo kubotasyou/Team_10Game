@@ -94,9 +94,11 @@ void Player::Shot()
 
 void Player::Damage(int damage)
 {
+	hp -= damage;
+
 	if (!dFlag)
 	{
-		hp -= damage;
+		
 		/*dFlag = true;*/
 	}
 }

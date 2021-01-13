@@ -132,8 +132,8 @@ void GamePlay::Update()
 	//敵とプレイヤーの当たり判定
 	for (int j = 0; j < enemys.size(); j++)
 	{
-		bool BstoEs = Collision::SphereToSphere(player->GetSphere(), enemys[j]->GetSphere());
-		if (BstoEs&&hit==false)
+		bool PtoEs = Collision::SphereToSphere(player->GetSphere(), enemys[j]->GetSphere());
+		if (PtoEs && hit == false)
 		{
 			enemys[j]->ChangeDeadFlag(true);
 			player->Damage(1);
@@ -142,24 +142,24 @@ void GamePlay::Update()
 			player->ChangeDamageFlag(true);
 		}
 	}
-	if (timer==true)
-	{
-		t++;
-		player->ChangeDamageFlag(true);
-		if (t > 20 * d)
-		{
-			player->ChangeDamageFlag(false);
-			d++;
-		}
-		if(t>180)
-		{
-			timer = false;
-			hit = false;
-			t = 0;
-			d = 1;
-			player->ChangeDamageFlag(false);
-		}
-	}
+	//if (timer==true)
+	//{
+	//	t++;
+	//	player->ChangeDamageFlag(true);
+	//	if (t > 20 * d)
+	//	{
+	//		player->ChangeDamageFlag(false);
+	//		d++;
+	//	}
+	//	if(t>180)
+	//	{
+	//		timer = false;
+	//		hit = false;
+	//		t = 0;
+	//		d = 1;
+	//		player->ChangeDamageFlag(false);
+	//	}
+	//}
 #pragma endregion
 
 	//残り時間を表示
