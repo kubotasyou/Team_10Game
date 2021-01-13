@@ -7,18 +7,19 @@
 #include <sstream>
 #include <iomanip>
 
-GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input, Score* score)
+GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input, Score* score,Sound* sound)
 	:BaseScene(sceneChanger),
 	dxManager(manager),
 	input(input),
-	score(score)
+	score(score),
+	sound(sound)
 {
 
 #pragma region モデルの読み込みと作成
 
 	//スカイドームモデル
-	skyDomeModel = new Model(dxManager->GetDevice());
-	skyDomeModel->CreateModel("skydome");
+	/*skyDomeModel = new Model(dxManager->GetDevice());
+	skyDomeModel->CreateModel("skydome");*/
 	//球モデル
 	sphereModel = new Model(dxManager->GetDevice());
 	sphereModel->CreateModel("sphere2");
@@ -35,7 +36,7 @@ GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* 
 
 GamePlay::~GamePlay()
 {
-	safedelete(skyDomeModel);
+	//safedelete(skyDomeModel);
 	safedelete(sphereModel);
 	//safedelete(groundModel);
 	safedelete(ground);
@@ -66,8 +67,8 @@ void GamePlay::Initialize()
 	}
 
 	//スカイドーム
-	skyDome = GameObject::Create();
-	skyDome->SetModel(skyDomeModel);
+	//skyDome = GameObject::Create();
+	//skyDome->SetModel(skyDomeModel);
 
 	////グラウンド
 	//ground = GameObject::Create();
@@ -76,7 +77,7 @@ void GamePlay::Initialize()
 
 	// パーティクルマネージャー生成
 	particleMan = ParticleManager::Create();
-
+	sound->PlayLoop("Gameplay");
 #pragma endregion
 
 }
