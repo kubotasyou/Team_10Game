@@ -79,5 +79,17 @@ void Ending::NextScene()
 {
 	sound->StopBGM();
 	//シーン変更(変更したいシーンを入れてね)
-	sceneChanger->ChangeScene(SceneTitle);
+	//sceneChanger->ChangeScene(SceneTitle);
+	switch (selectCount)
+	{
+	case 0:
+		sceneChanger->ChangeScene(SceneTitle);
+		break;
+	case 1:
+		sceneChanger->ChangeScene(SceneGame);
+		break;
+	case 2:
+		sceneChanger->ChangeScene(SceneTitle);
+		break;
+	}
 }
