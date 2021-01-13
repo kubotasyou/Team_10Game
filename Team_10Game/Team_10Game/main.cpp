@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "GamePlay.h"
 #include "Sound.h"
+#include "ParticleManager.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -27,6 +28,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//初期化
 	Sprite::StaticInitialize(dxManager->GetDevice(), WinApp::window_width, WinApp::window_height);
 	GameObject::StaticInitialize(dxManager->GetDevice(), WinApp::window_width, WinApp::window_height);
+
+	// パーティクルマネージャー静的初期化
+	if (!ParticleManager::StaticInitialize(dxManager->GetDevice(), WinApp::window_width, WinApp::window_height)) 
+	{
+		assert(0);
+		return 1;
+	}
 
 	////ゲームシーン初期化
 	//GamePlay* gameplay = new GamePlay();

@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "CollisionPrimitive.h"
 #include "CountDownTimer.h"
+#include "ParticleManager.h"
 
 //敵クラス：奥から流れてくる
 //memo : リスポーンの処理がまだできてない
@@ -30,6 +31,8 @@ public:
 	//死亡判定を変える。
 	void ChangeDeadFlag(bool value);
 
+	float3 GetPosition() { return position; }
+
 private:
 
 	//敵の移動
@@ -51,5 +54,8 @@ private:
 	Sphere sphere;
 
 	bool isDead = false;//死亡判定。
+
+	ParticleManager* particleMan = nullptr;
+	float3 deadPos;
 };
 

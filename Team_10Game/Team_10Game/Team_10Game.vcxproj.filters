@@ -19,6 +19,9 @@
     <FxCompile Include="SpritePixelShader.hlsl">
       <Filter>リソースファイル</Filter>
     </FxCompile>
+    <FxCompile Include="ParticleGS.hlsl" />
+    <FxCompile Include="ParticlePS.hlsl" />
+    <FxCompile Include="ParticleVS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp">
@@ -100,6 +103,7 @@
       <Filter>ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="Score.cpp" />
+    <ClCompile Include="ParticleManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseScene.h">
@@ -190,6 +194,7 @@
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="Score.h" />
+    <ClInclude Include="ParticleManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BasicShaderHeader.hlsli">
@@ -201,6 +206,7 @@
     <None Include="SpriteShaderHeader.hlsli">
       <Filter>リソースファイル</Filter>
     </None>
+    <None Include="Particle.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ヘッダーファイル">

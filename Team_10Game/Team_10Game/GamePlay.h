@@ -14,6 +14,8 @@
 #include "Score.h"
 #include "HpText.h"
 
+#include "ParticleManager.h"
+
 class GamePlay :public BaseScene
 {
 public:
@@ -58,6 +60,9 @@ private:
 	DebugText debugText;
 	HpText hpText;
 	//memo : デバッグテキストが使えないので、Spriteクラスを確認する
+
+	ParticleManager* particleMan = nullptr;
+	DirectX::XMFLOAT3 deadPos;
 };
 
 

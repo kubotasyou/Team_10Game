@@ -48,7 +48,7 @@ GamePlay::~GamePlay()
 		safedelete(e);
 	}
 	safedelete(player);
-
+	safedelete(particleMan);
 }
 
 void GamePlay::Initialize()
@@ -78,6 +78,9 @@ void GamePlay::Initialize()
 	ground = GameObject::Create();
 	ground->SetModel(groundModel);
 	ground->SetPosition({ 0, -2, 0 });
+
+	// パーティクルマネージャー生成
+	particleMan = ParticleManager::Create();
 
 #pragma endregion
 
@@ -128,6 +131,7 @@ void GamePlay::Update()
 				enemys[j]->ChangeDeadFlag(true);
 				//スコアを追加
 				score->AddScore(20);
+				deadPos = enemys[j]->GetPosition();
 			}
 		}
 	}
@@ -175,6 +179,35 @@ void GamePlay::Update()
 	hpstr.clear();
 	hpstr << "HP:" << std::fixed << std::setprecision(1) << hp;
 	hpText.Print(hpstr.str(), 200, 0, 5.0f);
+
+	for (auto& e : enemys)
+	{
+		if (e->GetDeadFlag())
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				//X,Y,Z全ての座標で{-0.05f,+0.05f}でランダムに分布
+				const float rnd_vel = 0.1f;
+				XMFLOAT3 vel{};
+				vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+				vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+				vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+				//重力に見立ててYのみ[-0.001f,0]でランダムに分布
+				XMFLOAT3 acc{};
+				const float rnd_acc = 0.001f;
+				acc.y = -(float)rand() / RAND_MAX * rnd_acc;
+
+				XMFLOAT4 color = { 0.0f, 1.0f, 0.0f, 0.0f };
+				float t = 1;
+
+				deadPos = { deadPos.x, deadPos.y + t, deadPos.z };
+
+				//追加
+				particleMan->Add(120, deadPos, vel, acc, 1.0f, 0.0f, color);
+			}
+		}
+	}
+	particleMan->Update();
 }
 
 void GamePlay::Draw()
@@ -206,6 +239,13 @@ void GamePlay::Draw()
 
 	//2Dテクスチャ描画後処理
 	Sprite::EndDraw();
+
+	//パーティクル描画
+	ParticleManager::PreDraw(cmdList);
+
+	particleMan->Draw();
+
+	ParticleManager::PostDraw();
 }
 
 void GamePlay::NextScene()
