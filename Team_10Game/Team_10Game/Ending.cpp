@@ -47,7 +47,28 @@ void Ending::Draw()
 	{
 	case 0:
 		curssor->Draw();
-		curssor->SetPosition({ 50.0f,50.0f });
+		curssor->SetPosition({ 50.0f,490.0f });
+		if (input->GetKeyTrigger(KeyCode::RIGHT))
+		{
+			selectCount = 1;
+		}
+		break;
+	case 1:
+		curssor->Draw();
+		curssor->SetPosition({ 800.0f,490.0f });
+		if (input->GetKeyTrigger(KeyCode::RIGHT))
+		{
+			selectCount = 2;
+		}
+		break;
+	case 2:
+		curssor->Draw();
+		curssor->SetPosition({ 500.0f,600.0f });
+		if (input->GetKeyTrigger(KeyCode::RIGHT))
+		{
+			selectCount = 0;
+		}
+		break;
 	}
 
 	// スプライト描画後処理
