@@ -20,7 +20,7 @@ Enemy::~Enemy()
 
 void Enemy::Initialize()
 {
-	position = { Random::SetRandom(-30,30),Random::SetRandom(-15,10),30.0f };
+	position = { Random::SetRandom(-30,30),Random::SetRandom(-15,10),Random::SetRandom(30,55) };
 	//‰ŠúˆÊ’u
 	enemy->SetPosition(position);
 	enemy->SetScale({ 0.5f,0.5f,0.5f });
