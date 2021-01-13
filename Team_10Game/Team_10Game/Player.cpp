@@ -15,9 +15,9 @@ Player::Player(Input * input, Model* model)
 
 Player::~Player()
 {
-//	safedelete(input);
-//	safedelete(player);
-//	safedelete(sphereModel);
+    //safedelete(input);
+    //safedelete(player);
+    //safedelete(sphereModel);
 	//for (auto test : bulletList)
 	//{
 	//	safedelete(test);
@@ -35,6 +35,9 @@ void Player::Initialize()
 	//自機：当たり判定初期化
 	sphere.center = XMVectorSet(position.x, position.y, position.z, 0);//位置
 	sphere.radius = 1.0f;//半径
+
+	//体力初期化
+	hp = 5;
 }
 
 void Player::Update()
@@ -44,7 +47,7 @@ void Player::Update()
 	Move();
 
 	//ボタンを押したら使用される
-	if (input->GetKeyTrigger(KeyCode::Z))
+	if (input->GetKeyTrigger(KeyCode::SPACE))
 	{
 		Shot();
 		//memo : ホントにメモ
@@ -68,6 +71,11 @@ void Player::Update()
 		test->Update();
 	}
 
+	if (dFlag == true)
+	{
+
+	}
+
 }
 void Player::Shot()
 {
@@ -81,6 +89,15 @@ void Player::Shot()
 			bulletList[i]->ChangeUseFlag(true);
 			break;
 		}
+	}
+}
+
+void Player::Damage(int damage)
+{
+	if (!dFlag)
+	{
+		hp -= damage;
+		/*dFlag = true;*/
 	}
 }
 

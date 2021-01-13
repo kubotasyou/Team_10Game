@@ -45,7 +45,7 @@ private:
 
 	Model* skyDomeModel;//スカイドームモデル
 	Model* sphereModel; //球モデル
-	Model* groundModel; //グラウンドモデル
+	//Model* groundModel; //グラウンドモデル
 
 	GameObject* skyDome;//スカイドームオブジェクト
 	GameObject* ground;	//グラウンドオブジェクト
@@ -59,7 +59,6 @@ private:
 	int d = 1;//追加
 	DebugText debugText;
 	HpText hpText;
-	//memo : デバッグテキストが使えないので、Spriteクラスを確認する
 
 	ParticleManager* particleMan = nullptr;
 	DirectX::XMFLOAT3 deadPos;

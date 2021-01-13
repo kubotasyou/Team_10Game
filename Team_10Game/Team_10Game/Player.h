@@ -26,10 +26,15 @@ public:
 	//弾発射
 	void Shot();
 
+	//ダメージ処理
+	void Damage(int damage);
+
 	//現在位置を取得
 	float3 GetPosition() { return position; }
 	//自機の当たり判定を取得
 	Sphere GetSphere() { return sphere; }
+	//現在の体力取得
+	int GetHp() { return hp; }
 
 	//弾のリストを取得したい
 	std::vector<Bullet*> GetBulletList() { return bulletList; }
@@ -53,7 +58,7 @@ private:
 	float3 velocity;
 
 	float speed = 0.1f;
-	float hp = 3;
+	int hp = 3;
 
 	bool DamageFlag =false;
 
@@ -62,5 +67,8 @@ private:
 
 	//自機の当たり判定
 	Sphere sphere;
+
+	//ダメージフラグ
+	bool dFlag = false;
 };
 

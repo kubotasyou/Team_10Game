@@ -6,10 +6,6 @@
 #include <sstream>
 #include <iomanip>
 
-//プレイヤーのHP 
-int hp = 10;
-///////////////
-
 GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input, Score* score)
 	:BaseScene(sceneChanger),
 	dxManager(manager),
@@ -25,9 +21,9 @@ GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* 
 	//球モデル
 	sphereModel = new Model(dxManager->GetDevice());
 	sphereModel->CreateModel("sphere2");
-	//グラウンドモデル
-	groundModel = new Model(dxManager->GetDevice());
-	groundModel->CreateModel("ground");
+	////グラウンドモデル
+	//groundModel = new Model(dxManager->GetDevice());
+	//groundModel->CreateModel("ground");
 
 #pragma endregion
 
@@ -40,7 +36,7 @@ GamePlay::~GamePlay()
 {
 	safedelete(skyDomeModel);
 	safedelete(sphereModel);
-	safedelete(groundModel);
+	//safedelete(groundModel);
 	safedelete(ground);
 	safedelete(skyDome);
 	for(auto e:enemys)
@@ -68,16 +64,14 @@ void GamePlay::Initialize()
 		enemys[i]->Initialize();
 	}
 
-	hp = 3;
-
 	//スカイドーム
 	skyDome = GameObject::Create();
 	skyDome->SetModel(skyDomeModel);
 
-	//グラウンド
-	ground = GameObject::Create();
-	ground->SetModel(groundModel);
-	ground->SetPosition({ 0, -2, 0 });
+	////グラウンド
+	//ground = GameObject::Create();
+	//ground->SetModel(groundModel);
+	//ground->SetPosition({ 0, -2, 0 });
 
 	// パーティクルマネージャー生成
 	particleMan = ParticleManager::Create();
@@ -107,10 +101,9 @@ void GamePlay::Update()
 
 	//if (input->GetKeyTrigger(KeyCode::A))
 	//{
-	//	hp--;
 	//	score->AddScore(10);
 	//}
-	if (hp <= 0)
+	if (player->GetHp() <0)
 	{
 		NextScene();
 	}
@@ -143,7 +136,7 @@ void GamePlay::Update()
 		if (BstoEs&&hit==false)
 		{
 			enemys[j]->ChangeDeadFlag(true);
-			hp--;
+			player->Damage(1);
 			hit = true;
 			timer = true;
 			player->ChangeDamageFlag(true);
@@ -184,7 +177,7 @@ void GamePlay::Update()
 
 	std::ostringstream hpstr;
 	hpstr.clear();
-	hpstr << "HP:" << std::fixed << std::setprecision(1) << player->GetPosition().x << player->GetPosition().y;
+	hpstr << "HP:" << std::fixed << std::setprecision(1) << player->GetHp();
 	hpText.Print(hpstr.str(), 200, 0, 2.0f);
 
 	for (auto& e : enemys)
