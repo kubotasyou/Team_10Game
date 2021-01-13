@@ -19,7 +19,8 @@ void Ending::Initialize()
 {
 	// ”wŒiƒXƒvƒ‰ƒCƒg¶¬
 	spriteBG = Sprite::Create(3, { 0.0f,0.0f });
-	sound->PlayLoopBGM("testBgm.mp3");
+	//sound->PlayLoopBGM("testBgm.mp3");
+	sound->PlayLoop("EndingDark");
 }
 
 void Ending::Update()
@@ -29,7 +30,7 @@ void Ending::Update()
 		NextScene();
 	}
 
-	sound->CheckLoop("testBgm.mp3");
+	//sound->CheckLoop("testBgm.mp3");
 }
 
 void Ending::Draw()

@@ -20,12 +20,14 @@ void Title::Initialize()
 	// ”wŒiƒXƒvƒ‰ƒCƒg¶¬
 	spriteBG = Sprite::Create(2, { 0.0f,0.0f });
 	//sound->PlaySE("3MinutesCooking",0.1f);
+	sound->PlayLoop("Title");
 }
 
 void Title::Update()
 {
 	if (input->GetKeyTrigger(KeyCode::SPACE))
 	{	
+		sound->PlaySE("select", 0.1f);
 		NextScene();
 	}
 }

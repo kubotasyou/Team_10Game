@@ -15,7 +15,7 @@ SceneManager::SceneManager(DirectXManager * manager, Input * input, Sound* sound
 	score(new Score(dxManager))
 {
 	//最初のシーンを設定
-	currentScene = (BaseScene*) new GamePlay(this, dxManager, input, score);
+	currentScene = (BaseScene*) new Title(this, dxManager, input, sound);
 
 	//フェードのタイプを設定
 	fader->SetFaderType(FadeType::Normal);
@@ -49,8 +49,14 @@ void SceneManager::Initialize()
 #pragma region サウンド読み込み
 
 	sound->LoadSE("3MinutesCooking");
-	sound->LoadBGM("testBgm.mp3");
-
+	sound->LoadSE("select");
+	sound->LoadSE("clear");
+	//sound->LoadBGM("punch.mp3");
+	sound->LoadSE("Title");
+	sound->LoadSE("Gameplay");
+	sound->LoadSE("Ending");
+	sound->LoadSE("EndingDark");
+	//sound->LoadBGM("testBgm.mp3");
 #pragma endregion
 
 	currentScene->Initialize();
