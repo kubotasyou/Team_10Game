@@ -95,16 +95,8 @@ void GamePlay::Update()
 	skyDome->Update();
 	//ground->Update();
 
-	//if (input->GetKeyTrigger(KeyCode::SPACE))
-	//{
-	//	NextScene();
-	//}
-
-	//if (input->GetKeyTrigger(KeyCode::A))
-	//{
-	//	score->AddScore(10);
-	//}
-	if (player->GetHp() <0)
+	//体力がなくなったら次のシーンへ
+	if (player->GetHp() < 1)
 	{
 		NextScene();
 	}
@@ -134,34 +126,13 @@ void GamePlay::Update()
 	for (int j = 0; j < enemys.size(); j++)
 	{
 		bool PtoEs = Collision::SphereToSphere(player->GetSphere(), enemys[j]->GetSphere());
-		if (PtoEs && hit == false)
+		if (PtoEs)
 		{
 			enemys[j]->ChangeDeadFlag(true);
 			player->Damage(1);
-			hit = true;
-			timer = true;
-			player->ChangeDamageFlag(true);
 			deadPos = enemys[j]->GetPosition();
 		}
 	}
-	//if (timer==true)
-	//{
-	//	t++;
-	//	player->ChangeDamageFlag(true);
-	//	if (t > 20 * d)
-	//	{
-	//		player->ChangeDamageFlag(false);
-	//		d++;
-	//	}
-	//	if(t>180)
-	//	{
-	//		timer = false;
-	//		hit = false;
-	//		t = 0;
-	//		d = 1;
-	//		player->ChangeDamageFlag(false);
-	//	}
-	//}
 #pragma endregion
 
 	//残り時間を表示
