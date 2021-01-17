@@ -20,14 +20,14 @@ void Title::Initialize()
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(2, { 0.0f,0.0f });
 	//sound->PlaySE("3MinutesCooking",0.1f);
-	sound->PlayLoop("Title");
+	sound->PlayLoopWav("Title");
 }
 
 void Title::Update()
 {
 	if (input->GetKeyTrigger(KeyCode::SPACE))
 	{	
-		sound->PlaySE("select", 0.1f);
+		sound->PlayWav("select", 0.1f);
 		NextScene();
 	}
 }
@@ -45,7 +45,7 @@ void Title::Draw()
 
 void Title::NextScene()
 {
-	sound->Stop();
+	sound->StopWav();
 	//シーン変更(変更したいシーンを入れてね)
 	sceneChanger->ChangeScene(SceneGame);
 }
