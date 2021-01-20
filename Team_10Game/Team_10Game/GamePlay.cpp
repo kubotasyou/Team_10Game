@@ -27,6 +27,10 @@ GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* 
 	//groundModel = new Model(dxManager->GetDevice());
 	//groundModel->CreateModel("ground");
 
+	//プレイヤーテスト用モデル
+	charaModel = new Model(dxManager->GetDevice());
+	charaModel->CreateModel("chr_sword");
+
 #pragma endregion
 
 	debugText.Initialize(0);
@@ -55,7 +59,7 @@ void GamePlay::Initialize()
 #pragma region オブジェクトの作成
 
 	//プレイヤー
-	player = new Player(input, sphereModel);
+	player = new Player(input, charaModel);
 	player->Initialize();
 
 	////敵

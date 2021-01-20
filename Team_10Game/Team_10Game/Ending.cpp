@@ -54,7 +54,7 @@ void Ending::Draw()
 {
 	Sprite::BeginDraw(dxManager->GetcmdList());
 	// ”wŒiƒXƒvƒ‰ƒCƒg•`‰æ
-	spriteBG->Draw();
+	//spriteBG->Draw();
 	score->Draw(300, 350, 8, { 1,0,0,1 });
 
 	switch (selectCount)

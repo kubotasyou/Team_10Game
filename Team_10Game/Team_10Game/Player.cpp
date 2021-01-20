@@ -168,8 +168,8 @@ void Player::Move()
 	position.z += velocity.z;
 
 	//ˆÚ“®”ÍˆÍ‚Ì§ŒÀ‚ð‚©‚¯‚é
-	position.x = Clamp(position.x, -6.0f, 6.0f);
-	position.y = Clamp(position.y, -4.0f, 4.0f);
+	position.x = Clamp(position.x, -15.0f, 15.0f);
+	position.y = Clamp(position.y, -15.0f, 15.0f);
 	position.z = Clamp(position.z, -0.1f, 0.1f);
 
 	//“–‚½‚è”»’è‚àˆê‚É“®‚©‚·
@@ -191,8 +191,8 @@ void Player::CameraMove()
 	cameraPosition.y += cameraVelocity.y;
 
 	//ˆÚ“®”ÍˆÍ‚Ì§ŒÀ‚ð‚©‚¯‚é
-	cameraPosition.x = Clamp(cameraPosition.x, -6.0f, 6.0f);
-	cameraPosition.y = Clamp(cameraPosition.y, -4.0f, 4.0f);
+	cameraPosition.x = Clamp(cameraPosition.x, -15.0f, 15.0f);
+	cameraPosition.y = Clamp(cameraPosition.y, -15.0f, 15.0f);
 
 	//ƒJƒƒ‰‚ð“®‚©‚·
 	camera->SetTarget(position);

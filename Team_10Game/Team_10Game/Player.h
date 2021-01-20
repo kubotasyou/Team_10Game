@@ -67,8 +67,7 @@ private:
 	float3 cameraPosition;//カメラの位置
 	float3 cameraVelocity;//カメラの移動量
 
-
-	float speed = 0.1f;//移動速度
+	float speed = 0.2f;//移動速度
 	int hp = 3;        //体力
 
 	//弾のリスト

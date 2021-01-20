@@ -47,6 +47,7 @@ private:
 	Model* spaceDomeModel;//宇宙ドームモデル
 	Model* sphereModel; //球モデル
 	//Model* groundModel; //グラウンドモデル
+	Model* charaModel;//プレイヤー用のテストモデル
 
 	GameObject* spaceDome;//宇宙ドームオブジェクト
 	//GameObject* ground;	//グラウンドオブジェクト
