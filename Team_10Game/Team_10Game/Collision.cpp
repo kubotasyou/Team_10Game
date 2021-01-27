@@ -184,3 +184,33 @@ bool Collision::CheckSphereToTriangle(XMFLOAT3 sphereCenter, float radius, XMFLO
 
 	return true;
 }
+
+bool Collision::CheckRectangleToDot(const Rectangles & rect, const Dot & point)
+{
+	//点が、矩形の中にあるかどうかをチェック
+
+	if (point.x >= rect.x && point.x <= (rect.x + rect.width) &&
+		point.y >= rect.y && point.y <= (rect.y + rect.height) &&
+		point.z >= rect.z && point.z <= (rect.z + rect.okuyuki))
+	{
+		//当たってる
+		return true;
+	}
+
+	return false;
+}
+
+bool Collision::CheckRectangleToSphere(const Rectangles & rect, const Sphere & sphere)
+{
+	//sphere.center.m128_f32[0] + sphere.radius
+
+	if (sphere.center.m128_f32[0] + sphere.radius >= rect.x && sphere.center.m128_f32[0] + sphere.radius <= (rect.x + rect.width) &&
+		sphere.center.m128_f32[1] + sphere.radius >= rect.y && sphere.center.m128_f32[1] + sphere.radius <= (rect.y + rect.height) &&
+		sphere.center.m128_f32[2] + sphere.radius >= rect.z && sphere.center.m128_f32[2] + sphere.radius <= (rect.z + rect.okuyuki))
+	{
+		//当たってる
+		return true;
+	}
+
+	return false;
+}

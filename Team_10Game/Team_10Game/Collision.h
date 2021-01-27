@@ -39,5 +39,18 @@ public:
 		XMFLOAT3 triangleP2,
 		XMVECTOR inter = XMVectorSet(0, 0, 0, 0)
 	);
+
+
+	//“_‚Æ‹éŒ`‚Ì“–‚½‚è”»’è
+	static bool CheckRectangleToDot(
+		const Rectangles& rect,
+		const Dot& point
+	);
+
+	//—§•û‘Ì‚Æ‹…‚Ì“–‚½‚è”»’è
+	static bool CheckRectangleToSphere(
+		const Rectangles& rect,
+		const Sphere& sphere
+	);
 };
 
