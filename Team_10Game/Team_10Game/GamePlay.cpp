@@ -7,7 +7,7 @@
 #include <sstream>
 #include <iomanip>
 
-GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input, Score* score,Sound* sound)
+GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* input, Score* score, Sound* sound)
 	:BaseScene(sceneChanger),
 	dxManager(manager),
 	input(input),
@@ -35,6 +35,25 @@ GamePlay::GamePlay(ISceneChanger* sceneChanger, DirectXManager* manager, Input* 
 
 	debugText.Initialize(0);
 	hpText.Initialie(0);
+
+
+#pragma region 当たり判定テスト
+
+	rect.x = 0.0f;
+	rect.y = 0.0f;
+
+	rect.width = 60.0f;
+	rect.height = 60.0f;
+
+	point.x = 50.0f;
+	point.x = 50.0f;
+
+	sphere.center = XMVectorSet(0, 0, 0, 1);
+	sphere.radius = 1.0f;
+
+#pragma endregion
+
+
 }
 
 
@@ -45,7 +64,7 @@ GamePlay::~GamePlay()
 	//safedelete(groundModel);
 	//safedelete(ground);
 	//safedelete(skyDome);
-	for(auto e:enemys)
+	for (auto e : enemys)
 	{
 		safedelete(e);
 	}
@@ -98,11 +117,11 @@ void GamePlay::Update()
 	//プレイヤー
 	player->Update();
 
-	//敵
-	for (auto& e : enemys)
-	{
-		e->Update(player->GetPosition());
-	}
+	////敵
+	//for (auto& e : enemys)
+	//{
+	//	e->Update(player->GetPosition());
+	//}
 
 	//宇宙ドーム
 	spaceDome->Update();
@@ -117,45 +136,45 @@ void GamePlay::Update()
 	}
 #pragma region 当たり判定処理
 
-	////弾を全検索
-	//for (int i = 0; i < player->GetBulletList().size(); i++)
-	//{
-	//	//敵を全検索
-	//	for (int j = 0; j < enemys.size(); j++)
-	//	{
-	//		bool BstoEs = Collision::SphereToSphere(player->GetBulletList()[i]->GetSphere(), enemys[j]->GetSphere());
-	//		if (BstoEs)
-	//		{
-	//			//弾を削除
-	//			player->GetBulletList()[i]->ChangeDeadFlag(true);
-	//			//敵を削除
-	//			enemys[j]->ChangeDeadFlag(true);
-	//			//スコアを追加
-	//			score->AddScore(20);
-	//			deadPos = enemys[j]->GetPosition();
-	//		}
-	//	}
-	//}
+	//弾を全検索
+	for (int i = 0; i < player->GetBulletList().size(); i++)
+	{
+		//敵を全検索
+		for (int j = 0; j < enemys.size(); j++)
+		{
+			bool BstoEs = Collision::SphereToSphere(player->GetBulletList()[i]->GetSphere(), enemys[j]->GetSphere());
+			if (BstoEs)
+			{
+				//弾を削除
+				player->GetBulletList()[i]->ChangeDeadFlag(true);
+				//敵を削除
+				enemys[j]->ChangeDeadFlag(true);
+				//スコアを追加
+				score->AddScore(20);
+				deadPos = enemys[j]->GetPosition();
+			}
+		}
+	}
 
-	////敵とプレイヤーの当たり判定
-	//for (int j = 0; j < enemys.size(); j++)
-	//{
-	//	bool PtoEs = Collision::SphereToSphere(player->GetSphere(), enemys[j]->GetSphere());
-	//	if (PtoEs)
-	//	{
-	//		enemys[j]->ChangeDeadFlag(true);
-	//		player->Damage(1);
-	//		deadPos = enemys[j]->GetPosition();
-	//	}
-	//}
+	//敵とプレイヤーの当たり判定
+	for (int j = 0; j < enemys.size(); j++)
+	{
+		bool PtoEs = Collision::SphereToSphere(player->GetSphere(), enemys[j]->GetSphere());
+		if (PtoEs)
+		{
+			enemys[j]->ChangeDeadFlag(true);
+			player->Damage(1);
+			deadPos = enemys[j]->GetPosition();
+		}
+	}
 
 #pragma endregion
 
-	//何かしらの位置を表示
-	std::ostringstream somethingPos;
-	somethingPos.clear();
-	somethingPos << "CameraPos:" << std::fixed << std::setprecision(1) << player->GetPosition().x << player->GetPosition().y << player->GetPosition().z;
-	debugText.Print(somethingPos.str(), 0, 500, 5.0f);
+	////何かしらの位置を表示
+	//std::ostringstream somethingPos;
+	//somethingPos.clear();
+	//somethingPos << "CameraPos:" << std::fixed << std::setprecision(1) << player->GetPosition().x << player->GetPosition().y << player->GetPosition().z;
+	//debugText.Print(somethingPos.str(), 0, 500, 5.0f);
 
 
 
@@ -189,6 +208,67 @@ void GamePlay::Update()
 		}
 	}
 	particleMan->Update();
+
+
+
+#pragma region 当たり判定テスト
+
+	/*bool ReToPo = Collision::CheckRectangleToDot(rect, point);*/
+	bool ReToPo = Collision::CheckRectangleToSphere(rect, sphere);
+	if (ReToPo)
+	{
+		std::ostringstream test;
+		test.clear();
+		test << "Rectangle&Dot...Hit!!:" << std::fixed;
+		hpText.Print(test.str(), 0, 400, 5.0f);
+	}
+	else
+	{
+		std::ostringstream test;
+		test.clear();
+		test << "Rectangle&Dot...No!!:" << std::fixed;
+		hpText.Print(test.str(), 0, 400, 5.0f);
+	}
+
+	if (input->GetKeyDown(KeyCode::A))
+	{
+		sphere.center.m128_f32[0] -= 0.1f;
+	}
+	else if (input->GetKeyDown(KeyCode::D))
+	{
+		sphere.center.m128_f32[0] += 0.1f;
+	}
+	if (input->GetKeyDown(KeyCode::S))
+	{
+		sphere.center.m128_f32[1] -= 0.1f;
+	}
+	else if (input->GetKeyDown(KeyCode::W))
+	{
+		sphere.center.m128_f32[1] += 0.1f;
+	}
+	if (input->GetKeyDown(KeyCode::DOWN))
+	{
+		sphere.center.m128_f32[2] -= 0.1f;
+	}
+	else if (input->GetKeyDown(KeyCode::UP))
+	{
+		sphere.center.m128_f32[2] += 0.1f;
+	}
+
+	//何かしらの位置を表示
+	std::ostringstream somethingPos;
+	somethingPos.clear();
+	somethingPos << "PointPos:" << 
+		std::fixed << 
+		std::setprecision(1) << 
+		sphere.center.m128_f32[0] << "," << 
+		sphere.center.m128_f32[1] << "," <<
+		sphere.center.m128_f32[2];
+
+	debugText.Print(somethingPos.str(), 0, 500, 5.0f);
+
+#pragma endregion
+
 }
 
 void GamePlay::Draw()
@@ -203,11 +283,11 @@ void GamePlay::Draw()
 	//プレイヤー
 	player->Draw();
 
-	//敵
-	for (auto& e : enemys)
-	{
-		e->Draw();
-	}
+	////敵
+	//for (auto& e : enemys)
+	//{
+	//	e->Draw();
+	//}
 
 	//宇宙ドーム
 	spaceDome->Draw();
