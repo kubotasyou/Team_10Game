@@ -65,6 +65,12 @@ private:
 	ParticleManager* particleMan = nullptr;
 	DirectX::XMFLOAT3 deadPos;
 	Sound* sound =nullptr;
+
+
+
+	Rectangles rect;
+	Dot point;
+	Sphere sphere;
 };
 
 

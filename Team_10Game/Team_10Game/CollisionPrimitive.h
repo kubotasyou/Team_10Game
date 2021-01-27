@@ -28,3 +28,25 @@ struct Line
 	//終点座標
 	DirectX::XMVECTOR end = { 1, 0, 0, 1 };
 };
+
+//矩形
+struct Rectangles
+{
+	//原点
+	float x = 0.0f;
+	float y = 0.0f;
+	float z = 0.0f;
+
+	float width =  10.0f;
+	float height = 10.0f;
+	float okuyuki = 10.0f;
+	
+};
+
+//点
+struct Dot
+{
+	float x = 0.0f;
+	float y = 0.0f;
+	float z = 0.0f;
+};
