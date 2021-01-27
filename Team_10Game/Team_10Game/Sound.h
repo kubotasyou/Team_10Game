@@ -50,34 +50,47 @@ public:
 	Sound();
 	~Sound();
 
-	void LoadSE(const std::string& filename);
+#pragma region XAudio2
 
-	//再生(ファイル名・音量(通常は1.0))
-	void PlaySE(const std::string& filename, float volume = 1.0f);
+	//wavファイルの読み込み(ファイル名(識別子無し))
+	void LoadWav(const std::string& filename);
 
-	//再生中の音声を終了
-	void Stop();
+	//wav再生(ファイル名(識別子無し)・音量(通常は1.0))
+	void PlayWav(const std::string& filename, float volume = 1.0f);
 
-	//ループ再生(ファイル名)
-	void PlayLoop(const std::string& filename, float volume = 1.0f);
+	//wav音声終了
+	void StopWav();
 
+	//wavループ再生(ファイル名(識別子無し))
+	void PlayLoopWav(const std::string& filename, float volume = 1.0f);
 
+#pragma endregion
+
+#pragma region DirectShow
+
+	//DirectShow初期化
 	void DirectShowInit();
 
-	void LoadBGM(const std::string& filename);
+	//MP3ファイルの読み込み(ファイル名(識別子必要))
+	void LoadMP3(const std::string& filename);
 
-	void PlayBGM(const std::string& filename);
+	//MP3再生
+	void PlayMP3(const std::string& filename);
 
-	void PlayLoopBGM(const std::string& filename);
-
+	//MP3ループ再生
+	void PlayLoopMP3(const std::string& filename);
 	void CheckLoop(const std::string& filename);
 
-	void StopBGM();
+	//MP3停止
+	void StopMP3(const std::string& filename);
 
 	void Release();
 
+#pragma endregion
 
 private:
+
+	//XAudio2初期化
 	void Initialize();
 
 	//stringからBSTRに変換
@@ -94,12 +107,14 @@ private:
 	std::vector<IXAudio2SourceVoice*> sourceData;
 
 	//↓DirectShow
-	//これ二つとも、一音声につき一つ必要
-	IGraphBuilder* graphBuffer = nullptr;
-	//IMediaControl* mediaControl = nullptr;
-	//音声のリスト
-	std::unordered_map<std::string, IMediaControl*> bgmList;
-	IMediaPosition* mediaPosition = nullptr;
+	//GraphBuilderリスト(ファイル名・GraphBuilder)
+	std::unordered_map<std::string, IGraphBuilder*> builderList;
+
+	//MediaControlリスト(ファイル名・MediaControl)
+	std::unordered_map<std::string, IMediaControl*> controlList;
+
+	//MediaPositionリスト(ファイル名・MediaPosition)
+	std::unordered_map<std::string, IMediaPosition*> positionList;
 
 	bool isPlay = false;//再生しているか
 	bool isLoop = false;//ループ再生するか

@@ -25,9 +25,6 @@ public:
 
 	void Draw();
 
-	//弾発射
-	void Shot();
-
 	//ダメージ処理
 	void Damage(int damage);
 
@@ -41,27 +38,37 @@ public:
 	//弾のリストを取得したい
 	std::vector<Bullet*> GetBulletList() { return bulletList; }
 
-	//追加
-	void ChangeDamageFlag(bool flag);
-	bool GetDamageFlag() { return DamageFlag; }
-
 private:
 
 	//自機の移動
 	void Move();
 
+	//カメラの移動
+	void CameraMove();
+
+	//弾発射
+	void Shot();
+
+	//ダメージの点滅
+	void Blinking();
+
+	//範囲の制限(クランプしたい値・最小値・最大値)
+	float Clamp(float value, float min, float max);
+
 private:
 	Input* input = nullptr;
 	GameObject* player = nullptr;
+	GameObject* camera = nullptr;//カメラ操作用
 	Model* sphereModel = nullptr;
 
-	float3 position;
-	float3 velocity;
+	float3 position;//自機の位置
+	float3 velocity;//自機の移動量
 
-	float speed = 0.1f;
-	int hp = 3;
+	float3 cameraPosition;//カメラの位置
+	float3 cameraVelocity;//カメラの移動量
 
-	bool DamageFlag =false;
+	float speed = 0.2f;//移動速度
+	int hp = 3;        //体力
 
 	//弾のリスト
 	std::vector<Bullet*> bulletList;
@@ -70,7 +77,7 @@ private:
 	Sphere sphere;
 
 	//ダメージフラグ
-	bool dFlag = false;
+	bool damageFlag = false;
 
 	//ダメージ用タイマー
 	CountDownTimer* downTimer;

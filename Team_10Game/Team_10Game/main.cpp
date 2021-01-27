@@ -36,12 +36,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		return 1;
 	}
 
-	////ゲームシーン初期化
-	//GamePlay* gameplay = new GamePlay();
-	//gameplay->Initialize(dxManager, input);
-
+	//サウンド
 	Sound* sound = new Sound();
 
+	//シーンマネージャー
 	SceneManager* sceneManager = new SceneManager(dxManager, input, sound);
 	sceneManager->Initialize();
 
@@ -54,16 +52,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			break;
 		}
 
+		//入力更新
 		input->Update();
 
-		//gameScene->Update();
-
+		//シーンマネージャー更新
 		sceneManager->Update();
 
 		//描画開始↓
 		dxManager->BeginDraw();
 
-		//gameScene->Draw();
+		//シンマネ描画
 		sceneManager->Draw();
 
 		//描画終了↑
@@ -73,8 +71,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//解放
 	safedelete(dxManager);
 	safedelete(input);
-	//safe_delete(gameplay);
 	safedelete(sceneManager);
+	//safedelete(sound);
 
 	//ゲームウィンドウの破棄
 	winApp->ReleaseGameWindow();

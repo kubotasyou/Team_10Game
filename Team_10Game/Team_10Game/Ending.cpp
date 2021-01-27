@@ -22,8 +22,19 @@ void Ending::Initialize()
 	spriteBG = Sprite::Create(3, { 0.0f,0.0f });
 	//カーソル画像生成
 	curssor = Sprite::Create(4, { 0.0f,0.0f });
-	//sound->PlayLoopBGM("testBgm.mp3");
-	sound->PlayLoop("EndingDark");
+
+
+	//音声の再生
+	//1回だけ流す場合はPlayBGMを初期化に書くだけでよい
+	//sound->PlayMP3("BGM01.mp3");
+
+	//ループ再生の場合、PlayLoopMP3を初期化に書き、
+	//流したい音声ファイルを引数に入れる。
+	//その後Updateへ...
+	sound->PlayLoopMP3("BGM01.mp3");
+
+	//memo : 今使っているサウンドはこれ
+	//sound->PlayLoop("EndingDark");
 }
 
 void Ending::Update()
@@ -33,14 +44,17 @@ void Ending::Update()
 		NextScene();
 	}
 
-	//sound->CheckLoop("testBgm.mp3");
+	//ループで流す場合、再生が終わったかを検知しないといけないため、
+	//UpdeteにCheckLoop関数と、初期化に書いた音声ファイルを引数に入れる
+	//これが無いとループしてくれないので注意。
+	sound->CheckLoop("BGM01.mp3");
 }
 
 void Ending::Draw()
 {
 	Sprite::BeginDraw(dxManager->GetcmdList());
 	// 背景スプライト描画
-	spriteBG->Draw();
+	//spriteBG->Draw();
 	score->Draw(300, 350, 8, { 1,0,0,1 });
 
 	switch (selectCount)
@@ -77,7 +91,11 @@ void Ending::Draw()
 
 void Ending::NextScene()
 {
-	sound->Stop();
+	sound->StopWav();
+
+	//最後にシーンが終了するときに止めたい音声ファイルを選択して終わり。
+	sound->StopMP3("BGM01.mp3");
+
 	//シーン変更(変更したいシーンを入れてね)
 	sceneChanger->ChangeScene(SceneTitle);
 	switch (selectCount)

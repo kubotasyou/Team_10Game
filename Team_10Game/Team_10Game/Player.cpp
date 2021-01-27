@@ -15,9 +15,9 @@ Player::Player(Input * input, Model* model)
 
 Player::~Player()
 {
-    //safedelete(input);
-    //safedelete(player);
-    //safedelete(sphereModel);
+	//safedelete(input);
+	//safedelete(player);
+	//safedelete(sphereModel);
 	//for (auto test : bulletList)
 	//{
 	//	safedelete(test);
@@ -30,8 +30,9 @@ void Player::Initialize()
 	velocity = { 0,0,0 };
 
 	//位置初期化
-	position = float3(0, 1, 0);
+	position = float3(0, 0, 0);
 	player->SetPosition(position);
+	player->SetColor({ 1, 0, 0, 0.5f });//後で消す
 	//自機：当たり判定初期化
 	sphere.center = XMVectorSet(position.x, position.y, position.z, 0);//位置
 	sphere.radius = 1.0f;//半径
@@ -39,16 +40,23 @@ void Player::Initialize()
 	//体力初期化
 	hp = 5;
 
+	//無敵時間の初期化
 	downTimer = new CountDownTimer();
 	downTimer->SetTime(noDamageTime);
+
+	//カメラの位置初期化
+	cameraPosition = float3(position.x, position.y, -5);
+	camera->SetTarget(position);//ターゲットはプレイヤーの位置
+	camera->SetEye(cameraPosition);//プレイヤーの真後ろから見てる感じ(zを0にすることはできない)
 }
 
 void Player::Update()
 {
 	player->Update();
-	//downTimer->Update();
 
 	Move();
+	CameraMove();
+	Blinking();
 
 	//ボタンを押したら使用される
 	if (input->GetKeyTrigger(KeyCode::SPACE))
@@ -74,38 +82,6 @@ void Player::Update()
 		//tureのフラグを見つけたら更新する
 		test->Update();
 	}
-
-	//ダメージを受けているとき
-	if (dFlag == true)
-	{
-		//時間を進める
-		downTimer->Update();
-
-		//カウントを増やす
-		count++;
-
-		//カウントが10で割り切れるとき
-		if (count % 10 == 0)
-		{
-			//色を変える
-			player->SetColor({ 1, 0, 0, 1 });
-		}
-		else
-		{
-			//割り切れないときは通常色
-			player->SetColor({ 1, 1, 1, 1 });
-		}
-
-		//時間になったら
-		if (downTimer->IsTime())
-		{
-			player->SetColor({ 1, 1, 1, 1 });
-			//ダメージを受けていない状態にする
-			count = 0;
-			dFlag = false;
-		}
-	}
-
 }
 void Player::Shot()
 {
@@ -122,13 +98,46 @@ void Player::Shot()
 	}
 }
 
+void Player::Blinking()
+{
+	//ダメージを受けていなかったら処理しない
+	if (!damageFlag) return;
+
+	//時間を進める
+	downTimer->Update();
+
+	//カウントを増やす
+	count++;
+
+	//カウントが10で割り切れるとき
+	if (count % 10 == 0)
+	{
+		//色を変える
+		player->SetColor({ 1, 0, 0, 1 });
+	}
+	else
+	{
+		//割り切れないときは通常色
+		player->SetColor({ 1, 1, 1, 0.5f });
+	}
+
+	//時間になったら
+	if (downTimer->IsTime())
+	{
+		player->SetColor({ 1, 1, 1, 0.5f });
+		//ダメージを受けていない状態にする
+		count = 0;
+		damageFlag = false;
+	}
+}
+
 void Player::Damage(int damage)
 {
-	if (!dFlag)
+	if (!damageFlag)
 	{
 		hp -= damage;                    //ダメージ受ける
 		downTimer->SetTime(noDamageTime);//無敵時間初期化
-		dFlag = true;                    //無敵突入
+		damageFlag = true;               //無敵突入
 	}
 }
 
@@ -150,21 +159,57 @@ void Player::Move()
 
 	position = player->GetPosition();
 
-	velocity.x += input->GetStick("Vertices") * speed;
-	velocity.y += input->GetStick("Horizontal") * speed;
+	velocity.x = input->GetStick("Vertices") * speed;
+	velocity.y = input->GetStick("Horizontal") * speed;
 
 	//float3に+=のoperatorがない。
 	position.x += velocity.x;
 	position.y += velocity.y;
 	position.z += velocity.z;
 
+	//移動範囲の制限をかける
+	position.x = Clamp(position.x, -15.0f, 15.0f);
+	position.y = Clamp(position.y, -15.0f, 15.0f);
+	position.z = Clamp(position.z, -0.1f, 0.1f);
+
 	//当たり判定も一緒に動かす
 	sphere.center = XMVectorSet(position.x, position.y, position.z, 0);
 
+	//位置更新
 	player->SetPosition(position);
 }
 
-void Player::ChangeDamageFlag(bool flag)
+void Player::CameraMove()
 {
-	DamageFlag = flag;
+	cameraVelocity = { 0,0,0 };
+
+	cameraVelocity.x = input->GetStick("Vertices") *   speed;
+	cameraVelocity.y = input->GetStick("Horizontal") * speed;
+
+	//float3に+=のoperatorがない。
+	cameraPosition.x += cameraVelocity.x;
+	cameraPosition.y += cameraVelocity.y;
+
+	//移動範囲の制限をかける
+	cameraPosition.x = Clamp(cameraPosition.x, -15.0f, 15.0f);
+	cameraPosition.y = Clamp(cameraPosition.y, -15.0f, 15.0f);
+
+	//カメラを動かす
+	camera->SetTarget(position);
+	camera->SetEye(cameraPosition);
+}
+
+float Player::Clamp(float value, float min, float max)
+{
+	if (value <= min)
+	{
+		value = min;
+	}
+	else if (value >= max)
+	{
+		value = max;
+	}
+
+	return value;
+
 }

@@ -10,8 +10,8 @@ using namespace std;
 
 Sound::Sound()
 {
-	Initialize();
-	DirectShowInit();
+	Initialize();    //XAudio2初期化
+	DirectShowInit();//DirectShow初期化
 }
 
 Sound::~Sound()
@@ -19,13 +19,12 @@ Sound::~Sound()
 	//マップ内のすべて(forとか)の音声データのバッファひとつづつをdeleteする
 	delete soundList[0].pBuffer;
 
-
 	//XAudio2の解放
 	audio->Release();
 	masterVoice->DestroyVoice();
 }
 
-void Sound::LoadSE(const std::string& filename)
+void Sound::LoadWav(const std::string& filename)
 {
 	//ファイル入力ストリームのインスタンス
 	std::ifstream file;
@@ -36,7 +35,6 @@ void Sound::LoadSE(const std::string& filename)
 
 	// .wavファイルをバイナリモードで開く
 	file.open(directoryName + soundName, std::ios_base::binary);
-	//file.open(filename, std::ios_base::binary);
 	// ファイルオープン失敗をチェック
 	if (file.fail()) { assert(0 && "ファイルオープンに失敗"); }
 
@@ -44,22 +42,18 @@ void Sound::LoadSE(const std::string& filename)
 	WaveData wavData;
 
 	//RIFFヘッダーの読み込み
-	/*RIFFHeader riffHeader;*/
 	file.read((char*)&wavData.riffHeader, sizeof(wavData.riffHeader));
 	// ファイルがRIFFかチェック
 	if (strncmp(wavData.riffHeader.chunk.ID, "RIFF", 4) != 0) { assert(0 && "ファイルがRIFFではない"); }
 
 	//Formatチャンクの読み込み
-	/*FormatChunk format;*/
 	file.read((char*)&wavData.format, sizeof(wavData.format));
 
 	//Dataチャンクの読み込み
-	/*Chunk data;*/
 	file.read((char*)&wavData.data, sizeof(wavData.data));
 
-
 	//Dataチャンクの波形データ読み込み
-	/*char* */wavData.pBuffer = new char[wavData.data.size];
+    wavData.pBuffer = new char[wavData.data.size];
 	file.read(wavData.pBuffer, wavData.data.size);
 
 	//リストに名前と、データを保存
@@ -110,7 +104,7 @@ BSTR Sound::StringToBSTR(const std::string & str)
 	return wsdata;
 }
 
-void Sound::PlaySE(const std::string& filename, float volume)
+void Sound::PlayWav(const std::string& filename, float volume)
 {
 	HRESULT result;
 
@@ -175,7 +169,7 @@ void Sound::PlaySE(const std::string& filename, float volume)
 	sourceData.emplace_back(source);
 }
 
-void Sound::Stop()
+void Sound::StopWav()
 {
 	for (auto a : sourceData)
 	{
@@ -183,7 +177,7 @@ void Sound::Stop()
 	}
 }
 
-void Sound::PlayLoop(const std::string & filename, float volume)
+void Sound::PlayLoopWav(const std::string & filename, float volume)
 {
 	HRESULT result;
 
@@ -234,36 +228,35 @@ void Sound::DirectShowInit()
 
 	//COMの初期化
 	CoInitialize(NULL);
+}
 
-	//FillterGraphを作成
+void Sound::LoadMP3(const std::string & filename)
+{
+	HRESULT result;
+
+	//GraphBuilderを作成
+	IGraphBuilder* graphBuilder = nullptr;
 	result = CoCreateInstance(
 		CLSID_FilterGraph,
 		NULL,
 		CLSCTX_INPROC,
 		IID_IGraphBuilder,
-		(LPVOID*)&graphBuffer
+		(LPVOID*)&graphBuilder
 	);
-}
 
-void Sound::LoadBGM(const std::string & filename)
-{
-	HRESULT result;
-
-	//memo: ここでローカルなMediaControlを作ればいいかな
-	IMediaControl* mediaControl;//作ってみた
-	//IMediaPosition* mediaPosition;//再生位置の指定
-
-	//MediaControlのインターフェース取得
-	result = graphBuffer->QueryInterface(
+	//MediaControlを作成
+	IMediaControl* mediaControl = nullptr;//一応nullで初期化
+	result = graphBuilder->QueryInterface(
 		IID_IMediaControl,
 		(LPVOID*)&mediaControl
 	);
 
-	result = graphBuffer->QueryInterface(
+	//MediaPositionを作成
+	IMediaPosition* mediaPosition = nullptr;//nullで初期化
+	result = graphBuilder->QueryInterface(
 		IID_IMediaPosition,
 		(LPVOID*)&mediaPosition
 	);
-
 
 	const std::string directoryName = "Resources/Sound/";
 	const std::string str = directoryName + filename;
@@ -271,34 +264,43 @@ void Sound::LoadBGM(const std::string & filename)
 	//ファイル名をBSTRに変換
 	BSTR bstr = SysAllocString(StringToBSTR(str));
 
-	//Graphを作成
+	//ローカルなMediaControlで、ファイルを読み込む。
 	result = mediaControl->RenderFile(bstr);
 	if FAILED(result)
 	{
 		assert(0 && "ファイルが読み込めませんでした。");
 	}
 
-	//読み込んだらリストに格納
-	bgmList.emplace(filename, mediaControl);
+	//ファイルが読み込めたらそれぞれのリストに格納
+	builderList.emplace(filename, graphBuilder);
+	controlList.emplace(filename, mediaControl);
+	positionList.emplace(filename, mediaPosition);
 
 	//解放処理
 	SysFreeString(bstr);
-	mediaControl->Release();
+
+	//入れ終わったからもういらない
 	mediaPosition->Release();
+	mediaControl->Release();
+	//testGraphBuilder->Release();
 }
 
-void Sound::PlayBGM(const std::string& filename)
+void Sound::PlayMP3(const std::string& filename)
 {
-	auto list = bgmList[filename];
-	list->Run();
+	//名前と一緒に格納したcontrolを取り出す
+	auto conList = controlList[filename];
+	conList->Run();//再生
+
 	isPlay = true;
 	isLoop = false;
 }
 
-void Sound::PlayLoopBGM(const std::string& filename)
+void Sound::PlayLoopMP3(const std::string& filename)
 {
-	auto list = bgmList[filename];
-	list->Run();
+	//名前と一緒に格納したcontrolを取り出す
+	auto conList = controlList[filename];
+	conList->Run();//再生
+
 	isPlay = true;
 	isLoop = true;
 }
@@ -308,30 +310,42 @@ void Sound::CheckLoop(const std::string& filename)
 	//再生してないか、ループモードじゃなければ処理しない
 	if (!isPlay || !isLoop) return;
 
+	//名前と一緒に格納したpositionを取り出す
+	auto posList = positionList[filename];
+
+
 	REFTIME pos, end;
-	mediaPosition->get_CurrentPosition(&pos);
-	mediaPosition->get_StopTime(&end);
+	posList->get_CurrentPosition(&pos);
+	posList->get_StopTime(&end);
 	if (pos >= end)
 	{
-		StopBGM();
-		PlayLoopBGM(filename);
+		//この方法で戻すと開始が少し途切れてしまった
+		//pMediaPosition->put_CurrentPosition(0);
+		//pMediaControl->Run();
+
+		//そこでいったん止めてから再生する
+		StopMP3(filename);
+		PlayLoopMP3(filename);
 	}
 }
 
-void Sound::StopBGM()
+void Sound::StopMP3(const std::string& filename)
 {
-	//全てのBGMの停止
-	for (auto list : bgmList)
-	{
-		list.second->Stop();
-	}
-	mediaPosition->put_CurrentPosition(0);
+	//名前と一緒に格納したcontrolを取り出す
+	auto conList = controlList[filename];
+
+	conList->Stop();//停止
+
+	//名前と一緒に格納したpositionを取り出す
+	auto posList = positionList[filename];
+
+	//再生位置を最初に戻す
+	posList->put_CurrentPosition(0);
 	isPlay = false;
 }
 
 void Sound::Release()
 {
 	//解放処理
-	graphBuffer->Release();
 	CoUninitialize();
 }

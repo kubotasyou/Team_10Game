@@ -42,12 +42,15 @@ private:
 	Input* input;
 	Score* score;
 
-	//Model* skyDomeModel;//スカイドームモデル
+	Sprite* backGround;//背景画像
+
+	Model* spaceDomeModel;//宇宙ドームモデル
 	Model* sphereModel; //球モデル
 	//Model* groundModel; //グラウンドモデル
+	Model* charaModel;//プレイヤー用のテストモデル
 
-	//GameObject* skyDome;//スカイドームオブジェクト
-	GameObject* ground;	//グラウンドオブジェクト
+	GameObject* spaceDome;//宇宙ドームオブジェクト
+	//GameObject* ground;	//グラウンドオブジェクト
 
 	Player* player;
 	std::vector<Enemy*> enemys;

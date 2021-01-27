@@ -1,7 +1,7 @@
 # 3ds Max Wavefront OBJ Exporter v0.99 - (c)2007 guruware
 # File Created: 13.10.2020 15:01:10
 
-mtllib skydome.mtl
+mtllib spacedome.mtl
 
 #
 # object Sphere001

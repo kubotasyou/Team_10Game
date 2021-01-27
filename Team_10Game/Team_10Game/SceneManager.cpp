@@ -15,7 +15,7 @@ SceneManager::SceneManager(DirectXManager * manager, Input * input, Sound* sound
 	score(new Score(dxManager))
 {
 	//最初のシーンを設定
-	currentScene = (BaseScene*) new Title(this, dxManager, input, sound);
+	currentScene = (BaseScene*) new Ending(this, dxManager, input, sound, score);
 
 	//フェードのタイプを設定
 	fader->SetFaderType(FadeType::Normal);
@@ -39,28 +39,35 @@ void SceneManager::Initialize()
 	Sprite::LoadTexture(0, L"Resources/Texture/debugfont.png");
 	// 1フェード用黒画像
 	Sprite::LoadTexture(1, L"Resources/Texture/black.png");
-	// 5タイトルの画像
+	// 2タイトルの画像
 	Sprite::LoadTexture(2, L"Resources/Texture/Title.png");
-	// 6エンディングの画像
+	// 3エンディングの画像
 	Sprite::LoadTexture(3, L"Resources/Texture/Ending.png");
-	//カーソルの画像
+	// 4カーソルの画像
 	Sprite::LoadTexture(4, L"Resources/Texture/curssor.png");
+	// 5ゲームシーン背景
+	Sprite::LoadTexture(5, L"Resources/Texture/Space.jpg");
 
 #pragma endregion
 
 #pragma region サウンド読み込み
 
-	sound->LoadSE("3MinutesCooking");
-	sound->LoadSE("select");
-	sound->LoadSE("clear");
-	//sound->LoadBGM("punch.mp3");
-	sound->LoadSE("Title");
-	sound->LoadSE("Gameplay");
-	sound->LoadSE("Ending");
-	sound->LoadSE("EndingDark");
-	//sound->LoadBGM("testBgm.mp3");
+	sound->LoadWav("3MinutesCooking");
+	sound->LoadWav("select");
+	sound->LoadWav("clear");
+	sound->LoadWav("Title");
+	sound->LoadWav("Gameplay");
+	sound->LoadWav("Ending");
+	sound->LoadWav("EndingDark");
+
+	//MP3ファイルの読み込み
+	//識別子(.mp3)が必要
+	//この時にファイル名をコピーしておくと良い
+	sound->LoadMP3("BGM01.mp3");
+
 #pragma endregion
 
+	//シーンの初期化(読み込みはこれより↑に書く)
 	currentScene->Initialize();
 
 }
@@ -119,7 +126,7 @@ void SceneManager::Draw()
 
 void SceneManager::ChangeScene(SceneType nextScene)
 {
-	fader->SetFadeIn(0.5f);
-	fader->SwitchFade(false);
+	fader->SetFadeIn(0.5f);  //フェードの時間指定
+	fader->SwitchFade(false);//フェードイン
 	this->nextScene = nextScene;
 }
