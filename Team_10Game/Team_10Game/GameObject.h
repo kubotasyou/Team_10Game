@@ -130,7 +130,17 @@ public://関数
 	{
 		return radius;
 	}
-
+	//角度の設定
+	void SetRotation(XMFLOAT3 rotation)
+	{
+		this->rotation = rotation;
+	}
+	//角度取得
+	const XMFLOAT3& GetRotation()
+	{
+		return rotation;
+	}
+	
 private://一度しか呼ばないメンバ変数
 
 	// デバイス

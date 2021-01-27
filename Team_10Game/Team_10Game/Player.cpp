@@ -31,7 +31,9 @@ void Player::Initialize()
 
 	//位置初期化
 	position = float3(0, 0, 0);
+	rotation = float3(0, 0, 0);
 	player->SetPosition(position);
+	player->SetRotation(rotation);
 	player->SetColor({ 1, 0, 0, 0.5f });//後で消す
 	//自機：当たり判定初期化
 	sphere.center = XMVectorSet(position.x, position.y, position.z, 0);//位置
@@ -48,18 +50,21 @@ void Player::Initialize()
 	cameraPosition = float3(position.x, position.y, -5);
 	camera->SetTarget(position);//ターゲットはプレイヤーの位置
 	camera->SetEye(cameraPosition);//プレイヤーの真後ろから見てる感じ(zを0にすることはできない)
+	bulletTimer = new CountDownTimer();
+	bulletTimer->SetTime(bulletTime);
+	rotSpeed = 0.4f;
 }
 
 void Player::Update()
 {
 	player->Update();
-
+	bulletTimer->Update();
 	Move();
 	CameraMove();
 	Blinking();
 
 	//ボタンを押したら使用される
-	if (input->GetKeyTrigger(KeyCode::SPACE))
+	if (input->GetKeyDown(KeyCode::SPACE))
 	{
 		Shot();
 		//memo : ホントにメモ
@@ -85,16 +90,20 @@ void Player::Update()
 }
 void Player::Shot()
 {
-	bulletList.emplace_back(new Bullet(player->GetPosition(), sphereModel));
-	for (int i = 0; i < bulletList.size(); i++)
+	if (bulletTimer->IsTime())
 	{
-		//リスト内のフラグがfalseのものを探す
-		if (!bulletList[i]->GetUsedFlag())
+		bulletList.emplace_back(new Bullet(player->GetPosition(), sphereModel));
+		for (int i = 0; i < bulletList.size(); i++)
 		{
-			//falseのフラグを見つけたら、trueに変える
-			bulletList[i]->ChangeUseFlag(true);
-			break;
+			//リスト内のフラグがfalseのものを探す
+			if (!bulletList[i]->GetUsedFlag())
+			{
+				//falseのフラグを見つけたら、trueに変える
+				bulletList[i]->ChangeUseFlag(true);
+				break;
+			}
 		}
+		bulletTimer->SetTime(bulletTime);//弾時間初期化
 	}
 }
 
@@ -172,11 +181,59 @@ void Player::Move()
 	position.y = Clamp(position.y, -15.0f, 15.0f);
 	position.z = Clamp(position.z, -0.1f, 0.1f);
 
+	//回転制限をかける
+	rotation.x = Clamp(rotation.x, -45.0f, 45.0f);
+	rotation.y = Clamp(rotation.y, -45.0f, 45.0f);
+	rotation.z = Clamp(rotation.z, -45.0f, 45.0f);
 	//当たり判定も一緒に動かす
 	sphere.center = XMVectorSet(position.x, position.y, position.z, 0);
 
+	if (input->GetStick("Vertices")== 1)
+	{
+		rotation.z = rotation.z - rotSpeed;
+	}
+	if (input->GetStick("Vertices") == -1)
+	{
+		rotation.z = rotation.z + rotSpeed;
+	}
+	if (input->GetStick("Vertices") == 0)
+	{
+		if (rotation.z >= 0)
+		{
+			rotation.z =rotation.z - rotSpeed;
+		}
+		if (rotation.z <= 0)
+		{
+			rotation.z = rotation.z + rotSpeed;
+		}
+	}
+	if (input->GetStick("Horizontal") == 1)
+	{
+		rotation.x = rotation.x + rotSpeed;
+	}
+	if (input->GetStick("Horizontal") == -1)
+	{
+		rotation.x = rotation.x - rotSpeed;
+	}
+	if (input->GetStick("Horizontal") == 0)
+	{
+		if (rotation.x >= 0)
+		{
+			rotation.x = rotation.x - rotSpeed;
+		}
+		if (rotation.x <= 0)
+		{
+			rotation.x = rotation.x + rotSpeed;
+		}
+	}
+
+	if (velocity.y == 0)
+	{
+
+	}
 	//位置更新
 	player->SetPosition(position);
+	player->SetRotation(rotation);
 }
 
 void Player::CameraMove()

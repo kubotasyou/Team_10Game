@@ -30,6 +30,8 @@ public:
 
 	//現在位置を取得
 	float3 GetPosition() { return position; }
+	//現在の角度
+	float3 GetRotation() { return rotation; }
 	//自機の当たり判定を取得
 	Sphere GetSphere() { return sphere; }
 	//現在の体力取得
@@ -55,6 +57,7 @@ private:
 	//範囲の制限(クランプしたい値・最小値・最大値)
 	float Clamp(float value, float min, float max);
 
+
 private:
 	Input* input = nullptr;
 	GameObject* player = nullptr;
@@ -63,7 +66,7 @@ private:
 
 	float3 position;//自機の位置
 	float3 velocity;//自機の移動量
-
+	float3 rotation;//自機の角度
 	float3 cameraPosition;//カメラの位置
 	float3 cameraVelocity;//カメラの移動量
 
@@ -82,10 +85,19 @@ private:
 	//ダメージ用タイマー
 	CountDownTimer* downTimer;
 
+	//弾の間隔用タイマー
+	CountDownTimer* bulletTimer;
+
 	//無敵時間
 	float noDamageTime = 3.0f;
 
 	//点滅用カウント
 	int count = 0;
+
+	//弾のインターバル
+	float bulletTime = 3;
+
+	//ローテーションの速さ
+	float rotSpeed = 0;
 };
 
