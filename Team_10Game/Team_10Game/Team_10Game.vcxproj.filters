@@ -104,6 +104,7 @@
     </ClCompile>
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="ParticleManager.cpp" />
+    <ClCompile Include="Light.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseScene.h">
@@ -195,6 +196,7 @@
     </ClInclude>
     <ClInclude Include="Score.h" />
     <ClInclude Include="ParticleManager.h" />
+    <ClInclude Include="Light.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BasicShaderHeader.hlsli">
