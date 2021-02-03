@@ -12,7 +12,7 @@ private:
 	using float3 = DirectX::XMFLOAT3;
 
 public:
-	Bullet(float3 position,Model* model);
+	Bullet(float3 position,Model* model,float3 pointerposition);
 	~Bullet();
 
 	void Update();
@@ -45,6 +45,9 @@ private:
 
 	float3 position;//ˆÊ’u
 	float3 velocity;//ˆÚ“®—Ê
+	float3 pointerPosition;//Æ€‚ÌˆÊ’u
+	float3 dist;//Æ€‚Æ’e‚Ì‹——£
+	float distance;//Æ€‚Æ“G‚Ì‹——£
 
 	float speed = 0.1f;//ˆÚ“®‘¬“x
 
