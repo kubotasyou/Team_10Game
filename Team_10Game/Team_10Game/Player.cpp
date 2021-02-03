@@ -31,11 +31,11 @@ void Player::Initialize()
 {
 	//一応初期化
 	velocity = { 0,0,0 };
-
+	pointervelocity = { 0,0,0 };
 	//位置初期化
 	position = float3(0, 0, 0);
 	rotation = float3(0, 0, 0);
-	pointerPosition = float3(0, 0, 10);
+	pointerPosition = float3(0, 0, 15);
 	player->SetPosition(position);
 	player->SetRotation(rotation);
 	player->SetColor({ 1, 0, 0, 0.5f });//後で消す
@@ -176,16 +176,21 @@ void Player::Move()
 {
 	//これ必須
 	velocity = { 0,0,0 };
-
+	pointervelocity = { 0,0,0 };
 	position = player->GetPosition();
 
 	velocity.x = input->GetStick("Vertices") * speed;
 	velocity.y = input->GetStick("Horizontal") * speed;
+	pointervelocity.x = input->GetRightStick("Vertices") * speed;
+	pointervelocity.y = input->GetRightStick("Horizontal") * speed;
 
 	//float3に+=のoperatorがない。
 	position.x += velocity.x;
 	position.y += velocity.y;
 	position.z += velocity.z;
+	pointerPosition.x += pointervelocity.x;
+	pointerPosition.y += pointervelocity.y;
+	pointerPosition.z += pointervelocity.z;
 
 	//移動範囲の制限をかける
 	position.x = Clamp(position.x, -5.0f, 5.0f);
@@ -245,6 +250,7 @@ void Player::Move()
 	//位置更新
 	player->SetPosition(position);
 	player->SetRotation(rotation);
+	objtest->SetPosition(pointerPosition);
 }
 
 void Player::CameraMove()

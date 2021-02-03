@@ -39,7 +39,7 @@ void Bullet::Update()
 	if (!isUsed) return;
 
 	bullet->Update();
-	if (position.z > 10)
+	if (position.z > 12)
 	{
 		isDeadFlag = true;
 	}

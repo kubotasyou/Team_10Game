@@ -69,11 +69,12 @@ private:
 
 	float3 position;//自機の位置
 	float3 velocity;//自機の移動量
+	float3 pointervelocity;//照準の移動量
 	float3 rotation;//自機の角度
 	float3 cameraPosition;//カメラの位置
 	float3 cameraVelocity;//カメラの移動量
 	float3 pointerPosition;//照準の位置
-	float speed = 0.2f;//移動速度
+	float speed = 0.09f;//移動速度
 	int hp = 3;        //体力
 
 	//弾のリスト
@@ -98,7 +99,7 @@ private:
 	int count = 0;
 
 	//弾のインターバル
-	float bulletTime = 2.5;
+	float bulletTime = 1.5f;
 
 	//ローテーションの速さ
 	float rotSpeed = 0;
