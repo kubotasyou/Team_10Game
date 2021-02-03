@@ -74,7 +74,7 @@ void Player::Update()
 	Blinking();
 
 	//ボタンを押したら使用される
-	if (input->GetKeyDown(KeyCode::SPACE)||input->GetJoyPadDown(JoyPad::A))
+	if (input->GetKeyDown(KeyCode::SPACE)||input->GetJoyPadDown(JoyPad::LB) || input->GetJoyPadDown(JoyPad::RB))
 	{
 		Shot();
 		//memo : ホントにメモ

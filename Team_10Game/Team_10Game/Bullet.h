@@ -49,7 +49,7 @@ private:
 	float3 dist;//照準と弾の距離
 	float distance;//照準と敵の距離
 
-	float speed = 0.1f;//移動速度
+	float speed = 0.25f;//移動速度
 
 	//使っているかどうかのフラグ
     bool isUsed;

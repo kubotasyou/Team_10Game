@@ -15,7 +15,7 @@ SceneManager::SceneManager(DirectXManager * manager, Input * input, Sound* sound
 	score(new Score(dxManager))
 {
 	//最初のシーンを設定
-	currentScene = (BaseScene*) new GamePlay(this, dxManager, input, score, sound);
+	currentScene = (BaseScene*) new Title(this, dxManager, input, sound);
 
 	//フェードのタイプを設定
 	fader->SetFaderType(FadeType::Normal);

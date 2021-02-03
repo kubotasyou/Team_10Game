@@ -229,11 +229,11 @@ float Input::GetStick(const std::string & str)
 		}
 		else
 		{
-			if (this->GetKeyDown(KeyCode::RIGHT))
+			if (this->GetKeyDown(KeyCode::D))
 			{
 				result = +1.0f;
 			}
-			else if (this->GetKeyDown(KeyCode::LEFT))
+			else if (this->GetKeyDown(KeyCode::A))
 			{
 				result = -1.0f;
 			}
@@ -258,11 +258,11 @@ float Input::GetStick(const std::string & str)
 		}
 		else
 		{
-			if (this->GetKeyDown(KeyCode::UP))
+			if (this->GetKeyDown(KeyCode::W))
 			{
 				result = +1.0f;
 			}
-			else if (this->GetKeyDown(KeyCode::DOWN))
+			else if (this->GetKeyDown(KeyCode::S))
 			{
 				result = -1.0f;
 			}
@@ -294,17 +294,17 @@ float Input::GetRightStick(const std::string & str)
 				result = +1.0f;
 			}
 		}
-		//else
-		//{
-		//	if (this->GetKeyDown(KeyCode::RIGHT))
-		//	{
-		//		result = +1.0f;
-		//	}
-		//	else if (this->GetKeyDown(KeyCode::LEFT))
-		//	{
-		//		result = -1.0f;
-		//	}
-		//}
+		else
+		{
+			if (this->GetKeyDown(KeyCode::RIGHT))
+			{
+				result = +1.0f;
+			}
+			else if (this->GetKeyDown(KeyCode::LEFT))
+			{
+				result = -1.0f;
+			}
+		}
 	}
 	//c‘€ì
 	if (chara == "Horizontal")
@@ -323,17 +323,17 @@ float Input::GetRightStick(const std::string & str)
 				result = -1.0f;
 			}
 		}
-		//else
-		//{
-		//	if (this->GetKeyDown(KeyCode::UP))
-		//	{
-		//		result = +1.0f;
-		//	}
-		//	else if (this->GetKeyDown(KeyCode::DOWN))
-		//	{
-		//		result = -1.0f;
-		//	}
-		//}
+		else
+		{
+			if (this->GetKeyDown(KeyCode::UP))
+			{
+				result = +1.0f;
+			}
+			else if (this->GetKeyDown(KeyCode::DOWN))
+			{
+				result = -1.0f;
+			}
+		}
 	}
 
 	return result;

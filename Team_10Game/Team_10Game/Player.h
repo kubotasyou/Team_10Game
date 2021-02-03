@@ -75,7 +75,7 @@ private:
 	float3 cameraVelocity;//ƒJƒƒ‰‚ÌˆÚ“®—Ê
 	float3 pointerPosition;//Æ€‚ÌˆÊ’u
 	float speed = 0.09f;//ˆÚ“®‘¬“x
-	float speed2 = 0.15;
+	float speed2 = 0.35;
 
 	int hp = 3;        //‘Ì—Í
 
