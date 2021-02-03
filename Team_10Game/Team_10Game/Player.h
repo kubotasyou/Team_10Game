@@ -6,8 +6,9 @@
 #include "Model.h"
 #include "CollisionPrimitive.h"
 #include "Bullet.h"
-
+#include "SceneManager.h"
 #include "CountDownTimer.h"
+#include "Pointer.h"
 
 class Player
 {
@@ -62,14 +63,16 @@ private:
 	Input* input = nullptr;
 	GameObject* player = nullptr;
 	GameObject* camera = nullptr;//カメラ操作用
+	GameObject* objtest = nullptr;
 	Model* sphereModel = nullptr;
+	Pointer* pointer = nullptr;	//ポインター
 
 	float3 position;//自機の位置
 	float3 velocity;//自機の移動量
 	float3 rotation;//自機の角度
 	float3 cameraPosition;//カメラの位置
 	float3 cameraVelocity;//カメラの移動量
-
+	float3 pointerPosition;//照準の位置
 	float speed = 0.2f;//移動速度
 	int hp = 3;        //体力
 
@@ -95,7 +98,7 @@ private:
 	int count = 0;
 
 	//弾のインターバル
-	float bulletTime = 3;
+	float bulletTime = 2.5;
 
 	//ローテーションの速さ
 	float rotSpeed = 0;

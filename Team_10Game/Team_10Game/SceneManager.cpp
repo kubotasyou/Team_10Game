@@ -47,7 +47,8 @@ void SceneManager::Initialize()
 	Sprite::LoadTexture(4, L"Resources/Texture/curssor.png");
 	// 5ゲームシーン背景
 	Sprite::LoadTexture(5, L"Resources/Texture/Space.jpg");
-
+	// 6ポインターの画像
+	Sprite::LoadTexture(6, L"Resources/Texture/marker.png");
 #pragma endregion
 
 #pragma region サウンド読み込み

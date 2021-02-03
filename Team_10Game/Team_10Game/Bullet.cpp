@@ -1,7 +1,7 @@
 #include "Bullet.h"
 #include "SafeDelete.h"
 
-Bullet::Bullet(float3 position, Model* model)
+Bullet::Bullet(float3 position, Model* model,float3 pointerposition)
 {
 	//íeê∂ê¨
 	this->sphereModel = model;
@@ -21,7 +21,7 @@ Bullet::Bullet(float3 position, Model* model)
 	sphere.center = XMVectorSet(position.x, position.y, position.z, 1);
 	//îºåa
 	sphere.radius = 0.5f;
-
+	this->pointerPosition = pointerposition;
 #pragma endregion
 
 
@@ -39,7 +39,7 @@ void Bullet::Update()
 	if (!isUsed) return;
 
 	bullet->Update();
-	if (position.z > 15)
+	if (position.z > 10)
 	{
 		isDeadFlag = true;
 	}
@@ -92,7 +92,13 @@ void Bullet::Move()
 	position = bullet->GetPosition();
 
 	//îÚÇÒÇ≈Ç¢Ç≠Å[
-	velocity.z += speed;
+	dist.x = pointerPosition.x - position.x;
+	dist.y = pointerPosition.y - position.y;
+	dist.z = pointerPosition.z - position.z;
+	distance = sqrtf(dist.x * dist.x + dist.y * dist.y + dist.z * dist.z);
+	velocity.x = dist.x / distance * speed;
+	velocity.y = dist.y / distance * speed;
+	velocity.z = dist.z / distance * speed;
 
 	//x,yÇ¢ÇÁÇ»Ç¢ÇØÇ«Ç¢ÇøÇ®Ç§ÇÀ
 	position.x += velocity.x;

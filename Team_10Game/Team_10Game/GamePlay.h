@@ -8,6 +8,7 @@
 #include "Sound.h"
 #include "BaseScene.h"
 #include "Player.h"
+#include "Pointer.h"
 #include "Enemy.h"
 #include "DebugText.h"
 #include "Score.h"
@@ -42,6 +43,7 @@ private:
 	Input* input;
 	Score* score;
 
+	XMFLOAT3 playerpos;
 	Sprite* backGround;//”wŒi‰æ‘œ
 
 	Model* spaceDomeModel;//‰F’ˆƒh[ƒ€ƒ‚ƒfƒ‹
@@ -66,7 +68,7 @@ private:
 	DirectX::XMFLOAT3 deadPos;
 	Sound* sound =nullptr;
 
-
+	Pointer* pointer;
 
 	Rectangles rect;
 	Dot point;

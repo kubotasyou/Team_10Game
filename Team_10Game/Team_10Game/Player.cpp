@@ -11,6 +11,8 @@ Player::Player(Input * input, Model* model)
 	//プレイヤー生成
 	player = GameObject::Create();
 	player->SetModel(sphereModel);
+	objtest = GameObject::Create();
+	objtest->SetModel(sphereModel);
 }
 
 Player::~Player()
@@ -22,6 +24,7 @@ Player::~Player()
 	//{
 	//	safedelete(test);
 	//}
+	safedelete(objtest);
 }
 
 void Player::Initialize()
@@ -32,12 +35,15 @@ void Player::Initialize()
 	//位置初期化
 	position = float3(0, 0, 0);
 	rotation = float3(0, 0, 0);
+	pointerPosition = float3(0, 0, 10);
 	player->SetPosition(position);
 	player->SetRotation(rotation);
 	player->SetColor({ 1, 0, 0, 0.5f });//後で消す
 	//自機：当たり判定初期化
 	sphere.center = XMVectorSet(position.x, position.y, position.z, 0);//位置
 	sphere.radius = 1.0f;//半径
+
+	objtest->SetPosition(pointerPosition);
 
 	//体力初期化
 	hp = 5;
@@ -58,9 +64,10 @@ void Player::Initialize()
 void Player::Update()
 {
 	player->Update();
+	objtest->Update();
 	bulletTimer->Update();
 	Move();
-	CameraMove();
+	//CameraMove();
 	Blinking();
 
 	//ボタンを押したら使用される
@@ -87,12 +94,14 @@ void Player::Update()
 		//tureのフラグを見つけたら更新する
 		test->Update();
 	}
+
+	pointerPosition = objtest->GetPosition();
 }
 void Player::Shot()
 {
 	if (bulletTimer->IsTime())
 	{
-		bulletList.emplace_back(new Bullet(player->GetPosition(), sphereModel));
+		bulletList.emplace_back(new Bullet(player->GetPosition(), sphereModel,pointerPosition));
 		for (int i = 0; i < bulletList.size(); i++)
 		{
 			//リスト内のフラグがfalseのものを探す
@@ -159,6 +168,8 @@ void Player::Draw()
 		//trueのフラグを見つけたら更新する
 		test->Draw();
 	}
+	//pointer->Draw();
+	objtest->Draw();
 }
 
 void Player::Move()
@@ -177,8 +188,8 @@ void Player::Move()
 	position.z += velocity.z;
 
 	//移動範囲の制限をかける
-	position.x = Clamp(position.x, -15.0f, 15.0f);
-	position.y = Clamp(position.y, -15.0f, 15.0f);
+	position.x = Clamp(position.x, -5.0f, 5.0f);
+	position.y = Clamp(position.y, -3.5f, 2.0f);
 	position.z = Clamp(position.z, -0.1f, 0.1f);
 
 	//回転制限をかける
