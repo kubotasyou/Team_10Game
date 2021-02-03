@@ -3,16 +3,17 @@
 
 #include <DirectXMath.h>
 
-Player::Player(Input * input, Model* model)
+Player::Player(Input * input, Model* model,Model * sphereModel)
 {
 	this->input = input;
-	this->sphereModel = model;
+	this->charaModel = model;
+	pointModel = sphereModel;
 
 	//プレイヤー生成
 	player = GameObject::Create();
-	player->SetModel(sphereModel);
+	player->SetModel(this->charaModel);
 	objtest = GameObject::Create();
-	objtest->SetModel(sphereModel);
+	objtest->SetModel(pointModel);
 }
 
 Player::~Player()
@@ -38,12 +39,13 @@ void Player::Initialize()
 	pointerPosition = float3(0, 0, 15);
 	player->SetPosition(position);
 	player->SetRotation(rotation);
-	player->SetColor({ 1, 0, 0, 0.5f });//後で消す
+	//player->SetColor({ 1, 0, 0, 0.5f });//後で消す
 	//自機：当たり判定初期化
 	sphere.center = XMVectorSet(position.x, position.y, position.z, 0);//位置
 	sphere.radius = 1.0f;//半径
 
 	objtest->SetPosition(pointerPosition);
+	objtest->SetColor({1,1,0,1});
 
 	//体力初期化
 	hp = 5;
@@ -58,7 +60,8 @@ void Player::Initialize()
 	camera->SetEye(cameraPosition);//プレイヤーの真後ろから見てる感じ(zを0にすることはできない)
 	bulletTimer = new CountDownTimer();
 	bulletTimer->SetTime(bulletTime);
-	rotSpeed = 0.4f;
+	rotSpeed = 0.8f;
+	rotSpeed2 = 1.6f;
 }
 
 void Player::Update()
@@ -71,7 +74,7 @@ void Player::Update()
 	Blinking();
 
 	//ボタンを押したら使用される
-	if (input->GetKeyDown(KeyCode::SPACE))
+	if (input->GetKeyDown(KeyCode::SPACE)||input->GetJoyPadDown(JoyPad::A))
 	{
 		Shot();
 		//memo : ホントにメモ
@@ -101,7 +104,7 @@ void Player::Shot()
 {
 	if (bulletTimer->IsTime())
 	{
-		bulletList.emplace_back(new Bullet(player->GetPosition(), sphereModel,pointerPosition));
+		bulletList.emplace_back(new Bullet(player->GetPosition(), pointModel,pointerPosition));
 		for (int i = 0; i < bulletList.size(); i++)
 		{
 			//リスト内のフラグがfalseのものを探す
@@ -181,8 +184,8 @@ void Player::Move()
 
 	velocity.x = input->GetStick("Vertices") * speed;
 	velocity.y = input->GetStick("Horizontal") * speed;
-	pointervelocity.x = input->GetRightStick("Vertices") * speed;
-	pointervelocity.y = input->GetRightStick("Horizontal") * speed;
+	pointervelocity.x = input->GetRightStick("Vertices") * speed2;
+	pointervelocity.y = input->GetRightStick("Horizontal") * speed2;
 
 	//float3に+=のoperatorがない。
 	position.x += velocity.x;
@@ -196,6 +199,10 @@ void Player::Move()
 	position.x = Clamp(position.x, -5.0f, 5.0f);
 	position.y = Clamp(position.y, -3.5f, 2.0f);
 	position.z = Clamp(position.z, -0.1f, 0.1f);
+
+	pointerPosition.x = Clamp(pointerPosition.x, -17.0, 17.0);
+	pointerPosition.y= Clamp(pointerPosition.y, -10.0, 8.7); 
+	//pointerPosition.z = Clamp(pointerPosition.z, -5.5, 5.5);
 
 	//回転制限をかける
 	rotation.x = Clamp(rotation.x, -45.0f, 45.0f);
@@ -223,13 +230,13 @@ void Player::Move()
 			rotation.z = rotation.z + rotSpeed;
 		}
 	}
-	if (input->GetStick("Horizontal") == 1)
+	if (input->GetStick("Horizontal") > 0)
 	{
-		rotation.x = rotation.x + rotSpeed;
+		rotation.x = rotation.x - rotSpeed2;
 	}
-	if (input->GetStick("Horizontal") == -1)
+	if (input->GetStick("Horizontal") < 0)
 	{
-		rotation.x = rotation.x - rotSpeed;
+		rotation.x = rotation.x + rotSpeed2;
 	}
 	if (input->GetStick("Horizontal") == 0)
 	{

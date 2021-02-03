@@ -39,7 +39,7 @@ void Ending::Initialize()
 
 void Ending::Update()
 {
-	if (input->GetKeyTrigger(KeyCode::SPACE))
+	if (input->GetKeyTrigger(KeyCode::SPACE)||input->GetJoyPadTrigger(JoyPad::A))
 	{
 		NextScene();
 	}
@@ -54,7 +54,7 @@ void Ending::Draw()
 {
 	Sprite::BeginDraw(dxManager->GetcmdList());
 	// ”wŒiƒXƒvƒ‰ƒCƒg•`‰æ
-	//spriteBG->Draw();
+	spriteBG->Draw();
 	score->Draw(300, 350, 8, { 1,0,0,1 });
 
 	switch (selectCount)
@@ -62,23 +62,23 @@ void Ending::Draw()
 	case 0:
 		curssor->Draw();
 		curssor->SetPosition({ 50.0f,490.0f });
-		if (input->GetKeyTrigger(KeyCode::RIGHT))
+		if (input->GetKeyTrigger(KeyCode::RIGHT)||input->GetStick("Vertices")>0)
 		{
 			selectCount = 1;
 		}
-		if (input->GetKeyTrigger(KeyCode::LEFT))
+	/*	if (input->GetKeyTrigger(KeyCode::LEFT)||input->GetStick("Vertices")<0)
 		{
 			selectCount = 1;
-		}
+		}*/
 		break;
 	case 1:
 		curssor->Draw();
 		curssor->SetPosition({ 800.0f,490.0f });
-		if (input->GetKeyTrigger(KeyCode::RIGHT))
-		{
-			selectCount = 0;
-		}
-		if (input->GetKeyTrigger(KeyCode::LEFT))
+		//if (input->GetKeyTrigger(KeyCode::RIGHT) || input->GetStick("Vertices") > 0)
+		//{
+		//	selectCount = 0;
+		//}
+		if (input->GetKeyTrigger(KeyCode::LEFT)||input->GetStick("Vertices")<0)
 		{
 			selectCount = 0;
 		}

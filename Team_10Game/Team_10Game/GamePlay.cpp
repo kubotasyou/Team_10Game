@@ -78,7 +78,7 @@ void GamePlay::Initialize()
 #pragma region オブジェクトの作成
 
 	//プレイヤー
-	player = new Player(input, charaModel);
+	player = new Player(input, charaModel,sphereModel);
 	player->Initialize();
 
 	//敵
@@ -106,6 +106,8 @@ void GamePlay::Initialize()
 	//背景画像
 	backGround = Sprite::Create(5, { 0,0 });
 
+	//スコアの初期化
+	score->Initialize();
 #pragma endregion
 
 }

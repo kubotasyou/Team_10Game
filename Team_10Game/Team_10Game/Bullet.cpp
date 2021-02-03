@@ -9,7 +9,7 @@ Bullet::Bullet(float3 position, Model* model,float3 pointerposition)
 	bullet->SetModel(sphereModel);//モデルセット
 	bullet->SetPosition(position);//位置初期化
 	bullet->SetScale({ 0.5f, 0.5f, 0.5f });//大きさを小さくしておく
-
+	bullet->SetColor({0,0,1,1});
 	//使っていない
 	isUsed = false;
 	isDeadFlag = false;
@@ -20,7 +20,7 @@ Bullet::Bullet(float3 position, Model* model,float3 pointerposition)
 	//位置
 	sphere.center = XMVectorSet(position.x, position.y, position.z, 1);
 	//半径
-	sphere.radius = 0.5f;
+	sphere.radius = 0.8f;
 	this->pointerPosition = pointerposition;
 #pragma endregion
 

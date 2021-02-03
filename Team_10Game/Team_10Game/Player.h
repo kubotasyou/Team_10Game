@@ -16,7 +16,7 @@ private:
 	using float3 = DirectX::XMFLOAT3;
 
 public:
-	Player(Input * input, Model* model);
+	Player(Input * input, Model* model,Model* sphereModel);
 	~Player();
 
 	void Initialize();
@@ -63,7 +63,9 @@ private:
 	GameObject* player = nullptr;
 	GameObject* camera = nullptr;//カメラ操作用
 	GameObject* objtest = nullptr;
-	Model* sphereModel = nullptr;
+	Model* charaModel = nullptr;
+	//Model* charaModel = nullptr;
+	Model* pointModel = nullptr;
 
 	float3 position;//自機の位置
 	float3 velocity;//自機の移動量
@@ -73,6 +75,8 @@ private:
 	float3 cameraVelocity;//カメラの移動量
 	float3 pointerPosition;//照準の位置
 	float speed = 0.09f;//移動速度
+	float speed2 = 0.15;
+
 	int hp = 3;        //体力
 
 	//弾のリスト
@@ -97,9 +101,10 @@ private:
 	int count = 0;
 
 	//弾のインターバル
-	float bulletTime = 1.5f;
+	float bulletTime = 0.5f;
 
 	//ローテーションの速さ
 	float rotSpeed = 0;
+	float rotSpeed2 = 0;
 };
 
