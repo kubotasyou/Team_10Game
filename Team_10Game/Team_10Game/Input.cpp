@@ -294,17 +294,17 @@ float Input::GetRightStick(const std::string & str)
 				result = +1.0f;
 			}
 		}
-		else
-		{
-			if (this->GetKeyDown(KeyCode::RIGHT))
-			{
-				result = +1.0f;
-			}
-			else if (this->GetKeyDown(KeyCode::LEFT))
-			{
-				result = -1.0f;
-			}
-		}
+		//else
+		//{
+		//	if (this->GetKeyDown(KeyCode::RIGHT))
+		//	{
+		//		result = +1.0f;
+		//	}
+		//	else if (this->GetKeyDown(KeyCode::LEFT))
+		//	{
+		//		result = -1.0f;
+		//	}
+		//}
 	}
 	//c‘€ì
 	if (chara == "Horizontal")
@@ -323,17 +323,17 @@ float Input::GetRightStick(const std::string & str)
 				result = -1.0f;
 			}
 		}
-		else
-		{
-			if (this->GetKeyDown(KeyCode::UP))
-			{
-				result = +1.0f;
-			}
-			else if (this->GetKeyDown(KeyCode::DOWN))
-			{
-				result = -1.0f;
-			}
-		}
+		//else
+		//{
+		//	if (this->GetKeyDown(KeyCode::UP))
+		//	{
+		//		result = +1.0f;
+		//	}
+		//	else if (this->GetKeyDown(KeyCode::DOWN))
+		//	{
+		//		result = -1.0f;
+		//	}
+		//}
 	}
 
 	return result;
