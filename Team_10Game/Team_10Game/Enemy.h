@@ -7,7 +7,6 @@
 #include "ParticleManager.h"
 
 //敵クラス：奥から流れてくる
-//memo : リスポーンの処理がまだできてない
 class Enemy
 {
 private:
@@ -18,7 +17,7 @@ public:
 	Enemy(Model* model);
 	~Enemy();
 
-	void Initialize();
+	void Initialize(float3 playerPosition);
 
 	void Update(float3 playerPosition);
 
@@ -44,9 +43,9 @@ private:
 
 	float3 position;
 	float3 velocity;
-	float speed = 0.1f;
+	float speed = 0.2f;
 
-	float3 playerPosition;//プレイヤーの位置(今回は固定。)
+	float3 playerPosition;//プレイヤーの位置
 	float3 dist;//プレイヤーと敵との距離
 	float distance;//プレイヤーと敵の距離の平方根
 
@@ -54,5 +53,7 @@ private:
 	Sphere sphere;
 
 	bool isDead = false;//死亡判定
+
+	bool distFlag = false;//プレイヤーと一定距離以内になったか
 };
 
