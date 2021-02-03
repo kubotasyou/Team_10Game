@@ -72,6 +72,8 @@ public:
 	bool GetJoyPadRelease(JoyPad padNum);
 	//左スティック操作(Vertices・Horizontal)
 	float GetStick(const std::string& str);
+	//右スティック操作
+	float GetRightStick(const std::string& str);
 
 
 

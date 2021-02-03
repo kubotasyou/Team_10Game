@@ -272,6 +272,73 @@ float Input::GetStick(const std::string & str)
 	return result;
 }
 
+float Input::GetRightStick(const std::string & str)
+{
+	string chara = str;
+	float result = 0.0f;
+
+	//横操作
+	if (chara == "Vertices")
+	{
+		//接続されていたら
+		if (connectPad)
+		{
+			//左に傾いていたら
+			if (joyState.lRx < 0)
+			{
+				result = -1.0f;
+			}
+			//右に傾いていたら
+			else if (joyState.lRx > 0)
+			{
+				result = +1.0f;
+			}
+		}
+		else
+		{
+			if (this->GetKeyDown(KeyCode::RIGHT))
+			{
+				result = +1.0f;
+			}
+			else if (this->GetKeyDown(KeyCode::LEFT))
+			{
+				result = -1.0f;
+			}
+		}
+	}
+	//縦操作
+	if (chara == "Horizontal")
+	{
+		//接続されていたら
+		if (connectPad)
+		{
+			//上に傾いていたら
+			if (joyState.lRy < 0)
+			{
+				result = +1.0f;
+			}
+			//下に傾いていたら
+			else if (joyState.lRy > 0)
+			{
+				result = -1.0f;
+			}
+		}
+		else
+		{
+			if (this->GetKeyDown(KeyCode::UP))
+			{
+				result = +1.0f;
+			}
+			else if (this->GetKeyDown(KeyCode::DOWN))
+			{
+				result = -1.0f;
+			}
+		}
+	}
+
+	return result;
+}
+
 //デバイス発見時に実行される関数(デバイスの情報・EnumDevicesで渡した値)
 BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE* pdidInstance, VOID* pContext)
 {

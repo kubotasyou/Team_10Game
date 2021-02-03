@@ -18,7 +18,7 @@ Enemy::~Enemy()
 	safedelete(enemy);
 }
 
-void Enemy::Initialize()
+void Enemy::Initialize(float3 playerPosition)
 {
 	position = { Random::SetRandom(-30,30),Random::SetRandom(-15,10),Random::SetRandom(30,55) };
 	//初期位置
@@ -30,10 +30,11 @@ void Enemy::Initialize()
 	sphere.radius = 0.5f;//半径
 
 
-	playerPosition = { 0, 1, -5 };
+	this->playerPosition = float3(playerPosition.x, playerPosition.y, playerPosition.z - 2.5f); 
 
 
 	isDead = false;
+	distFlag = false;//一定距離以内になってない
 }
 
 void Enemy::Update(float3 playerPosition)
@@ -50,15 +51,22 @@ void Enemy::Update(float3 playerPosition)
 	if (isDead)
 	{	
 		//位置、タイマー、フラグを初期化
-		Initialize();
+		Initialize(playerPosition);
 	}
 	//画面奥まで行ったら消えるように
 	if (position.z <= -1.5f)
 	{
-		Initialize();
+		Initialize(playerPosition);
 	}
 
-	this->playerPosition = float3(playerPosition.x, playerPosition.y, playerPosition.z - 2.5f);
+	//一定距離以内でないなら
+	if (distFlag == false)
+	{
+		//ホーミング
+		this->playerPosition = float3(playerPosition.x, playerPosition.y, playerPosition.z - 2.5f);
+	}
+
+	
 }
 
 void Enemy::Draw()
@@ -86,8 +94,6 @@ void Enemy::Move()
 
 #pragma region プレイヤーとの距離を計算して移動量に代入
 
-	
-
 	dist.x = playerPosition.x - position.x;
 	dist.y = playerPosition.y - position.y;
 	dist.z = playerPosition.z - position.z;
@@ -95,6 +101,11 @@ void Enemy::Move()
 	velocity.x = dist.x / distance * speed;
 	velocity.y = dist.y / distance * speed;
 	velocity.z = dist.z / distance * speed;
+
+	if (distance <= 15.0f)
+	{
+		distFlag = true;
+	}
 
 #pragma endregion
 

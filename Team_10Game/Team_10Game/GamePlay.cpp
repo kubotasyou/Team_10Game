@@ -81,13 +81,13 @@ void GamePlay::Initialize()
 	player = new Player(input, charaModel);
 	player->Initialize();
 
-	////敵
-	//enemys.resize(enemyNum);
-	//for (int i = 0; i < enemyNum; i++)
-	//{
-	//	enemys[i] = new Enemy(sphereModel);
-	//	enemys[i]->Initialize();
-	//}
+	//敵
+	enemys.resize(enemyNum);
+	for (int i = 0; i < enemyNum; i++)
+	{
+		enemys[i] = new Enemy(sphereModel);
+		enemys[i]->Initialize(player->GetPosition());
+	}
 
 	//宇宙ドーム
 	spaceDome = GameObject::Create();
@@ -117,11 +117,11 @@ void GamePlay::Update()
 	//プレイヤー
 	player->Update();
 
-	////敵
-	//for (auto& e : enemys)
-	//{
-	//	e->Update(player->GetPosition());
-	//}
+	//敵
+	for (auto& e : enemys)
+	{
+		e->Update(player->GetPosition());
+	}
 
 	//宇宙ドーム
 	spaceDome->Update();
@@ -211,63 +211,63 @@ void GamePlay::Update()
 
 
 
-#pragma region 当たり判定テスト
-
-	/*bool ReToPo = Collision::CheckRectangleToDot(rect, point);*/
-	bool ReToPo = Collision::CheckRectangleToSphere(rect, sphere);
-	if (ReToPo)
-	{
-		std::ostringstream test;
-		test.clear();
-		test << "Rectangle&Dot...Hit!!:" << std::fixed;
-		hpText.Print(test.str(), 0, 400, 5.0f);
-	}
-	else
-	{
-		std::ostringstream test;
-		test.clear();
-		test << "Rectangle&Dot...No!!:" << std::fixed;
-		hpText.Print(test.str(), 0, 400, 5.0f);
-	}
-
-	if (input->GetKeyDown(KeyCode::A))
-	{
-		sphere.center.m128_f32[0] -= 0.1f;
-	}
-	else if (input->GetKeyDown(KeyCode::D))
-	{
-		sphere.center.m128_f32[0] += 0.1f;
-	}
-	if (input->GetKeyDown(KeyCode::S))
-	{
-		sphere.center.m128_f32[1] -= 0.1f;
-	}
-	else if (input->GetKeyDown(KeyCode::W))
-	{
-		sphere.center.m128_f32[1] += 0.1f;
-	}
-	if (input->GetKeyDown(KeyCode::DOWN))
-	{
-		sphere.center.m128_f32[2] -= 0.1f;
-	}
-	else if (input->GetKeyDown(KeyCode::UP))
-	{
-		sphere.center.m128_f32[2] += 0.1f;
-	}
-
-	//何かしらの位置を表示
-	std::ostringstream somethingPos;
-	somethingPos.clear();
-	somethingPos << "PointPos:" << 
-		std::fixed << 
-		std::setprecision(1) << 
-		sphere.center.m128_f32[0] << "," << 
-		sphere.center.m128_f32[1] << "," <<
-		sphere.center.m128_f32[2];
-
-	debugText.Print(somethingPos.str(), 0, 500, 5.0f);
-
-#pragma endregion
+//#pragma region 当たり判定テスト
+//
+//	/*bool ReToPo = Collision::CheckRectangleToDot(rect, point);*/
+//	bool ReToPo = Collision::CheckRectangleToSphere(rect, sphere);
+//	if (ReToPo)
+//	{
+//		std::ostringstream test;
+//		test.clear();
+//		test << "Rectangle&Dot...Hit!!:" << std::fixed;
+//		hpText.Print(test.str(), 0, 400, 5.0f);
+//	}
+//	else
+//	{
+//		std::ostringstream test;
+//		test.clear();
+//		test << "Rectangle&Dot...No!!:" << std::fixed;
+//		hpText.Print(test.str(), 0, 400, 5.0f);
+//	}
+//
+//	if (input->GetKeyDown(KeyCode::A))
+//	{
+//		sphere.center.m128_f32[0] -= 0.1f;
+//	}
+//	else if (input->GetKeyDown(KeyCode::D))
+//	{
+//		sphere.center.m128_f32[0] += 0.1f;
+//	}
+//	if (input->GetKeyDown(KeyCode::S))
+//	{
+//		sphere.center.m128_f32[1] -= 0.1f;
+//	}
+//	else if (input->GetKeyDown(KeyCode::W))
+//	{
+//		sphere.center.m128_f32[1] += 0.1f;
+//	}
+//	if (input->GetKeyDown(KeyCode::DOWN))
+//	{
+//		sphere.center.m128_f32[2] -= 0.1f;
+//	}
+//	else if (input->GetKeyDown(KeyCode::UP))
+//	{
+//		sphere.center.m128_f32[2] += 0.1f;
+//	}
+//
+//	//何かしらの位置を表示
+//	std::ostringstream somethingPos;
+//	somethingPos.clear();
+//	somethingPos << "PointPos:" << 
+//		std::fixed << 
+//		std::setprecision(1) << 
+//		sphere.center.m128_f32[0] << "," << 
+//		sphere.center.m128_f32[1] << "," <<
+//		sphere.center.m128_f32[2];
+//
+//	debugText.Print(somethingPos.str(), 0, 500, 5.0f);
+//
+//#pragma endregion
 
 }
 
@@ -283,11 +283,11 @@ void GamePlay::Draw()
 	//プレイヤー
 	player->Draw();
 
-	////敵
-	//for (auto& e : enemys)
-	//{
-	//	e->Draw();
-	//}
+	//敵
+	for (auto& e : enemys)
+	{
+		e->Draw();
+	}
 
 	//宇宙ドーム
 	spaceDome->Draw();
