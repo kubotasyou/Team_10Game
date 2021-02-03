@@ -8,7 +8,6 @@
 #include "Sound.h"
 #include "BaseScene.h"
 #include "Player.h"
-#include "Pointer.h"
 #include "Enemy.h"
 #include "DebugText.h"
 #include "Score.h"
@@ -67,9 +66,6 @@ private:
 	ParticleManager* particleMan = nullptr;
 	DirectX::XMFLOAT3 deadPos;
 	Sound* sound =nullptr;
-
-	Pointer* pointer;
-
 	Rectangles rect;
 	Dot point;
 	Sphere sphere;

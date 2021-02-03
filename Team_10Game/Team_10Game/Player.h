@@ -8,7 +8,6 @@
 #include "Bullet.h"
 #include "SceneManager.h"
 #include "CountDownTimer.h"
-#include "Pointer.h"
 
 class Player
 {
@@ -65,7 +64,6 @@ private:
 	GameObject* camera = nullptr;//カメラ操作用
 	GameObject* objtest = nullptr;
 	Model* sphereModel = nullptr;
-	Pointer* pointer = nullptr;	//ポインター
 
 	float3 position;//自機の位置
 	float3 velocity;//自機の移動量

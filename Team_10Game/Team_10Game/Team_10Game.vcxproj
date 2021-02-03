@@ -165,7 +165,6 @@
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerBullet.cpp" />
-    <ClCompile Include="Pointer.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Score.cpp" />
@@ -199,7 +198,6 @@
     <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerBullet.h" />
-    <ClInclude Include="Pointer.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="SafeDelete.h" />
     <ClInclude Include="SceneManager.h" />

@@ -111,9 +111,6 @@
     <ClCompile Include="ParticleManager.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Pointer.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseScene.h">
@@ -210,9 +207,6 @@
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="Score.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Pointer.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
