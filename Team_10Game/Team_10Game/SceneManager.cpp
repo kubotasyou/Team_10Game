@@ -53,18 +53,19 @@ void SceneManager::Initialize()
 
 #pragma region サウンド読み込み
 
-	sound->LoadWav("3MinutesCooking");
+	//sound->LoadWav("3MinutesCooking");
 	sound->LoadWav("select");
-	sound->LoadWav("clear");
+	//sound->LoadWav("clear");
+	sound->LoadWav("punch");
 	sound->LoadWav("Title");
 	sound->LoadWav("Gameplay");
-	sound->LoadWav("Ending");
+	//sound->LoadWav("Ending");
 	sound->LoadWav("EndingDark");
 
 	//MP3ファイルの読み込み
 	//識別子(.mp3)が必要
 	//この時にファイル名をコピーしておくと良い
-	sound->LoadMP3("BGM01.mp3");
+	//sound->LoadMP3("BGM01.mp3");
 
 #pragma endregion
 

@@ -108,6 +108,7 @@ void GamePlay::Initialize()
 
 	//ƒXƒRƒA‚Ì‰Šú‰»
 	score->Initialize();
+    hp = player->GetHp();
 #pragma endregion
 
 }
@@ -135,6 +136,11 @@ void GamePlay::Update()
 	if (player->GetHp() < 1)
 	{
 		NextScene();
+	}
+	if (hp > player->GetHp())
+	{
+		sound->PlayWav("punch", 1.0f);
+		hp = player->GetHp();
 	}
 #pragma region “–‚½‚è”»’èˆ—
 

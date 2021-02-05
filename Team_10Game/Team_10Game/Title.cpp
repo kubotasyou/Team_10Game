@@ -27,7 +27,7 @@ void Title::Update()
 {
 	if (input->GetKeyTrigger(KeyCode::SPACE)||input->GetJoyPadTrigger(JoyPad::A))
 	{	
-		sound->PlayWav("select", 0.1f);
+		sound->PlayWav("select", 1.0f);
 		NextScene();
 	}
 }

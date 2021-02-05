@@ -31,10 +31,10 @@ void Ending::Initialize()
 	//ループ再生の場合、PlayLoopMP3を初期化に書き、
 	//流したい音声ファイルを引数に入れる。
 	//その後Updateへ...
-	sound->PlayLoopMP3("BGM01.mp3");
+	//sound->PlayLoopMP3("BGM01.mp3");
 
 	//memo : 今使っているサウンドはこれ
-	//sound->PlayLoop("EndingDark");
+	sound->PlayLoopWav("EndingDark");
 }
 
 void Ending::Update()
@@ -47,7 +47,7 @@ void Ending::Update()
 	//ループで流す場合、再生が終わったかを検知しないといけないため、
 	//UpdeteにCheckLoop関数と、初期化に書いた音声ファイルを引数に入れる
 	//これが無いとループしてくれないので注意。
-	sound->CheckLoop("BGM01.mp3");
+	//sound->CheckLoop("BGM01.mp3");
 }
 
 void Ending::Draw()
@@ -94,7 +94,7 @@ void Ending::NextScene()
 	sound->StopWav();
 
 	//最後にシーンが終了するときに止めたい音声ファイルを選択して終わり。
-	sound->StopMP3("BGM01.mp3");
+	//sound->StopMP3("BGM01.mp3");
 
 	//シーン変更(変更したいシーンを入れてね)
 	sceneChanger->ChangeScene(SceneTitle);

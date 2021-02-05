@@ -60,6 +60,7 @@ private:
 	bool timer = false;//’Ç‰Á
 	int t = 0;//’Ç‰Á
 	int d = 1;//’Ç‰Á
+	int hp = 5;
 	DebugText debugText;
 	HpText hpText;
 
