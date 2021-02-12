@@ -22,6 +22,15 @@
     <FxCompile Include="ParticleGS.hlsl" />
     <FxCompile Include="ParticlePS.hlsl" />
     <FxCompile Include="ParticleVS.hlsl" />
+    <FxCompile Include="x64\BasicPixelShader.hlsl" />
+    <FxCompile Include="x64\BasicVertexShader.hlsl" />
+    <FxCompile Include="x64\ObjectPixelShader.hlsl" />
+    <FxCompile Include="x64\ObjectVertexShader.hlsl" />
+    <FxCompile Include="x64\ParticleGS.hlsl" />
+    <FxCompile Include="x64\ParticlePS.hlsl" />
+    <FxCompile Include="x64\ParticleVS.hlsl" />
+    <FxCompile Include="x64\SpritePixelShader.hlsl" />
+    <FxCompile Include="x64\SpriteVertexShader.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp">
@@ -221,6 +230,10 @@
       <Filter>リソースファイル</Filter>
     </None>
     <None Include="Particle.hlsli" />
+    <None Include="x64\BasicShaderHeader.hlsli" />
+    <None Include="x64\ObjectShaderHeader.hlsli" />
+    <None Include="x64\Particle.hlsli" />
+    <None Include="x64\SpriteShaderHeader.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ヘッダーファイル">

@@ -35,7 +35,7 @@ void WinApp::CreateGameWindow()
 	//ウィンドウオブジェクトの生成
 	hwnd = CreateWindow(
 		wndClass.lpszClassName,            //クラス名
-		L"DirectX12でシューティングゲーム作ってみたら予想以上に難しかった", //タイトルバーの文字
+		L"しゅーてぃんぐげーむThe３D", //タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,               //タイトルバーと画面に境界があるウィンドウ
 		CW_USEDEFAULT,                     //表示X座標(OSに任せる)
 		CW_USEDEFAULT,                     //表示Y座標(OSに任せる)
